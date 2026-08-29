@@ -112,6 +112,7 @@ def bloc_tete(page):
 
 def bloc_pied():
     c, b, m = CFG["contact"], CFG["bien"], CFG["marque"]
+    E = CFG["editeur"]
     return (
       '<footer class="pied">\n'
       '  <div class="page">\n'
@@ -147,6 +148,9 @@ def bloc_pied():
       'déclaration ont été inventés pour cette maquette, et les photographies proviennent de '
       'banques d\'images libres de droits. Le détail figure dans les '
       '<a href="mentions.html">mentions légales</a>. Aucun établissement réel n\'est représenté.</p>\n'
+      '    <p class="pied__signature">Site de démonstration réalisé par '
+      '<a href="%s" rel="noopener">%s</a> — '
+      '<a href="mailto:%s">%s</a> · <a href="tel:%s">%s</a></p>\n'
       '    <div class="pied__bas">\n'
       '      <span>© 2026 %s — maquette</span>\n'
       '      <span><a href="mentions.html">Mentions légales</a> · '
@@ -156,6 +160,8 @@ def bloc_pied():
       '</footer>'
       % (m["nom"], b["chambres"], b["voyageurs"], b["enregistrement"],
          c["telephoneLien"], c["telephone"], c["courriel"], c["courriel"], c["adresse"],
+         E["site"], E["studio"], E["courriel"], E["courriel"],
+         E["telephoneLien"], E["telephone"],
          m["nom"]))
 
 
@@ -404,7 +410,37 @@ def ecrire_credits_js():
     return False
 
 
+def bloc_editeur():
+    """Identité de l'éditeur — obligation légale, et non décor.
+    La villa est fictive ; l'éditeur du site, lui, est réel."""
+    e = CFG["editeur"]; h = e["hebergeur"]
+    siren = e["siren"].strip()
+    ligne_siren = ('<tr><td>SIREN</td><td>%s</td></tr>' % siren) if siren else (
+        '<tr><td>SIREN</td><td><strong style="color:var(--accent)">'
+        '&lt; à compléter &gt;</strong></td></tr>')
+    return (
+      '<table class="table">\n'
+      '  <caption class="vh">Identité de l\'éditeur</caption>\n'
+      '  <tbody>\n'
+      '    <tr><td>Éditeur</td><td>%s</td></tr>\n'
+      '    <tr><td>Responsable de la publication</td><td>%s</td></tr>\n'
+      '    <tr><td>Adresse</td><td>%s</td></tr>\n'
+      '    <tr><td>Courriel</td><td><a href="mailto:%s">%s</a></td></tr>\n'
+      '    <tr><td>Téléphone</td><td><a href="tel:%s">%s</a></td></tr>\n'
+      '    <tr><td>Site</td><td><a href="%s" rel="noopener">%s</a></td></tr>\n'
+      '    %s\n'
+      '  </tbody>\n'
+      '</table>\n'
+      '<h3>Hébergement</h3>\n'
+      '<p class="mince">%s — %s — <a href="%s" rel="noopener">%s</a></p>'
+      % (e["studio"], e["responsable"], e["adresse"],
+         e["courriel"], e["courriel"], e["telephoneLien"], e["telephone"],
+         e["site"], e["siteAffiche"], ligne_siren,
+         h["nom"], h["adresse"], h["site"], h["site"].replace("https://", "")))
+
+
 BLOCS = {
+  "EDITEUR": lambda page: bloc_editeur(),
   "PIED": lambda page: bloc_pied(),
   "TETE": bloc_tete,
   "PIECES": lambda page: bloc_pieces(),
@@ -425,7 +461,7 @@ BLOCS = {
 # Une page sans og:title ni canonical se partage mal et se référence mal.
 # Plutôt que de les recopier huit fois, on les dérive du <title> et de la
 # description déjà présents, et on les injecte à la construction.
-SANS_INDEX = {"confirmation.html"}
+SANS_INDEX = {"confirmation.html", "merci.html"}
 
 
 def meta_page(nom, s):
@@ -473,6 +509,7 @@ def ecrire_indexation():
     robots = ("User-agent: *\n"
               "Allow: /\n"
               "Disallow: /confirmation.html\n"
+              "Disallow: /merci.html\n"
               "Disallow: /api/\n\n"
               "Sitemap: %s/sitemap.xml\n" % site)
     lignes = ['<?xml version="1.0" encoding="UTF-8"?>',

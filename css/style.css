@@ -499,3 +499,13 @@ body.bloque{overflow:hidden}
 }
 .seuil__vue img{width:100%; aspect-ratio:21/9; object-fit:cover}
 @media (max-width:700px){ .seuil__vue img{aspect-ratio:4/3} }
+
+/* Signature de l'éditeur : discrète, mais cliquable — c'est par là qu'un
+   propriétaire séduit par la démonstration prend contact. */
+.pied__signature{
+  margin:2rem 0 0; padding-top:1.6rem; border-top:1px solid rgba(255,255,255,.13);
+  font-size:.84rem; color:color-mix(in srgb, var(--fond2) 78%, transparent);
+}
+.pied__signature a{border-bottom:1px solid rgba(255,255,255,.28); padding-bottom:1px}
+.pied__signature a:hover{border-bottom-color:var(--accent-pale)}
+.pied__signature + .pied__bas{border-top:0; margin-top:1.4rem; padding-top:0}

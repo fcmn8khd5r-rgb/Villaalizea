@@ -243,5 +243,22 @@
     "langue": "fr",
     "apercu": "assets/hero/affiche-l.webp",
     "note": "Remplacer url par le domaine réel avant mise en ligne : les balises sociales et le plan du site en dépendent."
+  },
+  "editeur": {
+    "studio": "Studio Mathys Bocage",
+    "responsable": "Mathys Bocage",
+    "site": "https://studiomathysbocage.fr",
+    "siteAffiche": "studiomathysbocage.fr",
+    "courriel": "contact@studiomathysbocage.fr",
+    "telephone": "0690 30 50 37",
+    "telephoneLien": "+590690305037",
+    "adresse": "16 B Les Jardins de Houelbourg, Boulevard de Houëlbourg, ZI Jarry, 97122 Baie-Mahault",
+    "siren": "",
+    "sirenNote": "À COMPLÉTER — immatriculation en cours. outils-publier.sh refuse d'assembler le site tant que ce champ est vide.",
+    "hebergeur": {
+      "nom": "Netlify, Inc.",
+      "adresse": "512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis",
+      "site": "https://www.netlify.com"
+    }
   }
 }

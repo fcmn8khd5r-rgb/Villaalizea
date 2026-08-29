@@ -205,7 +205,7 @@ avec un jeu de démonstration et le signale à l'écran.
 | `disponibilites.mjs` | Agrège les calendriers iCal d'Airbnb et Booking | `ICAL_AIRBNB`, `ICAL_BOOKING` |
 | `acompte.mjs` | Session de paiement Stripe Checkout | `STRIPE_SECRET_KEY` |
 | `avis.mjs` | Avis de la fiche Google (API Places New) | `GOOGLE_MAPS_API_KEY`, `GOOGLE_PLACE_ID` |
-| `demande.mjs` | Envoi du formulaire par courriel | `RESEND_API_KEY`, `COURRIEL_DESTINATION` |
+| `demande.mjs` | Envoi du formulaire par courriel | `RESEND_API_KEY` |
 
 ### L'acompte, et pourquoi il est sûr
 
@@ -303,11 +303,31 @@ Trois outils de mesure, qui ont servi à trancher plutôt qu'à justifier après
 est refabricable depuis `src/sources.tsv`, qui liste la provenance, l'auteur et la licence
 de chaque fichier.
 
+## Qui édite, et qui est fictif
+
+Le site présente une villa **fictive** mais il est édité par quelqu'un de **réel**. Les deux
+identités ne se confondent nulle part :
+
+| | La Villa Alizéa | Studio Mathys Bocage |
+|---|---|---|
+| Existence | inventée pour la maquette | réelle, éditeur du site |
+| Coordonnées | fictives, en `.example` | dans le pied de page et les mentions |
+| Formulaire | présenté comme celui de la villa | **les messages arrivent au studio** |
+
+Une ligne discrète en pied de chaque page renvoie au studio : c'est par là qu'un
+propriétaire séduit par la démonstration prend contact. Les mentions légales portent
+l'identité complète de l'éditeur, comme la loi l'exige d'un support commercial.
+
 ## Mettre en ligne
 
 ```bash
-bash outils-publier.sh     # assemble _site/ : 13 Mo, exactement ce qui doit partir
+bash outils-publier.sh     # assemble _site/ : 14 Mo, exactement ce qui doit partir
 ```
+
+**Le script refuse d'assembler tant que le SIREN de l'éditeur est vide** dans
+`config/villa.json`. Ce n'est pas un avertissement mais un blocage : un site commercial
+dont les mentions légales sont incomplètes ne doit pas partir. Renseignez le champ,
+relancez `python3 construire.py`, puis le script.
 
 **Netlify n'a pas d'équivalent de `.vercelignore`** : tout le dossier publié est déployé.
 Sans ce tri, `src/orig` — près de quatre cents mégaoctets de vidéos sources — partirait sur
@@ -368,7 +388,9 @@ d'écrire à côté.
 ├── config/villa.json           ← tout ce qui change d'un client à l'autre
 ├── construire.py               générateur des blocs répétés
 ├── .env.exemple                les variables à renseigner pour passer en réel
+├── outils-publier.sh           assemble _site/ ; refuse si le SIREN manque
 ├── index.html … mentions.html  8 pages publiées
+├── css/polices.css             Marcellus et Jost, hébergées ici
 ├── css/style.css               feuille commune, palette et animations
 ├── css/reserver.css            calendrier, récapitulatif, confirmation
 ├── js/hero.js                  la caméra pilotée au défilement
@@ -378,7 +400,8 @@ d'écrire à côté.
 ├── js/tarifs.mjs               calcul du prix — PARTAGÉ avec le serveur
 ├── js/credits.js               GÉNÉRÉ — crédits de la visionneuse
 ├── netlify/functions/          iCal, Stripe, avis Google, courriel
-├── assets/img/                 29 photos étalonnées, AVIF + WebP, deux largeurs
+├── assets/fonts/               8 fichiers woff2, sous-ensembles latin
+├── assets/img/                 28 photos étalonnées, AVIF + WebP, deux largeurs
 ├── assets/hero/                140 images de séquence + affiches de repli
 ├── assets/video/               Baie Longue, deux définitions
 └── src/                        sources, scripts de fabrication, serveur local
