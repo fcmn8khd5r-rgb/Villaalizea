@@ -317,3 +317,8 @@ body.est-bloque{overflow:hidden}
 /* Espacements structurels (remplacent les hauteurs en style en ligne) */
 .espace{height:2.5rem}
 .espace--court{height:1.75rem}
+
+/* Ancres : l'en-tête est fixe, une cible d'ancre doit s'arrêter en dessous
+   plutôt que de glisser sous la barre. */
+:target,
+section[id]{scroll-margin-top:calc(var(--entete) + 1.5rem)}
