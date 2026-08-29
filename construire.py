@@ -123,7 +123,7 @@ def bloc_pied():
       '        <p style="opacity:.82">N° de déclaration : %s</p>\n'
       '      </div>\n'
       '      <div>\n'
-      '        <h3>Contact</h3>\n'
+      '        <h2>Contact</h2>\n'
       '        <ul>\n'
       '          <li><a href="tel:%s">%s</a></li>\n'
       '          <li><a href="mailto:%s">%s</a></li>\n'
@@ -131,7 +131,7 @@ def bloc_pied():
       '        </ul>\n'
       '      </div>\n'
       '      <div>\n'
-      '        <h3>Le site</h3>\n'
+      '        <h2>Le site</h2>\n'
       '        <ul>\n'
       '          <li><a href="la-villa.html">La villa</a></li>\n'
       '          <li><a href="galerie.html">Galerie</a></li>\n'
@@ -186,7 +186,7 @@ def bloc_pieces():
           '  %s\n'
           '  <div data-anim>\n'
           '    <p class="oeil">%02d</p>\n'
-          '    <h3>%s</h3>\n'
+          '    <h2 class="titre-bloc">%s</h2>\n'
           '    <p class="mince">%s</p>\n'
           '    <ul class="etiquettes">%s</ul>\n'
           '  </div>\n'
@@ -273,7 +273,7 @@ def bloc_ile():
           '  %s\n'
           '  <div data-anim>\n'
           '    <p class="oeil">%s</p>\n'
-          '    <h3>%s</h3>\n'
+          '    <h2 class="titre-bloc">%s</h2>\n'
           '    <p class="mince">%s</p>\n'
           '    %s\n'
           '  </div>\n'
@@ -421,6 +421,76 @@ BLOCS = {
 }
 
 
+# --- métadonnées sociales et indexation ------------------------------------
+# Une page sans og:title ni canonical se partage mal et se référence mal.
+# Plutôt que de les recopier huit fois, on les dérive du <title> et de la
+# description déjà présents, et on les injecte à la construction.
+SANS_INDEX = {"confirmation.html"}
+
+
+def meta_page(nom, s):
+    site = CFG["site"]["url"].rstrip("/")
+    titre = (re.search(r"<title>(.*?)</title>", s, re.S) or [None, ""])[1].strip()
+    desc = (re.search(r'name="description"\s+content="([^"]*)"', s) or [None, ""])[1]
+    url = site + "/" + ("" if nom == "index.html" else nom)
+    apercu = site + "/" + CFG["site"]["apercu"]
+    m = ['<link rel="canonical" href="%s">' % url,
+         '<meta property="og:type" content="website">',
+         '<meta property="og:site_name" content="%s">' % CFG["marque"]["nom"],
+         '<meta property="og:locale" content="fr_FR">',
+         '<meta property="og:url" content="%s">' % url,
+         '<meta property="og:title" content="%s">' % titre,
+         '<meta property="og:image" content="%s">' % apercu,
+         '<meta name="twitter:card" content="summary_large_image">']
+    if desc:
+        m.insert(6, '<meta property="og:description" content="%s">' % desc)
+    if nom in SANS_INDEX:
+        m.append('<meta name="robots" content="noindex, nofollow">')
+    return "\n".join(m)
+
+
+def injecter_meta(nom, s):
+    """Remplace le bloc de métadonnées, ou le pose s'il n'existe pas."""
+    bloc = "<!-- META:debut -->\n" + meta_page(nom, s) + "\n<!-- META:fin -->"
+    motif = re.compile(r"<!-- META:debut -->.*?<!-- META:fin -->", re.S)
+    if motif.search(s):
+        return motif.sub(lambda _: bloc, s)
+    # Première pose : juste avant la feuille de style commune, et on retire les
+    # balises éparses qui feraient double emploi.
+    s = re.sub(r'\s*<link rel="canonical"[^>]*>', "", s)
+    s = re.sub(r'\s*<meta property="og:[^>]*>', "", s)
+    s = re.sub(r'\s*<meta name="robots"[^>]*>', "", s)
+    return s.replace('<link rel="stylesheet" href="css/style.css',
+                     bloc + '\n<link rel="stylesheet" href="css/style.css', 1)
+
+
+def ecrire_indexation():
+    """robots.txt et sitemap.xml, dérivés de la liste des pages."""
+    site = CFG["site"]["url"].rstrip("/")
+    pages = [f for f in sorted(os.listdir(RACINE))
+             if f.endswith(".html") and f not in SANS_INDEX
+             and f not in ("essai-replis.html", "404.html")]
+    robots = ("User-agent: *\n"
+              "Allow: /\n"
+              "Disallow: /confirmation.html\n"
+              "Disallow: /api/\n\n"
+              "Sitemap: %s/sitemap.xml\n" % site)
+    lignes = ['<?xml version="1.0" encoding="UTF-8"?>',
+              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for f in pages:
+        u = site + "/" + ("" if f == "index.html" else f)
+        prio = "1.0" if f == "index.html" else ("0.9" if f in ("galerie.html", "reserver.html") else "0.7")
+        lignes += ["  <url><loc>%s</loc><priority>%s</priority></url>" % (u, prio)]
+    lignes.append("</urlset>")
+    ecrit = []
+    for nom, contenu in (("robots.txt", robots), ("sitemap.xml", "\n".join(lignes) + "\n")):
+        c = os.path.join(RACINE, nom)
+        ancien = open(c, encoding="utf-8").read() if os.path.exists(c) else ""
+        if contenu != ancien:
+            open(c, "w", encoding="utf-8").write(contenu); ecrit.append(nom)
+    return ecrit
+
+
 def appliquer(chemin, verifie=False):
     nom = os.path.basename(chemin)
     s = ancien = open(chemin, encoding="utf-8").read()
@@ -434,6 +504,11 @@ def appliquer(chemin, verifie=False):
             raise SystemExit("%s : repère %s introuvable ou en double — "
                              "le générateur ne peut pas écrire." % (nom, bloc))
         touche.append(bloc)
+    if nom not in ("essai-replis.html",):
+        s2 = injecter_meta(nom, s)
+        if s2 != s:
+            touche.append("META")
+            s = s2
     if s != ancien and not verifie:
         open(chemin, "w", encoding="utf-8").write(s)
     return touche, s != ancien
@@ -445,8 +520,11 @@ def main():
         touche, change = appliquer(os.path.join(RACINE, p), verifie)
         if touche:
             print("%-20s %s%s" % (p, ", ".join(touche), "  (modifié)" if change else "  (à jour)"))
-    if not verifie and ecrire_credits_js():
-        print("%-20s réécrit" % "js/credits.js")
+    if not verifie:
+        if ecrire_credits_js():
+            print("%-20s réécrit" % "js/credits.js")
+        for f in ecrire_indexation():
+            print("%-20s réécrit" % f)
     manque = [c for c in ORDRE if c not in MAN]
     print("\n%d vues dans la galerie, %d lieux sur la page de l'île."
           % (len([c for c in ORDRE if c in MAN]), len(CFG["ile"])))

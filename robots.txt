@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /confirmation.html
+Disallow: /api/
+
+Sitemap: https://villa-alizea.example/sitemap.xml

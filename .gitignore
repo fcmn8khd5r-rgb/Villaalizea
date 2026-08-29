@@ -1,4 +1,4 @@
-# Originaux et intermédiaires : lourds, refabricables depuis src/sources.tsv
+_site/
 src/orig/
 node_modules/
 .netlify/

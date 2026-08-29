@@ -303,6 +303,22 @@ Trois outils de mesure, qui ont servi à trancher plutôt qu'à justifier après
 est refabricable depuis `src/sources.tsv`, qui liste la provenance, l'auteur et la licence
 de chaque fichier.
 
+## Mettre en ligne
+
+```bash
+bash outils-publier.sh     # assemble _site/ : 13 Mo, exactement ce qui doit partir
+```
+
+**Netlify n'a pas d'équivalent de `.vercelignore`** : tout le dossier publié est déployé.
+Sans ce tri, `src/orig` — près de quatre cents mégaoctets de vidéos sources — partirait sur
+le serveur, avec les scripts de fabrication et la page d'essai des replis.
+`netlify.toml` appelle donc le script et publie `_site`.
+
+`construire.py` génère aussi `robots.txt` et `sitemap.xml` à partir de la liste des pages,
+et injecte dans chaque `<head>` le lien canonique et les balises Open Graph, dérivés du
+`<title>` et de la description déjà présents. **L'adresse du site se règle à un seul
+endroit** : `config/villa.json`, bloc `site`.
+
 ## Décliner ce site pour un autre client
 
 Tout ce qui se répète ou se chiffre est dans **`config/villa.json`** : marque, coordonnées,

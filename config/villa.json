@@ -237,5 +237,11 @@
     "km": 9,
     "voiture": "15 min",
     "note": "Transfert privé sur demande, 60 € l'aller."
+  },
+  "site": {
+    "url": "https://villa-alizea.example",
+    "langue": "fr",
+    "apercu": "assets/hero/affiche-l.webp",
+    "note": "Remplacer url par le domaine réel avant mise en ligne : les balises sociales et le plan du site en dépendent."
   }
 }

@@ -1,10 +1,11 @@
 # Villa Alizéa — configuration Netlify
 [build]
-  publish = "."
+  # Le dossier publié est assemblé par outils-publier.sh : Netlify déploie
+  # tout ce qu'on lui donne, et src/orig pèse quatre cents mégaoctets.
+  command  = "bash outils-publier.sh"
+  publish  = "_site"
   functions = "netlify/functions"
 
-# Le dossier de travail (originaux, scripts de fabrication) n'a rien à faire
-# en ligne : 318 Mo d'images sources et de vidéos.
 [build.processing]
   skip_processing = true
 
