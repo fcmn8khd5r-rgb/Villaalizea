@@ -16,7 +16,8 @@ const $ = s => document.querySelector(s);
 const jour = d => d.toISOString().slice(0, 10);
 const MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août",
               "septembre","octobre","novembre","décembre"];
-const JOURS = ["L","M","M","J","V","S","D"];
+const JOURS = [["L","lundi"],["M","mardi"],["M","mercredi"],["J","jeudi"],
+               ["V","vendredi"],["S","samedi"],["D","dimanche"]];
 const euro = n => n.toLocaleString("fr-FR", { style:"currency", currency:"EUR",
                                               maximumFractionDigits: 2 });
 const enLettres = s => {
@@ -132,7 +133,8 @@ function rendreMois(premier) {
   }
 
   return `<div class="mois"><h3>${MOIS[mo]} ${an}</h3><table>`
-       + `<thead><tr>${JOURS.map(j => `<th scope="col"><abbr title="${j}">${j}</abbr></th>`).join("")}</tr></thead>`
+       + `<thead><tr>${JOURS.map(([c, n]) =>
+             `<th scope="col"><abbr title="${n}">${c}</abbr></th>`).join("")}</tr></thead>`
        + `<tbody><tr>${cases}</tr></tbody></table></div>`;
 }
 
@@ -235,7 +237,10 @@ $("#cal-mois").addEventListener("keydown", e => {
 /* ---- acompte -------------------------------------------------------------- */
 $("#r-payer").addEventListener("click", async () => {
   const b = $("#r-payer"), note = $("#r-note");
-  b.disabled = true; note.style.color = ""; note.textContent = "Ouverture du paiement…";
+  const libelle = b.textContent;
+  b.disabled = true; note.style.color = "";
+  b.textContent = "Enregistrement…";
+  note.textContent = "Vérification des dates et du montant…";
   try {
     const r = await fetch("/api/acompte", {
       method: "POST",
@@ -246,19 +251,23 @@ $("#r-payer").addEventListener("click", async () => {
       })
     });
     const d = await r.json();
-    if (!r.ok) throw new Error(d.message || "Paiement indisponible.");
+    if (!r.ok) throw new Error(d.message || "Réservation indisponible.");
+
+    // En mode réel, d.url mène à la page de paiement hébergée par Stripe.
+    // En démonstration, elle mène directement à la confirmation : le prix a
+    // déjà été recalculé côté serveur et la disponibilité revérifiée.
     if (d.mode === "demonstration") {
-      // Le calcul, la vérification de disponibilité et l'appel serveur sont
-      // ceux de la production. Seule manque la clé qui ouvre la page Stripe.
-      note.textContent = "Maquette : aucune clé Stripe n'est configurée. "
-                       + "Renseignez STRIPE_SECRET_KEY (clé sk_test_…) pour "
-                       + "ouvrir le vrai paiement en bac à sable.";
+      note.textContent = "Démonstration : aucun paiement n'est demandé.";
+      // Une courte pause : sans elle le passage est si brusque qu'on ne voit
+      // pas qu'une vérification a eu lieu.
+      await new Promise(res => setTimeout(res, 600));
     }
     location.href = d.url;
   } catch (e) {
     note.style.color = "#9C3A28";
     note.textContent = e.message;
     b.disabled = false;
+    b.textContent = libelle;
   }
 });
 

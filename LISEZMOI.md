@@ -143,12 +143,24 @@ Le calcul du prix vit dans **`js/tarifs.mjs`**, chargé des *deux* côtés : par
 pour l'affichage en direct, par la fonction d'acompte pour le montant facturé. Un seul jeu
 de règles, donc aucune divergence entre ce que le visiteur lit et ce qu'il paie.
 
-**Pour voir le paiement fonctionner en bac à sable**, il faut une clé de test Stripe — je
-ne peux pas en créer une, elle est liée à un compte. Créez un compte Stripe, restez en
-« mode test », copiez la clé `sk_test_…` dans `STRIPE_SECRET_KEY`, et le parcours complet
-s'ouvre : page Stripe hébergée, carte de test `4242 4242 4242 4242`, retour sur
-`confirmation.html` avec le détail de la session. Le passage en production ne demande que
-de remplacer la clé par la `sk_live_`.
+### Sur cette maquette, le paiement est simulé
+
+Le bouton « Réserver » déroule le parcours complet — vérification des dates auprès des
+calendriers, calcul du montant côté serveur, page de confirmation avec le détail du séjour
+— mais **aucune carte n'est demandée et rien n'est encaissé**. Une mention discrète le dit
+sous le bouton, et une seconde sur la confirmation ; les libellés y sont ajustés (« acompte
+à régler » et non « acompte réglé »).
+
+C'est un choix assumé pour une démonstration : ouvrir un compte Stripe pour une maquette
+serait un engagement de plus à surveiller. **L'intégration reste entière dans le code.**
+Le jour où un client apporte son compte, il suffit de renseigner `STRIPE_SECRET_KEY` :
+
+- une clé `sk_test_…` ouvre le bac à sable — page Stripe hébergée, carte de test
+  `4242 4242 4242 4242`, retour sur `confirmation.html` avec le détail réel de la session ;
+- une clé `sk_live_…` met le paiement en service.
+
+Aucune ligne de code n'est à changer dans un cas comme dans l'autre : `acompte.mjs` bascule
+sur la présence de la variable.
 
 ### Les avis
 

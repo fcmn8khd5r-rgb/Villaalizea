@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
-<link rel="stylesheet" href="css/style.css?v=3">
-<link rel="stylesheet" href="css/reserver.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/reserver.css?v=5">
 <script>document.documentElement.className+=" anime";</script>
 </head>
 <body>
@@ -44,18 +44,21 @@
   <div class="page">
     <div class="confirmation">
       <div class="confirmation__coche" aria-hidden="true">✓</div>
-      <p class="oeil">Acompte reçu</p>
+      <p class="oeil" id="confirmation-oeil">Acompte reçu</p>
       <h1>Votre séjour est réservé</h1>
-      <p class="chapo" style="margin-inline:auto">
+      <p class="chapo" style="margin-inline:auto" id="confirmation-courriel">
         Un courriel de confirmation vous a été adressé. Nous reprendrons contact quelques
         jours avant l'arrivée pour organiser la remise des clés.
+      </p>
+      <p class="mention-demo" id="mention-demo" hidden>
+        Réservation de démonstration — aucun paiement n'a eu lieu.
       </p>
       <div class="confirmation__resume" id="resume">
         <p class="recap__vide">Chargement du récapitulatif…</p>
       </div>
       <p class="mince" style="font-size:.88rem">
-        Le solde sera appelé 30 jours avant l'arrivée. Le dépôt de garantie fait l'objet
-        d'une empreinte bancaire non débitée.
+        En service, le solde serait appelé 30 jours avant l'arrivée, et le dépôt de garantie
+        ferait l'objet d'une empreinte bancaire non débitée.
       </p>
       <p style="margin-top:2.2rem"><a class="btn" href="index.html">Revenir à l'accueil</a></p>
     </div>
@@ -99,7 +102,7 @@
   </div>
 </footer>
 <!-- PIED:fin -->
-<script src="js/main.js?v=3" defer></script>
-<script src="js/confirmation.js?v=3" defer></script>
+<script src="js/main.js?v=5" defer></script>
+<script src="js/confirmation.js?v=6" defer></script>
 </body>
 </html>

@@ -103,3 +103,31 @@
   text-align:left; border:1px solid var(--trait); padding:1.6rem; margin:2.2rem 0;
   background:var(--voile);
 }
+
+/* Mention discrète de simulation, sous le bouton de réservation. */
+.recap__simule{
+  margin:.9rem 0 0; font-size:.74rem; letter-spacing:.02em; color:var(--encre2);
+  display:flex; align-items:flex-start; gap:.5rem; line-height:1.5;
+}
+.recap__simule::before{
+  content:""; flex:none; width:6px; height:6px; margin-top:.45rem; border-radius:50%;
+  background:var(--accent); opacity:.55;
+}
+
+/* Bandeau discret sur la confirmation de démonstration. */
+.mention-demo{
+  display:inline-flex; align-items:center; gap:.55rem; margin:1.6rem auto 0;
+  padding:.5rem 1rem; border:1px solid var(--trait); background:var(--fond);
+  font-size:.76rem; letter-spacing:.06em; color:var(--encre2);
+}
+.mention-demo::before{
+  content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); flex:none;
+}
+
+/* Une date choisie comme départ peut être « prise » — on part le matin, la
+   nuit appartient au suivant. La rature n'a alors plus lieu d'être : elle
+   donnerait à croire qu'on a sélectionné une date indisponible. */
+.jour--bord.jour--pris::after{display:none}
+
+/* Initiales des jours : pas de soulignement pointillé d'abréviation. */
+.mois th abbr{text-decoration:none; border:0; cursor:default}

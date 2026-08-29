@@ -85,15 +85,24 @@ export default async (req) => {
   const cle = process.env.STRIPE_SECRET_KEY;
 
   // ---- Mode démonstration ------------------------------------------------
-  // Sans clé, on renvoie le détail calculé et l'adresse d'une page qui
-  // rejoue le parcours. Tout le reste du chemin est déjà le vrai.
+  // Sans clé Stripe, le parcours se termine sur une confirmation de
+  // démonstration. Tout ce qui précède est déjà le chemin réel : le prix a
+  // été recalculé ici, la disponibilité revérifiée. Il ne manque que
+  // l'ouverture de la page de paiement — voir plus bas.
   if (!cle) {
+    const q = new URLSearchParams({
+      demo: "1", arrivee, depart,
+      voyageurs: String(p.voyageurs),
+      acompte: p.acompte.toFixed(2),
+      total: p.total.toFixed(2),
+      solde: p.solde.toFixed(2),
+      nuits: String(p.nuits)
+    });
     return json({
       mode: "demonstration",
-      message: "Aucune clé Stripe configurée : le parcours est simulé.",
+      message: "Paiement simulé : cette maquette n'encaisse rien.",
       detail: p,
-      url: `${origine}/confirmation.html?demo=1&arrivee=${arrivee}&depart=${depart}`
-           + `&voyageurs=${p.voyageurs}&acompte=${p.acompte}`
+      url: `${origine}/confirmation.html?${q}`
     });
   }
 

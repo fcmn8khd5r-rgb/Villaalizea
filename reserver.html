@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
-<link rel="stylesheet" href="css/style.css?v=3">
-<link rel="stylesheet" href="css/reserver.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/reserver.css?v=5">
 <script>document.documentElement.className+=" anime";</script>
 </head>
 <body>
@@ -94,11 +94,15 @@
         <div id="r-detail" class="recap__detail" role="status" aria-live="polite">
           <p class="recap__vide">Choisissez vos dates dans le calendrier.</p>
         </div>
-        <button class="btn recap__payer" type="button" id="r-payer" disabled>Régler l'acompte</button>
+        <button class="btn recap__payer" type="button" id="r-payer" disabled>Réserver</button>
         <p class="recap__note" id="r-note"></p>
+        <p class="recap__simule">
+          Maquette&nbsp;: le paiement est simulé, aucune carte n'est demandée.
+        </p>
         <p class="recap__rassure">
-          Paiement par carte hébergé par <strong>Stripe</strong>. Aucun numéro de carte ne
-          transite par ce site. Le solde est appelé 30 jours avant l'arrivée.
+          En service, l'acompte se règle par carte sur une page hébergée par
+          <strong>Stripe</strong> : aucun numéro de carte ne transite par ce site.
+          Le solde est appelé 30 jours avant l'arrivée.
         </p>
         <p class="recap__rassure">
           Une question avant de réserver ? <a href="le-sejour.html#avis">Écrivez-nous</a>.
@@ -189,7 +193,7 @@
   </div>
 </footer>
 <!-- PIED:fin -->
-<script src="js/main.js?v=3" defer></script>
-<script type="module" src="js/reserver.js?v=4"></script>
+<script src="js/main.js?v=5" defer></script>
+<script type="module" src="js/reserver.js?v=5"></script>
 </body>
 </html>
