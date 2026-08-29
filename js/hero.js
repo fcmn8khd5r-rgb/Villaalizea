@@ -41,11 +41,18 @@
   var affiche = document.getElementById("hero-affiche");
   if (!hero || !course || !pile) return;
 
-  /* ---- faut-il charger la séquence ? ----------------------------------- */
+  /* ---- faut-il charger la séquence ? -----------------------------------
+     L'économiseur de données et la 2G ferment la porte sans discussion.
+     Pour la 3G, la seule étiquette ne suffit pas : elle couvre une bande
+     très large (0,4 à 4 Mb/s). On regarde donc le débit estimé. À 1,4 Mb/s,
+     la première vague mobile (260 Ko) arrive en moins de deux secondes,
+     derrière une affiche déjà à l'écran — cela vaut la peine. En dessous,
+     on s'abstient. */
   var co = navigator.connection || {};
+  var debit = typeof co.downlink === "number" ? co.downlink : 10;
   var lent = co.saveData === true ||
              /^(slow-)?2g$/.test(co.effectiveType || "") ||
-             co.effectiveType === "3g";
+             (co.effectiveType === "3g" && debit < 1.4);
   var sobre = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function figer(raison) {

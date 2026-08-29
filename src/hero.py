@@ -16,11 +16,27 @@ from etalonnage import etalonner
 import numpy as np
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC    = os.path.join(RACINE, "src", "orig", "vid-31931883.mp4")
+SRC    = os.path.join(RACINE, "src", "orig", "vid-31931888.mp4")
 SORTIE = os.path.join(RACINE, "assets", "hero")
 FF     = open(os.path.join(RACINE, "src", ".ffmpeg")).read().strip()
 
 # (nom, nb d'images, largeur, hauteur, qualite AVIF)
+# --- Le plan --------------------------------------------------------------
+# Un DEZOOM, pas un travelling. Le drone part d'entre les cocotiers au ras de
+# l'eau et recule jusqu'a decouvrir le lagon et la cote qui file a l'horizon.
+#
+# Deux raisons de l'avoir choisi :
+#   - AUCUNE construction sur les 15,5 s du plan. Le hero ne montre donc
+#     aucune villa qui pourrait contredire celle de la galerie — c'etait le
+#     defaut le plus grave de la version precedente.
+#   - Un fort parallaxe entre les palmiers de premier plan et l'horizon.
+#     C'est lui qui rend le pilotage au defilement utile plutot que
+#     decoratif : sans profondeur, deplacer la camera ne revele rien.
+#
+# Le plan decelere de lui-meme en s'ouvrant (5,0 % puis 2,65 % d'ecart entre
+# images voisines), ce qui epouse le profil de vitesse trapezoidal au lieu de
+# le contrarier.
+
 # --- Dimensionnement, mesure a l'appui ------------------------------------
 # Le defaut de la premiere version : 32 images reparties sur les 13 s du plan,
 # soit 2,4 images/s. L'ecart entre deux images voisines valait alors environ
@@ -35,7 +51,7 @@ FF     = open(os.path.join(RACINE, "src", ".ffmpeg")).read().strip()
 #
 # Le chargement reste progressif : affiche fixe immediate, puis une image sur
 # quatre, puis le reste.
-DEBUT, DUREE, CADENCE = 3.8, 3.5, 20        # secondes, secondes, images/s
+DEBUT, DUREE, CADENCE = 2.0, 3.5, 20        # secondes, secondes, images/s
 PROFILS = [("l", 70, 1280, 720, 30),      # large  : 16/9
            ("p", 70,  640, 854, 27)]      # portrait mobile : 3/4
 
@@ -74,7 +90,9 @@ def main():
                 h = round(im.width / r_cible)
                 im = im.crop((0, (im.height - h) // 2, im.width, (im.height - h) // 2 + h))
             im = im.resize((lw, lh), Image.LANCZOS)
-            im = etalonner(im, cible, force_align=0.62)
+            # Alignement volontairement leger : pousse plus loin, le turquoise
+            # du lagon vire au laiteux et le plan perd ce qui fait son prix.
+            im = etalonner(im, cible, force_align=0.40)
             p = os.path.join(SORTIE, "%s%03d.avif" % (nom, i))
             im.save(p, quality=q, speed=4)
             poids += os.path.getsize(p)

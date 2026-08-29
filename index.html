@@ -7,7 +7,7 @@
 <meta name="description" content="Villa Alizéa, meublé de tourisme de 4 chambres pour 8 voyageurs aux Terres Basses, à Saint-Martin. Bassin de nage, à cinq minutes à pied de Baie Longue. Disponibilités en direct et acompte réglé en ligne.">
 <link rel="canonical" href="https://villa-alizea.example/">
 <meta property="og:title" content="Villa Alizéa — Terres Basses, Saint-Martin">
-<meta property="og:description" content="Quatre chambres face au vent, à cinq minutes de Baie Longue.">
+<meta property="og:description" content="Quatre chambres aux Terres Basses, à cinq minutes à pied d'une plage sans commerce ni parasol.">
 <meta property="og:image" content="assets/hero/affiche-l.webp">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#FFF8EF">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
 <link rel="preload" as="image" href="assets/hero/affiche-l.avif" fetchpriority="high" media="(min-width:700px) and (orientation:landscape)">
 <link rel="preload" as="image" href="assets/hero/affiche-p.avif" fetchpriority="high" media="(max-width:699px), (orientation:portrait)">
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="stylesheet" href="css/style.css?v=7">
 <script>document.documentElement.className+=" anime";</script>
 </head>
 <body>
@@ -47,7 +47,7 @@
 <!-- TETE:fin -->
 
 <!-- ====================== LE HERO PILOTÉ AU DÉFILEMENT ==================== -->
-<section class="hero" id="hero" aria-label="La villa vue du ciel">
+<section class="hero" id="hero" aria-label="Le rivage, vu du ciel">
   <div class="hero__course" id="course">
     <div class="hero__cadre">
       <div class="hero__pile" id="pile">
@@ -55,7 +55,7 @@
           <source type="image/avif" srcset="assets/hero/affiche-l.avif" media="(min-width:700px) and (orientation:landscape)">
           <source type="image/avif" srcset="assets/hero/affiche-p.avif">
           <img class="hero__affiche" id="hero-affiche" src="assets/hero/affiche-l.webp"
-               alt="La Villa Alizéa vue du ciel : sa piscine, ses cocotiers et le littoral rocheux battu par la houle."
+               alt="Le rivage des Terres Basses vu du ciel : une plage déserte bordée de cocotiers, et le lagon jusqu'à l'horizon."
                fetchpriority="high" decoding="async">
         </picture>
       </div>
@@ -66,7 +66,8 @@
         <div class="page">
           <p class="hero__lieu">Terres Basses · Saint-Martin</p>
           <h1>Villa Alizéa</h1>
-          <p class="hero__phrase">Quatre chambres face au vent, à cinq minutes à pied de Baie Longue.</p>
+          <p class="hero__phrase">Ici, la plage n'a ni commerce ni parasol de location.
+             La maison est à cinq minutes, derrière les cocotiers.</p>
           <a class="btn" href="reserver.html">Voir les disponibilités</a>
         </div>
       </div>
@@ -81,6 +82,24 @@
 </section>
 
 <main id="contenu">
+
+<!-- ====================== LE SEUIL : on entre dans la maison ==============
+     Le hero montre le rivage, pas la villa. Ce passage doit donc être
+     explicite, sinon le visiteur croit que la maison du ciel est celle des
+     photos qui suivent — c'est exactement l'ambiguïté à éviter. -->
+<section class="seuil">
+  <div class="page">
+    <p class="seuil__mot" data-anim>Et la maison,<br>elle est là.</p>
+  </div>
+  <div class="seuil__vue" data-anim="volet">
+    <picture>
+      <source type="image/avif" srcset="assets/img/sejour-01-g.avif" media="(min-width:820px)">
+      <source type="image/avif" srcset="assets/img/sejour-01-v.avif">
+      <img src="assets/img/sejour-01-v.webp" alt="Le séjour de la Villa Alizéa, ouvert sur la terrasse"
+           loading="lazy" decoding="async">
+    </picture>
+  </div>
+</section>
 
 <!-- ============================== LE LIEU ================================ -->
 <section class="section">
@@ -123,7 +142,7 @@
     <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap; margin-bottom:2.6rem">
       <div data-anim>
         <p class="oeil">Galerie</p>
-        <h2 style="margin:0">Vingt-trois vues de la maison</h2>
+        <h2 style="margin:0">Vingt-deux vues de la maison</h2>
       </div>
       <a class="lien-fleche" href="galerie.html" data-anim>Voir la galerie complète</a>
     </div>
@@ -312,6 +331,6 @@
 <!-- PIED:fin -->
 
 <script src="js/main.js?v=5" defer></script>
-<script src="js/hero.js?v=5" defer></script>
+<script src="js/hero.js?v=7" defer></script>
 </body>
 </html>

@@ -30,7 +30,7 @@ calendrier tomberait sur son repli.
 |---|---|
 | `index.html` | Hero piloté, le lieu et ses chiffres, aperçu de la galerie, l'île, avis, appel à réserver |
 | `la-villa.html` | Les cinq pièces en détail, les six prestations |
-| `galerie.html` | 23 vues, filtrables par pièce, visionneuse clavier et tactile |
+| `galerie.html` | 22 vues, filtrables par pièce, visionneuse clavier et tactile |
 | `l-ile.html` | Six lieux avec image, distance et temps de trajet ; vidéo de Baie Longue |
 | `le-sejour.html` | Tarifs, conditions, six avis sourcés, formulaire de contact |
 | `reserver.html` | Calendrier synchronisé iCal, calcul du séjour, acompte en ligne |
@@ -40,7 +40,33 @@ calendrier tomberait sur son repli.
 
 ## Le hero piloté au défilement
 
-### Ce qui a été corrigé
+### Le plan, et pourquoi celui-là
+
+Un **dézoom**, pas un travelling. Le drone part d'entre les cocotiers au ras de l'eau et
+recule jusqu'à découvrir le lagon et la côte qui file à l'horizon.
+
+Deux raisons, dans cet ordre :
+
+1. **Aucune construction sur les 15,5 s du plan.** La version précédente montrait une villa
+   blanche à piscine — qui n'était pas celle des intérieurs. Une villa visible dans le hero
+   qui diffère de celle de la galerie rend tout le reste suspect. Aucun plan ne permettant
+   de partir de la villa des photos (elle n'a jamais été filmée), la seule issue était de
+   n'en montrer aucune.
+2. **Un fort parallaxe** entre les palmiers de premier plan et l'horizon. C'est lui qui rend
+   le pilotage au défilement utile plutôt que décoratif : sans profondeur, déplacer la
+   caméra ne révèle rien. Le travelling latéral précédent n'en avait pas.
+
+Le plan répond à deux questions qu'un locataire se pose vraiment — « est-ce vraiment
+isolé » et « à quoi ressemble le bord de mer ici ». Il ne situe pas la villa, et ne le
+prétend pas : le hero annonce le rivage, et **le seuil** qui le suit dit explicitement qu'on
+entre dans la maison.
+
+Le choix a été fait sur mesure, pas sur les titres : `src/typemouvement.py` décompose le
+mouvement de chaque plan en translation et en divergence radiale, ce qui permet de savoir
+lequel recule réellement. Sur dix-sept plans examinés, cinq reculaient vraiment ; trois
+contenaient des bâtiments identifiables.
+
+### La fluidité — ce qui a été corrigé
 
 La première version répartissait 32 images sur les 13 secondes du plan, soit **2,4 images
 par seconde**. L'écart entre deux images voisines valait alors environ **cinq fois** l'écart
@@ -51,10 +77,10 @@ mais de **resserrer le mouvement**. On garde donc un segment court, échantillon
 
 | | |
 |---|---|
-| Segment retenu | **3,5 s** du plan (à partir de t = 3,8 s) |
+| Segment retenu | **3,5 s** du plan (à partir de t = 2,0 s) |
 | Cadence | **20 images par seconde** |
 | Nombre d'images | **70** |
-| Écart entre images voisines | **×1,37 le natif** (contre ×5 avant) |
+| Écart entre images voisines | **×1,35 le natif** (contre ×5 avant) |
 
 Le facteur ×1,37 est mesuré, pas estimé : `src/mouvement.py` compare l'écart absolu moyen
 entre images consécutives à celui de la vidéo à sa cadence native. Un fondu entre images
@@ -64,19 +90,22 @@ voisines achève de lisser.
 
 | | Bureau 1280×720 | Mobile 640×854 |
 |---|---|---|
-| Séquence complète | **3,01 Mo** | **1,38 Mo** |
-| Première vague (1 image sur 4) | 790 Ko | 361 Ko |
-| Affiche fixe | 46 Ko | 80 Ko |
-| **Page d'accueil, première visite** | **3,18 Mo** | **1,47 Mo** |
+| Séquence complète | **2,30 Mo** | **1,00 Mo** |
+| Première vague (1 image sur 4) | 604 Ko | 264 Ko |
+| **Page d'accueil, première visite** | **2,43 Mo** | **1,09 Mo** |
+
+Le lagon et le ciel se compressent mieux que la houle et le feuillage du plan précédent :
+à cadence et dimensions égales, la séquence pèse un tiers de moins.
 
 Temps mesurés sur les poids réels, à débit constant :
 
 | Réseau | Affiche | 1ʳᵉ vague (mobile) | Séquence complète (mobile) |
 |---|---|---|---|
-| 4G moyenne, 10 Mb/s | < 0,1 s | **0,3 s** | 1,2 s |
-| 4G faible, 5 Mb/s | < 0,1 s | 0,6 s | 2,3 s |
+| 4G moyenne, 10 Mb/s | < 0,1 s | **0,2 s** | 0,8 s |
+| 4G faible, 5 Mb/s | < 0,1 s | 0,4 s | 1,7 s |
+| 3G, 1,5 Mb/s | < 0,1 s | 1,4 s | 5,6 s |
 
-Le visiteur n'attend jamais devant un écran vide : **91 Ko** suffisent au premier rendu
+Le visiteur n'attend jamais devant un écran vide : **82 Ko** suffisent au premier rendu
 (HTML + CSS + affiche), et la séquence arrive derrière, par vagues.
 
 ### La liaison d'entrée et de sortie
@@ -110,7 +139,8 @@ de page monte et le hero s'y dissout au lieu de la heurter.
 |---|---|---|
 | Pas de JavaScript | L'affiche reste, en plein écran ; le hero fait une hauteur d'écran | 0 |
 | `prefers-reduced-motion` | Idem, `data-repli="animations-reduites"` | **0** |
-| Économiseur de données, 2G/3G | Idem, `data-repli="connexion-lente"` | **0** |
+| Économiseur de données, 2G | Idem, `data-repli="connexion-lente"` | **0** |
+| 3G sous 1,4 Mb/s | Idem — au-dessus, la séquence se charge | **0** |
 | Images inaccessibles | Idem, `data-repli="chargement-impossible"` | — |
 
 `essai-replis.html?cas=sobre|lent|donnees|normal` rejoue chacun de ces cas.

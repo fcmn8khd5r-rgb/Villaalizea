@@ -42,7 +42,10 @@ ONGLETS = [("tout", "Tout"), ("sejour", "Séjour et cuisine"), ("chambres", "Cha
 
 # Ordre de la mosaïque : on alterne les registres pour ne pas aligner quatre
 # chambres de suite.
-ORDRE = ["sejour-01", "terrasse-02", "chambre-01", "cuisine-01", "ciel-01", "bain-02",
+# La galerie ne montre plus aucune vue aérienne : celle qui s'y trouvait
+# était une villa blanche à piscine, qui n'est pas celle des intérieurs. Une
+# galerie intitulée « la maison » ne peut pas montrer une autre maison.
+ORDRE = ["sejour-01", "terrasse-02", "chambre-01", "cuisine-01", "bain-02",
          "chambre-03", "detail-02", "sejour-02", "terrasse-01", "piscine-01", "chambre-02",
          "bain-01", "cuisine-02", "detail-01", "sejour-03", "terrasse-03", "chambre-04",
          "bureau-01", "detail-03", "chambre-05", "sejour-04", "detail-04"]

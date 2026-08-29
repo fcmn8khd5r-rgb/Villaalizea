@@ -15,7 +15,7 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
 FF = open(os.path.join(RACINE, "src", ".ffmpeg")).read().strip()
 
 # Instant retenu dans chaque video source, en fraction de sa duree.
-INSTANTS = {"ciel-01": 0.78, "ile-baielongue": 0.35}
+INSTANTS = {"ile-baielongue": 0.62}
 
 
 def duree(chemin):

@@ -5,7 +5,6 @@ window.ALIZEA_CREDITS = {
  "terrasse-02": "Photo : Luis J. Corniel — licence Unsplash",
  "chambre-01": "Photo : Luis J. Corniel — licence Unsplash",
  "cuisine-01": "Photo : Luis J. Corniel — licence Unsplash",
- "ciel-01": "Photo : Pexels — licence Pexels",
  "bain-02": "Photo : Protex Plastering — licence Unsplash",
  "chambre-03": "Photo : SPX Clicks — licence Unsplash",
  "detail-02": "Photo : Kath MZ — licence Unsplash",

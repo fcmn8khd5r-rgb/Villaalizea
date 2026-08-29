@@ -197,17 +197,6 @@
   "groupe": "exterieur",
   "ident": "1596178067639-5c6e68aea6dc"
  },
- "ciel-01": {
-  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAAsAPulgqU0pJaQiMAgBIB0JZQAAW3HJLnzSf2QAAP5bMBeAixMMY9HCIY3eJ/y+Z8/Kg38rk/Uq7pi73VbliAA=",
-  "w": 2560,
-  "h": 1440,
-  "poids": 406949,
-  "auteur": "Pexels",
-  "licence": "Pexels",
-  "piece": "La villa vue du ciel",
-  "groupe": "exterieur",
-  "ident": "vid-31931883"
- },
  "detail-01": {
   "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdABuh84wqTGaAAP6UGF8/aFL3fXh7s2B2fxwGJ2g8/ZDBv8zqRLsGF58Reg+ZLewgAAA=",
   "w": 2400,
@@ -253,15 +242,15 @@
   "ident": "1689767041257-a7b125f694d3"
  },
  "ile-baielongue": {
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAAsAPuliqU2pJaQiMAgBIB0JYgCdACHw1gSkg62qjGzAAMsmHm4piZ7AII8nIwEv9rKUfEbSxcIXPqQ3XO71XEAbH6/oAAA=",
-  "w": 2560,
-  "h": 1440,
-  "poids": 496399,
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAAsAPulgqE0pJaQiMAgBIB0JYwCAAAisMG+gi73kkgDyoEoxHaa409X+ooxIiy5z0310G2jFXzx+ZoxllrugAAA=",
+  "w": 1920,
+  "h": 1080,
+  "poids": 232951,
   "auteur": "Pexels",
   "licence": "Pexels",
   "piece": "Baie Longue",
   "groupe": "ile",
-  "ident": "vid-37957946"
+  "ident": "vid-3223480"
  },
  "ile-baierouge": {
   "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA8APulgq00pJaQiMAgBIB0JQBgbhDrj82JKWmuwAP7vvp3Ca/2HzoXWB+HuJA6O9T9VLG69VahU9q49iAAA",
