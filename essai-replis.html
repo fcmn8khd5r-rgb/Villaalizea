@@ -1,0 +1,56 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8">
+<title>Essai des replis du hero</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/css/style.css">
+<style>body{padding:0}#journal{position:fixed;inset:auto 0 0;background:#111;color:#0f0;
+font:12px ui-monospace,monospace;padding:8px;z-index:999;max-height:40vh;overflow:auto}</style>
+<script>
+document.documentElement.className += " js";
+// --- simulation des conditions, AVANT le chargement de hero.js -------------
+var CAS = new URLSearchParams(location.search).get("cas") || "normal";
+var vraiMM = window.matchMedia.bind(window);
+window.matchMedia = function (q) {
+  if (CAS === "sobre" && /prefers-reduced-motion/.test(q))
+    return { matches: true, addEventListener: function(){}, media: q };
+  return vraiMM(q);
+};
+if (CAS === "lent")   Object.defineProperty(navigator, "connection", { value: { effectiveType: "3g" }, configurable: true });
+if (CAS === "donnees")Object.defineProperty(navigator, "connection", { value: { saveData: true },      configurable: true });
+if (CAS === "panne") {           // toutes les images du hero echouent
+  var vraieImage = window.Image;
+  window.Image = function () { var e = new vraieImage();
+    setTimeout(function(){ e.onerror && e.onerror(); }, 5); return e; };
+}
+</script></head><body>
+<section class="hero" id="hero">
+  <div class="hero__course" id="course"><div class="hero__cadre">
+    <div class="hero__pile" id="pile"></div>
+    <img class="hero__repli" src="/assets/hero/affiche-l.webp" alt="repli">
+    <div class="hero__voile"></div>
+    <div class="hero__texte"><div class="page"><h1>Villa Alizéa</h1></div></div>
+    <div class="hero__pilote"><span>Défilez</span><span class="hero__piste"><i class="hero__curseur" id="curseur"></i></span></div>
+    <div class="hero__jauge" id="jauge"></div>
+  </div></div>
+</section>
+<div style="height:150vh"></div>
+<pre id="journal"></pre>
+<script src="/js/hero.js"></script>
+<script>
+setTimeout(function () {
+  var h = document.getElementById("hero"), c = document.getElementById("course");
+  var repli = getComputedStyle(document.querySelector(".hero__repli")).display;
+  var toile = document.querySelector(".hero__toile");
+  var reseau = performance.getEntriesByType("resource")
+      .filter(function (e) { return /\/assets\/hero\/[lp]\d{3}\.avif/.test(e.name); }).length;
+  document.getElementById("journal").textContent = JSON.stringify({
+    cas: CAS,
+    classeHero: h.className,
+    raisonRepli: h.getAttribute("data-repli"),
+    imageDeRepliVisible: repli !== "none",
+    toilePresente: !!toile,
+    hauteurCourse: Math.round(c.getBoundingClientRect().height),
+    hauteurEcran: window.innerHeight,
+    imagesTelechargees: reseau
+  }, null, 1);
+}, 2500);
+</script></body></html>

@@ -1,0 +1,5 @@
+# Originaux et intermédiaires : lourds, refabricables depuis src/sources.tsv
+src/orig/
+node_modules/
+.netlify/
+.DS_Store

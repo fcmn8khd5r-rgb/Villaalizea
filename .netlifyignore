@@ -1,0 +1,4 @@
+# Dossier de fabrication : originaux, scripts d'étalonnage, serveur local.
+src/
+# Page d'essai des replis du hero (outil de vérification, pas du contenu).
+essai-replis.html

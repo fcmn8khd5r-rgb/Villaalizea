@@ -1,0 +1,111 @@
+{
+  "marque": {
+    "nom": "Villa Alizéa",
+    "baseline": "Terres Basses · Saint-Martin",
+    "accroche": "Quatre chambres face au vent, à deux pas de Baie Longue.",
+    "fictif": true
+  },
+  "bien": {
+    "type": "Meublé de tourisme",
+    "chambres": 4,
+    "voyageurs": 8,
+    "sallesEau": 3,
+    "surface": 320,
+    "terrain": 1800,
+    "commune": "Saint-Martin (97150)",
+    "quartier": "Terres Basses",
+    "enregistrement": "97801 00 0000",
+    "enregistrementFictif": true,
+    "classement": "non classé"
+  },
+  "contact": {
+    "telephone": "+590 590 00 00 00",
+    "telephoneLien": "+590590000000",
+    "courriel": "contact@villa-alizea.example",
+    "adresse": "Baie Longue, Terres Basses, 97150 Saint-Martin",
+    "exploitant": "SCI Alizéa (société fictive)"
+  },
+  "tarifs": {
+    "devise": "EUR",
+    "unite": "semaine",
+    "nuitsMini": 5,
+    "acomptePourcent": 30,
+    "menage": 350,
+    "cautionDepot": 3000,
+    "saisons": [
+      {
+        "cle": "basse",
+        "nom": "Basse saison",
+        "periode": "16 avril → 14 décembre",
+        "prix": 4200,
+        "plages": [
+          [
+            "04-16",
+            "12-14"
+          ]
+        ]
+      },
+      {
+        "cle": "haute",
+        "nom": "Haute saison",
+        "periode": "15 décembre → 15 avril",
+        "prix": 7800,
+        "plages": [
+          [
+            "12-15",
+            "12-19"
+          ],
+          [
+            "01-06",
+            "04-15"
+          ]
+        ]
+      },
+      {
+        "cle": "fetes",
+        "nom": "Fêtes de fin d'année",
+        "periode": "20 décembre → 5 janvier",
+        "prix": 12500,
+        "nuitsMini": 14,
+        "plages": [
+          [
+            "12-20",
+            "12-31"
+          ],
+          [
+            "01-01",
+            "01-05"
+          ]
+        ]
+      }
+    ],
+    "taxeSejour": {
+      "mode": "pourcentage",
+      "taux": 5,
+      "plafondParPersonneParNuit": 4.3,
+      "note": "taux et plafond sont révisés périodiquement, à vérifier auprès d'elle avant toute mise en ligne réelle."
+    }
+  },
+  "sync": {
+    "ical": [
+      {
+        "nom": "Airbnb",
+        "url": "AIRBNB_ICAL_URL"
+      },
+      {
+        "nom": "Booking",
+        "url": "BOOKING_ICAL_URL"
+      }
+    ],
+    "modeDemo": true
+  },
+  "avis": {
+    "placeId": "GOOGLE_PLACE_ID",
+    "modeDemo": true
+  },
+  "paiement": {
+    "prestataire": "stripe",
+    "mode": "test",
+    "clePubliqueTest": "STRIPE_PUBLISHABLE_KEY"
+  }
+}

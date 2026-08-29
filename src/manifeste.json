@@ -1,0 +1,272 @@
+{
+ "sejour-01": {
+  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JQBOgAfGSIrY2D/kIAOFBEFPLpa5Smus+93kZ07fAF7cfkKbEK4yLSrW9MHelKIAAAA==",
+  "w": 2400,
+  "h": 1596,
+  "poids": 174010,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Séjour, vue d'ensemble",
+  "ident": "1747336754845-0fac9b2581cc"
+ },
+ "sejour-02": {
+  "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAwAwCdASoUAA0APuliqU2pJaQiMAgBIB0JQBOgAU1GlTQAAP317O9kQcNOT/MFieRV7g1cZKLvkHKqpB4Yhr6mPq4AAA==",
+  "w": 2400,
+  "h": 1563,
+  "poids": 182652,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Séjour depuis la cuisine",
+  "ident": "1747336754838-024761fd5a7b"
+ },
+ "sejour-03": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDwA7ErxZ/0gAP6Ly0NRJicmYL5BHOc2Z73NImQzscyNmiCuGDgojvYAAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 179837,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Séjour, coin salon",
+  "ident": "1747336754900-1b9edb05b002"
+ },
+ "sejour-04": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JZQC7ABiirfEoO8gA/sOl6oxXnlLr1/ceW69jc3wmwcT40kpqeYp8OYm3OnNcAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 262722,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Séjour, tons neutres",
+  "ident": "1747336754870-ca7b10cc75f5"
+ },
+ "cuisine-01": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZQCw7BaidobiLhHkAP6QKEUm66eCI950kV6A6HVpyhGuMOOWTUrjnDwKfYsEwAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 221388,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Cuisine ouverte",
+  "ident": "1747336754979-cb1078ce73f5"
+ },
+ "cuisine-02": {
+  "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAA0APuliqU2pJaQiMAgBIB0JQBOgBFu0nyj19+Ek3oAA/eij4Zd5IArZuXve2qgQg1XMgrMGPCGbxkAAAA==",
+  "w": 2400,
+  "h": 1596,
+  "poids": 177054,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Table dressée",
+  "ident": "1747336754816-bda489b6349f"
+ },
+ "detail-01": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdABuh84wqTGaAAP6UGF8/aFL3fXh7s2B2fxwGJ2g8/ZDBv8zqRLsGF58Reg+ZLewgAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 180245,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Détail, table basse",
+  "ident": "1747336754868-82d5bef02448"
+ },
+ "bureau-01": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBdl4AAijby1+hWTVUAA/uc7G0+x03qbq/wQgYn+UIkkSHdtvHQOdr5GXlGpthVlyXlRdAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 145311,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Coin bureau",
+  "ident": "1747336754882-dfa5c49f15da"
+ },
+ "chambre-01": {
+  "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDmFZWawv0TmAAD9zFIVnWy5qUa8W994i/KZnpo6z20s4SaV9XAAAA==",
+  "w": 2400,
+  "h": 1584,
+  "poids": 132756,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Chambre principale",
+  "ident": "1747336754884-c48ca119a9e0"
+ },
+ "terrasse-01": {
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABwAwCdASoUAA0APuliq04pJaQiMAgBIB0JQBOmUABhM6g0DSAA3+ImE8ugCEVIiocpLq4PttbxolZEjiEsyfcNqSIdS17Z+c3vMNRnzMUr5sE4rmuAAA==",
+  "w": 2400,
+  "h": 1596,
+  "poids": 427745,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Terrasse et bassin",
+  "ident": "1747336755062-b9c6c43edf83"
+ },
+ "terrasse-02": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDDVzjFGlSeOYAD+Vv4cTR2fkxRMyNm0taHeKiIELRiIRrgBqDJ8phmrif3VFFxUAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 510594,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Pergola, lit de repos",
+  "ident": "1747336755075-ea212debe1d0"
+ },
+ "terrasse-03": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBOgAs3s3KxcHlt6AADtYqonlfDhQ5ReRxQ6Q4S6wqWJ40AzTXNNByUeRbYCAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 308020,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Coin repas extérieur",
+  "ident": "1747336754890-85fc2ccf6d80"
+ },
+ "chambre-02": {
+  "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQBACdASoUAA0APuliqE2pJaOiMAgBIB0JYwC7ACHhp9yIhciMzej3gAD+16XQJSeR+Q/KOy/tvr7KDj31rVOnsMTDVSPA07XOjG7pGkxtYkAAAAA=",
+  "w": 2400,
+  "h": 1600,
+  "poids": 137521,
+  "auteur": "SPX Clicks",
+  "licence": "Unsplash",
+  "piece": "Chambre d'amis",
+  "ident": "1718894071402-fb944e2a1849"
+ },
+ "chambre-03": {
+  "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdACG6EpIwWwzK0AD+xM+3e+scaUgDz4qP3ZOHz9hCdRBW3/stzVfoAAAA",
+  "w": 2400,
+  "h": 1600,
+  "poids": 189748,
+  "auteur": "SPX Clicks",
+  "licence": "Unsplash",
+  "piece": "Chambre d'amis, angle",
+  "ident": "1718894071528-1108a094cc78"
+ },
+ "chambre-04": {
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAwCdASoUAA0APulgqE2pJaQiMAgBIB0JYwCdACHeguDzTY6cF7YAAP7fRTFpYfJyj4jbNiog6qrZo0jg0IBefF+GEbCpUnN78AAA",
+  "w": 2400,
+  "h": 1600,
+  "poids": 145313,
+  "auteur": "SPX Clicks",
+  "licence": "Unsplash",
+  "piece": "Chambre d'amis, bureau",
+  "ident": "1718894071320-550cd7195ec4"
+ },
+ "chambre-05": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABQAPulkqU4pJaQiMAgBIB0JQBOgBDvrTceGy4uQAAD+sFUdFViw4ndUr204MOUFxxe8um1eLJzgc0g1Puw68dP0DKKAAAA=",
+  "w": 2400,
+  "h": 3000,
+  "poids": 344892,
+  "auteur": "Kath MZ",
+  "licence": "Unsplash",
+  "piece": "Troisième chambre",
+  "ident": "1681949289585-c7a974cfa1a7"
+ },
+ "bain-01": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoQABQAPulgqE0pJaOiMAgBIB0JYwCw7BbkbExF7QAA/sQo5tf1579gaRZ6ZKEVS3h5lpy64/IK7aBl1za8pjeIAAA=",
+  "w": 2400,
+  "h": 3000,
+  "poids": 82042,
+  "auteur": "Protex Plastering",
+  "licence": "Unsplash",
+  "piece": "Douche à l'italienne",
+  "ident": "1783040016976-dca83dc5155e"
+ },
+ "bain-02": {
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoQABQAPulgqE0pJaQiMAgBIB0JQBOgAskX2QAQXdfbSgAA9C7vrESZHq9EOv7G9ns+ZH8TbbAx68mTVTSkhs5gagTusZAA",
+  "w": 2400,
+  "h": 3000,
+  "poids": 99571,
+  "auteur": "Protex Plastering",
+  "licence": "Unsplash",
+  "piece": "Vasque et baignoire",
+  "ident": "1783040016931-213518180297"
+ },
+ "detail-02": {
+  "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBOmUABoV2KFIDXPGoAA/uczUoZV+R+eh1b+XpVLpLr5I5pujINyBTxcXHnEe6gLXEkq0ljMkAAA",
+  "w": 2400,
+  "h": 1600,
+  "poids": 218210,
+  "auteur": "Kath MZ",
+  "licence": "Unsplash",
+  "piece": "Mur de vannerie",
+  "ident": "1682126381814-d11325b8bef8"
+ },
+ "detail-03": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAwCdASoNABQAPulgqE2pJaOiMAgBIB0JZACdL1ABbLrvGliEmgAA/lRmbFqCiCdJtpXooiFEU+LFzV2llgUcw6TvLn7AAAA=",
+  "w": 2400,
+  "h": 3599,
+  "poids": 133822,
+  "auteur": "Kath MZ",
+  "licence": "Unsplash",
+  "piece": "Luminaire en osier",
+  "ident": "1682126380690-7766c681049c"
+ },
+ "detail-04": {
+  "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAwBACdASoNABQAPulgqE0pJaQiMAgBIB0JYwCdMoADTp547pYBtObx0cAA/owevUsluKcRUXBWeUZaSiNqszPeo8OQAA==",
+  "w": 2400,
+  "h": 3598,
+  "poids": 120487,
+  "auteur": "Toma Ha",
+  "licence": "Unsplash",
+  "piece": "Chevet et lin",
+  "ident": "1689767041257-a7b125f694d3"
+ },
+ "plage-01": {
+  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoQABQAPulkqE0pJaQiMAgBIB0JYwCw7B4kg8eBACxZigAA9c/ZBXMCTVCGzvsK1SogrBHbwufAYBb1geoR2Axd//WQAA==",
+  "w": 2400,
+  "h": 3000,
+  "poids": 384789,
+  "auteur": "Kath MZ",
+  "licence": "Unsplash",
+  "piece": "Ombre de palmier",
+  "ident": "1679196938875-16312b722f2b"
+ },
+ "ciel-01": {
+  "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABwAwCdASoUAAsAPulgqk2pJaQiMAgBIB0JYgCsLwAAjnv6CmAA/hXYAV6DW/w5PYktRd5VKQFt26+BpDH1TxFvAAA=",
+  "w": 2560,
+  "h": 1440,
+  "poids": 355770,
+  "auteur": "Pexels — vue aérienne",
+  "licence": "Pexels",
+  "piece": "La maison vue du ciel",
+  "ident": "17404328"
+ },
+ "ciel-02": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAwAwCdASoUAAsAPulkq04pJaQiMAgBIB0JZQAAW6oyu7JAAP5byV79ZGZN93umxrVyCJdL2FEL2LRoS+fnVf5JqKtH2mzYAAA=",
+  "w": 2560,
+  "h": 1440,
+  "poids": 432967,
+  "auteur": "Pexels — vue aérienne",
+  "licence": "Pexels",
+  "piece": "Le littoral et la villa",
+  "ident": "31931883"
+ },
+ "ciel-03": {
+  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JQBWAAsBJ6Yq1ESSwAAD9HwDdd+pZEk1+DEvZdQ4Iu48UyWkz1msW/7h9h988oKAAAA==",
+  "w": 2560,
+  "h": 1440,
+  "poids": 240271,
+  "auteur": "Pexels — vue aérienne",
+  "licence": "Pexels",
+  "piece": "La baie au petit matin",
+  "ident": "37841349"
+ },
+ "ciel-04": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAAsAPuliqU2pJaQiMAgBIB0JYgCdMoADUEd/oRw1z3YAAMsmIW4MU4zwnY5xOKfDtx4s7txY4/Jt8C0cO25nFslozoKYAAA=",
+  "w": 2560,
+  "h": 1440,
+  "poids": 493038,
+  "auteur": "Pexels — vue aérienne",
+  "licence": "Pexels",
+  "piece": "Le croissant de sable",
+  "ident": "37957946"
+ },
+ "ciel-05": {
+  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JaACw7BuD2hBWf1JEgAD6YNyv7YqdrvsbSAzhG2H9ojcpSnUnoDiWkJiBEkmIDSAAAA==",
+  "w": 2560,
+  "h": 1440,
+  "poids": 528426,
+  "auteur": "Pexels — vue aérienne",
+  "licence": "Pexels",
+  "piece": "Les terrasses sur la plage",
+  "ident": "38094658"
+ }
+}

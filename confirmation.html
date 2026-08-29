@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Réservation confirmée — Villa Alizéa</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css?v=1">
+<link rel="stylesheet" href="css/reserver.css?v=1">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body class="page-interieure">
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+<header class="entete est-pose" id="entete">
+  <div class="entete__in">
+    <a class="marque" href="index.html">Villa Alizéa<small>Terres Basses · Saint-Martin</small></a>
+    <nav class="nav" aria-label="Principale">
+      <a href="index.html#maison">La maison</a>
+      <a href="index.html#galerie">Galerie</a>
+      <a href="index.html#tarifs">Tarifs</a>
+    </nav>
+    <a class="btn btn--tete" href="reserver.html">Disponibilités</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<div class="voile" id="menu" hidden>
+  <button class="voile__fermer" type="button" aria-label="Fermer le menu">&times;</button>
+  <a href="index.html#maison">La maison</a>
+  <a href="index.html#galerie">Galerie</a>
+  <a href="index.html#tarifs">Tarifs</a>
+  <a href="reserver.html">Disponibilités</a>
+</div>
+
+<main id="contenu" class="section" style="padding-top:calc(var(--entete) + 4rem)">
+  <div class="page">
+    <div class="confirmation">
+      <div class="confirmation__coche" aria-hidden="true">✓</div>
+      <p class="sur-titre">Acompte reçu</p>
+      <h1 style="font-size:clamp(2rem,5vw,3rem)">Votre séjour est réservé</h1>
+      <p class="chapo" style="margin-inline:auto">
+        Un courriel de confirmation vous a été adressé. Nous reprendrons contact
+        quelques jours avant l'arrivée pour organiser la remise des clés.
+      </p>
+
+      <div class="confirmation__resume" id="resume">
+        <p class="recap__vide">Chargement du récapitulatif…</p>
+      </div>
+
+      <p style="font-size:.86rem; color:var(--encre-doux)">
+        Le solde sera appelé 30 jours avant l'arrivée. Le dépôt de garantie fait l'objet
+        d'une empreinte bancaire non débitée.
+      </p>
+
+      <p style="margin-top:2rem">
+        <a class="btn" href="index.html">Revenir à l'accueil</a>
+      </p>
+    </div>
+  </div>
+</main>
+
+<!-- PIED:debut -->
+<footer class="pied">
+  <div class="page">
+    <div class="pied__grille">
+      <div>
+        <h3>Villa Alizéa</h3>
+        <p style="max-width:38ch; opacity:.8">Meublé de tourisme de 4 chambres pour 8 voyageurs, aux Terres Basses, à Saint-Martin.</p>
+        <p style="opacity:.8">N° de déclaration&nbsp;: 97801 00 0000</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="tel:+590590000000">+590 590 00 00 00</a></li>
+          <li><a href="mailto:contact@villa-alizea.example">contact@villa-alizea.example</a></li>
+          <li style="opacity:.8">Baie Longue, Terres Basses, 97150 Saint-Martin</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Le site</h3>
+        <ul>
+          <li><a href="index.html#maison">La maison</a></li>
+          <li><a href="index.html#galerie">Galerie</a></li>
+          <li><a href="reserver.html">Disponibilités et réservation</a></li>
+          <li><a href="mentions.html">Mentions légales et crédits</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="mention-fictif">
+      <strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive&nbsp;: le nom, les textes, les tarifs et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits — le détail figure dans les <a href="mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.
+    </p>
+    <div class="pied__bas">
+      <span>© 2026 Villa Alizéa — maquette</span>
+      <span><a href="mentions.html">Mentions légales</a> · <a href="mentions.html#credits">Crédits photo</a></span>
+    </div>
+  </div>
+</footer>
+<!-- PIED:fin -->
+
+<script src="js/main.js?v=1" defer></script>
+<script src="js/confirmation.js?v=1" defer></script>
+</body>
+</html>

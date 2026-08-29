@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Disponibilités et réservation — Villa Alizéa</title>
+<meta name="description" content="Calendrier des disponibilités de la Villa Alizéa, synchronisé avec Airbnb et Booking. Réservation avec acompte de 30 % réglé en ligne.">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/style.css?v=1">
+<link rel="stylesheet" href="css/reserver.css?v=1">
+<script>document.documentElement.className+=" js";</script>
+</head>
+<body class="page-interieure">
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+<header class="entete est-pose" id="entete">
+  <div class="entete__in">
+    <a class="marque" href="index.html">Villa Alizéa<small>Terres Basses · Saint-Martin</small></a>
+    <nav class="nav" aria-label="Principale">
+      <a href="index.html#maison">La maison</a>
+      <a href="index.html#galerie">Galerie</a>
+      <a href="index.html#ile">L'île</a>
+      <a href="index.html#tarifs">Tarifs</a>
+    </nav>
+    <a class="btn btn--tete" href="reserver.html" aria-current="page">Disponibilités</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<div class="voile" id="menu" hidden>
+  <button class="voile__fermer" type="button" aria-label="Fermer le menu">&times;</button>
+  <a href="index.html#maison">La maison</a>
+  <a href="index.html#galerie">Galerie</a>
+  <a href="index.html#ile">L'île</a>
+  <a href="index.html#tarifs">Tarifs</a>
+  <a href="reserver.html">Disponibilités</a>
+</div>
+
+<main id="contenu" class="section" style="padding-top:calc(var(--entete) + 3rem)">
+  <div class="page">
+    <p class="sur-titre">Réserver</p>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.4rem)">Disponibilités en direct</h1>
+    <p class="chapo">
+      Ce calendrier est synchronisé avec Airbnb et Booking&nbsp;: une semaine louée
+      sur l'une des plateformes s'y ferme automatiquement. Choisissez une date
+      d'arrivée, puis une date de départ.
+    </p>
+
+    <noscript>
+      <p class="avertissement" style="margin:2rem 0">
+        Le calendrier interactif a besoin de JavaScript. Les tarifs et les conditions
+        figurent ci-dessous, et vous pouvez nous écrire directement&nbsp;:
+        <a href="index.html#demande">formulaire de demande</a> ou
+        <a href="mailto:contact@villa-alizea.example">contact@villa-alizea.example</a>.
+      </p>
+    </noscript>
+
+    <div class="reservation">
+      <!-- ---------------------------- calendrier ---------------------------- -->
+      <div>
+        <div class="cal" id="cal" aria-busy="true">
+          <div class="cal__tete">
+            <button class="cal__fl" type="button" id="cal-prec" aria-label="Mois précédents">&#8249;</button>
+            <p class="cal__titre" id="cal-titre" role="status" aria-live="polite">Chargement…</p>
+            <button class="cal__fl" type="button" id="cal-suiv" aria-label="Mois suivants">&#8250;</button>
+          </div>
+          <div class="cal__mois" id="cal-mois"></div>
+          <p class="cal__legende">
+            <span><i class="pastille pastille--libre"></i> libre</span>
+            <span><i class="pastille pastille--pris"></i> réservé</span>
+            <span><i class="pastille pastille--choisi"></i> votre séjour</span>
+          </p>
+          <p class="cal__source" id="cal-source"></p>
+        </div>
+      </div>
+
+      <!-- ---------------------------- récapitulatif ------------------------- -->
+      <aside class="recap" aria-label="Votre séjour">
+        <h2 class="recap__titre">Votre séjour</h2>
+
+        <div class="recap__dates">
+          <div>
+            <span class="recap__etiq">Arrivée</span>
+            <strong id="r-arrivee">—</strong>
+          </div>
+          <div>
+            <span class="recap__etiq">Départ</span>
+            <strong id="r-depart">—</strong>
+          </div>
+        </div>
+
+        <label class="recap__voyageurs" for="r-voyageurs">
+          Voyageurs
+          <select id="r-voyageurs">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option selected>5</option><option>6</option><option>7</option><option>8</option>
+          </select>
+        </label>
+
+        <div id="r-detail" class="recap__detail" role="status" aria-live="polite">
+          <p class="recap__vide">Choisissez vos dates dans le calendrier.</p>
+        </div>
+
+        <button class="btn recap__payer" type="button" id="r-payer" disabled>
+          Régler l'acompte
+        </button>
+        <p class="recap__note" id="r-note"></p>
+
+        <p class="recap__rassure">
+          Paiement par carte hébergé par <strong>Stripe</strong>. Aucun numéro de carte
+          ne transite par ce site. Le solde est appelé 30 jours avant l'arrivée.
+        </p>
+        <p class="recap__rassure">
+          Une question avant de réserver&nbsp;?
+          <a href="index.html#demande">Écrivez-nous</a>.
+        </p>
+      </aside>
+    </div>
+
+    <!-- ------------------------- rappel des tarifs -------------------------- -->
+    <section style="margin-top:clamp(3rem,7vw,5rem)">
+      <h2>Tarifs et conditions</h2>
+      <div class="espace espace--court"></div>
+      <!-- TARIFS:debut -->
+<div class="tarifs">
+<div class="tarif revele">
+  <p class="tarif__periode">16 avril → 14 décembre</p>
+  <p class="tarif__prix">4 200 €<small> / semaine</small></p>
+  <p style="margin:.2rem 0 0; font-size:.85rem; opacity:.75">Basse saison — 5 nuits minimum</p>
+</div>
+<div class="tarif tarif--fort revele">
+  <p class="tarif__periode">15 décembre → 15 avril</p>
+  <p class="tarif__prix">7 800 €<small> / semaine</small></p>
+  <p style="margin:.2rem 0 0; font-size:.85rem; opacity:.75">Haute saison — 5 nuits minimum</p>
+</div>
+<div class="tarif revele">
+  <p class="tarif__periode">20 décembre → 5 janvier</p>
+  <p class="tarif__prix">12 500 €<small> / semaine</small></p>
+  <p style="margin:.2rem 0 0; font-size:.85rem; opacity:.75">Fêtes de fin d'année — 14 nuits minimum</p>
+</div>
+</div>
+<!-- TARIFS:fin -->
+      <!-- CONDITIONS:debut -->
+<table class="tableau revele">
+  <caption class="vh">Conditions tarifaires</caption>
+  <thead><tr><th scope="col">Poste</th><th scope="col">Montant</th></tr></thead>
+  <tbody>
+    <tr><td>Acompte à la réservation</td><td>30 % du séjour</td></tr>
+    <tr><td>Solde</td><td>30 jours avant l'arrivée</td></tr>
+    <tr><td>Ménage de fin de séjour</td><td>350 €</td></tr>
+    <tr><td>Dépôt de garantie (empreinte, non débitée)</td><td>3 000 €</td></tr>
+    <tr><td>Taxe de séjour</td><td>5 % du prix de la nuitée, plafonnée à 4,30 € par personne et par nuit</td></tr>
+    <tr><td>Capacité maximale</td><td>8 voyageurs</td></tr>
+  </tbody>
+</table>
+<p class="avertissement" style="margin-top:1.5rem">
+  Meublé de tourisme non classé, déclaré sous le numéro <strong>97801 00 0000</strong>. Le taux de la taxe de séjour est fixé par la Collectivité de Saint-Martin&nbsp;: taux et plafond sont révisés périodiquement, à vérifier auprès d'elle avant toute mise en ligne réelle.
+</p>
+<!-- CONDITIONS:fin -->
+    </section>
+  </div>
+</main>
+
+<!-- PIED:debut -->
+<footer class="pied">
+  <div class="page">
+    <div class="pied__grille">
+      <div>
+        <h3>Villa Alizéa</h3>
+        <p style="max-width:38ch; opacity:.8">Meublé de tourisme de 4 chambres pour 8 voyageurs, aux Terres Basses, à Saint-Martin.</p>
+        <p style="opacity:.8">N° de déclaration&nbsp;: 97801 00 0000</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="tel:+590590000000">+590 590 00 00 00</a></li>
+          <li><a href="mailto:contact@villa-alizea.example">contact@villa-alizea.example</a></li>
+          <li style="opacity:.8">Baie Longue, Terres Basses, 97150 Saint-Martin</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Le site</h3>
+        <ul>
+          <li><a href="index.html#maison">La maison</a></li>
+          <li><a href="index.html#galerie">Galerie</a></li>
+          <li><a href="reserver.html">Disponibilités et réservation</a></li>
+          <li><a href="mentions.html">Mentions légales et crédits</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="mention-fictif">
+      <strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive&nbsp;: le nom, les textes, les tarifs et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits — le détail figure dans les <a href="mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.
+    </p>
+    <div class="pied__bas">
+      <span>© 2026 Villa Alizéa — maquette</span>
+      <span><a href="mentions.html">Mentions légales</a> · <a href="mentions.html#credits">Crédits photo</a></span>
+    </div>
+  </div>
+</footer>
+<!-- PIED:fin -->
+
+<script src="js/main.js?v=1" defer></script>
+<script type="module" src="js/reserver.js?v=1"></script>
+</body>
+</html>

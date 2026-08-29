@@ -1,0 +1,31 @@
+/* GÉNÉRÉ par construire.py — ne pas modifier à la main.
+   Crédits affichés sous chaque photo de la visionneuse. */
+window.ALIZEA_CREDITS = {
+ "sejour-01": "Photo : Luis J. Corniel — licence Unsplash",
+ "terrasse-02": "Photo : Luis J. Corniel — licence Unsplash",
+ "chambre-01": "Photo : Luis J. Corniel — licence Unsplash",
+ "cuisine-01": "Photo : Luis J. Corniel — licence Unsplash",
+ "ciel-01": "Photo : Pexels — vue aérienne — licence Pexels",
+ "bain-02": "Photo : Protex Plastering — licence Unsplash",
+ "chambre-03": "Photo : SPX Clicks — licence Unsplash",
+ "detail-02": "Photo : Kath MZ — licence Unsplash",
+ "sejour-02": "Photo : Luis J. Corniel — licence Unsplash",
+ "terrasse-01": "Photo : Luis J. Corniel — licence Unsplash",
+ "ciel-04": "Photo : Pexels — vue aérienne — licence Pexels",
+ "chambre-02": "Photo : SPX Clicks — licence Unsplash",
+ "bain-01": "Photo : Protex Plastering — licence Unsplash",
+ "cuisine-02": "Photo : Luis J. Corniel — licence Unsplash",
+ "detail-01": "Photo : Luis J. Corniel — licence Unsplash",
+ "sejour-03": "Photo : Luis J. Corniel — licence Unsplash",
+ "terrasse-03": "Photo : Luis J. Corniel — licence Unsplash",
+ "chambre-04": "Photo : SPX Clicks — licence Unsplash",
+ "ciel-02": "Photo : Pexels — vue aérienne — licence Pexels",
+ "bureau-01": "Photo : Luis J. Corniel — licence Unsplash",
+ "detail-03": "Photo : Kath MZ — licence Unsplash",
+ "chambre-05": "Photo : Kath MZ — licence Unsplash",
+ "sejour-04": "Photo : Luis J. Corniel — licence Unsplash",
+ "ciel-03": "Photo : Pexels — vue aérienne — licence Pexels",
+ "detail-04": "Photo : Toma Ha — licence Unsplash",
+ "plage-01": "Photo : Kath MZ — licence Unsplash",
+ "ciel-05": "Photo : Pexels — vue aérienne — licence Pexels"
+};
