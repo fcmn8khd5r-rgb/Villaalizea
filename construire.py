@@ -72,7 +72,7 @@ PIECES = [
    ["3 salles d'eau", "Douches à l'italienne", "Eau chaude solaire", "Linge fourni"]),
   ("terrasse-01", "La terrasse et le bassin",
    "Une pergola, un lit de repos qui reçoit l'ombre l'après-midi, et un bassin de nage de "
-   "douze mètres bordé de béton lissé. Au-delà, la pelouse descend jusqu'aux rochers.",
+   "douze mètres bordé de béton lissé. Au-delà, le jardin de sable et de cocotiers.",
    ["Bassin de 12 m", "Pergola", "Plancha", "Douche extérieure"]),
 ]
 

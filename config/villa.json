@@ -190,7 +190,7 @@
       "cle": "ile-baierouge",
       "nom": "Baie Rouge",
       "sousTitre": "Les arches de roche",
-      "texte": "Deux arches naturelles creusées dans la falaise, une eau très claire et des rouleaux courts qui plaisent aux enfants. Le meilleur endroit de l'île pour le coucher de soleil.",
+      "texte": "Une anse courte fermée par une pointe rocheuse, l'eau très claire et des rouleaux qui plaisent aux enfants. C'est de ce côté que l'île regarde le soleil se coucher.",
       "km": 2.5,
       "pied": "30 min",
       "voiture": "6 min"
@@ -199,7 +199,7 @@
       "cle": "ile-marigot",
       "nom": "Marigot",
       "sousTitre": "Le chef-lieu, côté français",
-      "texte": "Le marché du matin sous les tôles colorées, le fort Louis pour la vue sur Anguilla, et la marina Fort-Louis. Le mercredi et le samedi, les étals débordent sur le quai.",
+      "texte": "Des rues basses aux façades peintes, sous les balcons de bois. Le marché du matin se tient sous les tôles colorées ; plus haut, le fort Louis donne la vue sur Anguilla. Les étals débordent sur le quai le mercredi et le samedi.",
       "km": 7,
       "pied": "—",
       "voiture": "12 min"
@@ -208,7 +208,7 @@
       "cle": "ile-grandcase",
       "nom": "Grand-Case",
       "sousTitre": "La rue des restaurants",
-      "texte": "Une seule rue, une trentaine de tables, et les <em>lolos</em> sur le port — les grillades au charbon servies sur des bancs de bois. Réserver le soir, surtout de janvier à avril.",
+      "texte": "On y dîne sur des terrasses ouvertes au couchant, les pieds presque dans l'eau. Une seule rue, une trentaine de tables, et les <em>lolos</em> sur le port — les grillades au charbon servies sur des bancs de bois. Réserver le soir, surtout de janvier à avril.",
       "km": 14,
       "pied": "—",
       "voiture": "20 min"
@@ -217,7 +217,7 @@
       "cle": "ile-pinel",
       "nom": "Îlet Pinel",
       "sousTitre": "La réserve naturelle",
-      "texte": "Un îlet de vingt hectares dans la réserve, à dix minutes de navette depuis l'embarcadère de Cul-de-Sac. Eau translucide, sentier de découverte, deux restaurants de plage. Les navettes partent toutes les demi-heures.",
+      "texte": "Une eau si claire qu'on y marche longtemps sans perdre pied. L'îlet fait vingt hectares, dans la réserve naturelle, à dix minutes de navette depuis l'embarcadère de Cul-de-Sac. Sentier de découverte, deux restaurants de plage, navettes toutes les demi-heures.",
       "km": 21,
       "pied": "—",
       "voiture": "30 min + navette"
@@ -226,7 +226,7 @@
       "cle": "ile-picparadis",
       "nom": "Pic Paradis",
       "sousTitre": "Le point haut",
-      "texte": "424 mètres, le sommet de l'île, et le seul endroit d'où l'on voit les deux côtes à la fois. En contrebas, la forêt de Loterie Farm et ses parcours dans les arbres. Prévoir de bonnes chaussures et de l'eau.",
+      "texte": "Une passerelle de bois, et la forêt qui se referme au-dessus. Le sommet est à 424 mètres, le seul endroit d'où l'on voie les deux côtes à la fois ; en contrebas, la forêt de Loterie Farm et ses parcours dans les arbres. Prévoir de bonnes chaussures et de l'eau.",
       "km": 12,
       "pied": "—",
       "voiture": "25 min + 25 min de marche"
