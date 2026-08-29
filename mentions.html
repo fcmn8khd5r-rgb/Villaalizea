@@ -4,72 +4,76 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mentions légales et crédits — Villa Alizéa</title>
-<meta name="description" content="Mentions légales de la Villa Alizéa : éditeur, meublé de tourisme, taxe de séjour, données personnelles et crédits photographiques.">
+<meta name="description" content="Mentions légales de la Villa Alizéa : éditeur, meublé de tourisme, taxe de séjour, données personnelles, paiement et crédits photographiques.">
 <meta name="robots" content="index, follow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="mask-icon" href="favicon.svg" color="#B3552F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&display=swap">
-<link rel="stylesheet" href="css/style.css?v=2">
-<script>document.documentElement.className+=" js";</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
+<link rel="stylesheet" href="css/style.css?v=3">
+<script>document.documentElement.className+=" anime";</script>
 </head>
-<body class="page-interieure">
-<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+<body>
+<!-- TETE:debut -->
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="tete">
+  <a class="marque" href="index.html">Villa Alizéa</a>
+  <nav class="menu" aria-label="Principale">
+      <a href="la-villa.html">La villa</a>
+      <a href="galerie.html">Galerie</a>
+      <a href="l-ile.html">L'île</a>
+      <a href="le-sejour.html">Le séjour</a>
+  </nav>
+  <a class="btn" href="reserver.html">Réserver</a>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="tiroir"
+          aria-label="Ouvrir le menu"><i></i></button>
+</header>
+<div class="tiroir" id="tiroir" hidden>
+  <button class="tiroir__x" type="button" aria-label="Fermer le menu">&times;</button>
+  <a href="la-villa.html">La villa</a>
+  <a href="galerie.html">Galerie</a>
+  <a href="l-ile.html">L'île</a>
+  <a href="le-sejour.html">Le séjour</a>
+  <a href="reserver.html">Réserver</a>
+</div>
+<!-- TETE:fin -->
+<main id="contenu">
 
-<header class="entete est-pose" id="entete">
-  <div class="entete__in">
-    <a class="marque" href="index.html">Villa Alizéa<small>Terres Basses · Saint-Martin</small></a>
-    <nav class="nav" aria-label="Principale">
-      <a href="index.html#maison">La maison</a>
-      <a href="index.html#galerie">Galerie</a>
-      <a href="index.html#ile">L'île</a>
-      <a href="index.html#tarifs">Tarifs</a>
-    </nav>
-    <a class="btn btn--tete" href="reserver.html">Disponibilités</a>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
-      <span></span>
-    </button>
+<header class="entree">
+  <div class="page" style="max-width:760px">
+    <p class="oeil">Informations légales</p>
+    <h1>Mentions légales et crédits</h1>
+    <p class="note" style="margin-top:2rem">
+      <strong>Ce site est une maquette de démonstration.</strong> La Villa Alizéa n'existe
+      pas : le nom, les textes, les tarifs, les avis, les coordonnées et le numéro de
+      déclaration ont été inventés pour montrer ce que sait faire ce type de site. Les
+      photographies proviennent de banques d'images libres de droits et représentent
+      d'autres propriétés. Aucun établissement réel n'est représenté ni désigné.
+    </p>
   </div>
 </header>
 
-<div class="voile" id="menu" hidden>
-  <button class="voile__fermer" type="button" aria-label="Fermer le menu">&times;</button>
-  <a href="index.html#maison">La maison</a>
-  <a href="index.html#galerie">Galerie</a>
-  <a href="index.html#ile">L'île</a>
-  <a href="index.html#tarifs">Tarifs</a>
-  <a href="reserver.html">Disponibilités</a>
-</div>
-
-<main id="contenu" class="section" style="padding-top:calc(var(--entete) + 3rem)">
+<section class="section" style="padding-top:0">
   <div class="page" style="max-width:760px">
 
-    <p class="sur-titre">Informations légales</p>
-    <h1 style="font-size:clamp(2.2rem,5vw,3.2rem)">Mentions légales et crédits</h1>
-
-    <p class="avertissement" style="margin:2rem 0">
-      <strong>Ce site est une maquette de démonstration.</strong> La Villa Alizéa n'existe pas&nbsp;:
-      le nom, les textes, les tarifs, les avis, les coordonnées et le numéro de déclaration
-      ont été inventés pour montrer ce que sait faire ce type de site. Les photographies
-      proviennent de banques d'images libres de droits et représentent d'autres propriétés —
-      le détail figure plus bas. Aucun établissement réel n'est représenté ni désigné.
-    </p>
-
     <h2>Éditeur du site</h2>
-    <p>
-      Site édité à titre de démonstration. Pour un site réel, cette rubrique doit indiquer&nbsp;:
-      la dénomination sociale ou les nom et prénom de l'exploitant, la forme juridique, l'adresse
-      du siège, le numéro SIRET, le numéro de TVA intracommunautaire le cas échéant, un numéro
-      de téléphone, une adresse de courriel et le nom du directeur de la publication.
+    <p class="mince">
+      Site édité à titre de démonstration. Pour un site réel, cette rubrique doit indiquer :
+      la dénomination sociale ou les nom et prénom de l'exploitant, la forme juridique,
+      l'adresse du siège, le numéro SIRET, le numéro de TVA intracommunautaire le cas
+      échéant, un numéro de téléphone, une adresse de courriel et le nom du directeur de
+      la publication.
     </p>
 
     <h2>Hébergement</h2>
-    <p>
+    <p class="mince">
       Nom, raison sociale, adresse et téléphone de l'hébergeur du site — à compléter selon
       l'hébergeur retenu.
     </p>
 
     <h2>Le bien</h2>
-    <table class="tableau">
+    <table class="table">
       <caption class="vh">Caractéristiques déclarées du meublé de tourisme</caption>
       <tbody>
         <tr><td>Nature</td><td>Meublé de tourisme (location saisonnière)</td></tr>
@@ -80,158 +84,169 @@
         <tr><td>Surface</td><td>320 m² habitables sur 1 800 m² de terrain</td></tr>
       </tbody>
     </table>
-    <p>
-      Toute location saisonnière doit être déclarée auprès de la collectivité compétente, et le
-      numéro obtenu doit figurer sur chaque annonce. La capacité annoncée engage&nbsp;: elle doit
-      correspondre au nombre de couchages réellement disponibles.
+    <p class="mince">
+      Toute location saisonnière doit être déclarée auprès de la collectivité compétente,
+      et le numéro obtenu doit figurer sur chaque annonce. La capacité annoncée engage :
+      elle doit correspondre au nombre de couchages réellement disponibles.
     </p>
 
     <h2>Taxe de séjour</h2>
-    <p>
-      La taxe de séjour est collectée par le loueur pour le compte de la collectivité, en plus du
-      prix du séjour. Elle apparaît séparément dans le récapitulatif de réservation. Le taux
-      retenu dans cette maquette est de <strong>5&nbsp;% du prix de la nuitée par personne,
-      plafonné à 4,30&nbsp;€ par personne et par nuit</strong>. Les taux et les plafonds sont fixés
-      par la Collectivité de Saint-Martin et révisés périodiquement&nbsp;: ils doivent être
-      vérifiés auprès d'elle avant toute mise en ligne réelle.
+    <p class="mince">
+      La taxe de séjour est collectée par le loueur pour le compte de la collectivité, en
+      plus du prix du séjour. Elle apparaît séparément dans le récapitulatif de
+      réservation. Le taux retenu dans cette maquette est de <strong>5 % du prix de la
+      nuitée par personne, plafonné à 4,30 € par personne et par nuit</strong>. Les taux et
+      les plafonds sont fixés par la Collectivité de Saint-Martin et révisés
+      périodiquement : ils doivent être vérifiés auprès d'elle avant toute mise en ligne.
     </p>
 
     <h2>Réservation, acompte et annulation</h2>
-    <p>
-      La réservation devient ferme au versement de l'acompte de 30&nbsp;%. Le solde est appelé
-      30 jours avant l'arrivée. Un dépôt de garantie de 3 000&nbsp;€ fait l'objet d'une empreinte
-      bancaire non débitée, libérée après l'état des lieux de sortie.
+    <p class="mince">
+      La réservation devient ferme au versement de l'acompte de 30 %. Le solde est appelé
+      30 jours avant l'arrivée. Un dépôt de garantie de 3 000 € fait l'objet d'une
+      empreinte bancaire non débitée, libérée après l'état des lieux de sortie.
     </p>
-    <p>
-      <strong>Rappel utile&nbsp;:</strong> le droit de rétractation de 14 jours prévu pour la vente
-      à distance <em>ne s'applique pas</em> aux prestations d'hébergement fournies à une date
-      déterminée. Les conditions d'annulation propres au loueur doivent donc être énoncées
-      clairement et acceptées avant paiement.
+    <p class="mince">
+      <strong>Rappel utile :</strong> le droit de rétractation de 14 jours prévu pour la
+      vente à distance <em>ne s'applique pas</em> aux prestations d'hébergement fournies à
+      une date déterminée. Les conditions d'annulation propres au loueur doivent donc être
+      énoncées clairement et acceptées avant paiement.
     </p>
 
     <h2>Paiement</h2>
-    <p>
-      Les paiements par carte sont traités par <strong>Stripe</strong>, sur des pages hébergées par
-      Stripe. Aucun numéro de carte n'est saisi, transmis ni conservé par ce site&nbsp;: c'est la
-      condition de la conformité à la norme PCI&nbsp;DSS. Les montants sont recalculés côté serveur
-      à partir des seules dates et du nombre de voyageurs.
+    <p class="mince">
+      Les paiements par carte sont traités par <strong>Stripe</strong>, sur des pages
+      hébergées par Stripe. Aucun numéro de carte n'est saisi, transmis ni conservé par ce
+      site : c'est la condition de la conformité à la norme PCI DSS. Les montants sont
+      recalculés côté serveur à partir des seules dates et du nombre de voyageurs, et la
+      disponibilité est revérifiée avant l'ouverture du paiement.
     </p>
 
     <h2>Données personnelles</h2>
-    <p>
-      Les informations transmises par le formulaire de demande (nom, courriel, téléphone, dates,
-      message) servent uniquement à répondre à la demande et à gérer la réservation. Elles ne sont
-      ni cédées ni revendues. Base légale&nbsp;: mesures précontractuelles et exécution du contrat.
-      Durée de conservation recommandée&nbsp;: trois ans après le dernier contact pour les demandes
-      sans suite, dix ans pour les pièces comptables.
+    <p class="mince">
+      Les informations transmises par le formulaire (nom, courriel, téléphone, dates,
+      message) servent uniquement à répondre à la demande et à gérer la réservation. Elles
+      ne sont ni cédées ni revendues. Base légale : mesures précontractuelles et exécution
+      du contrat. Durée de conservation recommandée : trois ans après le dernier contact
+      pour les demandes sans suite, dix ans pour les pièces comptables.
     </p>
-    <p>
-      Conformément au RGPD et à la loi Informatique et Libertés, vous disposez d'un droit d'accès,
-      de rectification, d'effacement, de limitation, d'opposition et de portabilité, en écrivant à
-      l'adresse de contact. Vous pouvez introduire une réclamation auprès de la CNIL.
+    <p class="mince">
+      Conformément au RGPD et à la loi Informatique et Libertés, vous disposez d'un droit
+      d'accès, de rectification, d'effacement, de limitation, d'opposition et de
+      portabilité, en écrivant à l'adresse de contact. Vous pouvez introduire une
+      réclamation auprès de la CNIL.
     </p>
 
     <h2>Cookies et mesure d'audience</h2>
-    <p>
-      Ce site ne dépose aucun cookie publicitaire et n'utilise aucun traceur de mesure d'audience.
-      Les polices de caractères sont chargées depuis Google&nbsp;Fonts&nbsp;; pour un site totalement
-      autonome, il suffit de les héberger localement.
+    <p class="mince">
+      Ce site ne dépose aucun cookie publicitaire et n'utilise aucun traceur de mesure
+      d'audience. Les polices de caractères sont chargées depuis Google Fonts ; pour un
+      site totalement autonome, il suffit de les héberger localement.
+    </p>
+
+    <h2>Marques citées</h2>
+    <p class="mince">
+      Airbnb, Booking.com, Google et Stripe sont des marques déposées par leurs
+      propriétaires respectifs. Elles ne sont citées que pour indiquer la provenance des
+      avis et le prestataire de paiement.
     </p>
 
     <h2>Accessibilité</h2>
-    <p>
-      Le contenu essentiel — description, coordonnées, tarifs, conditions et formulaire — reste
-      consultable sans JavaScript. La galerie est parcourable au clavier et au doigt, et les
-      animations sont neutralisées pour les personnes ayant activé la réduction des animations
-      dans leur système.
+    <p class="mince">
+      Le contenu essentiel — description, coordonnées, tarifs, conditions et formulaire —
+      reste consultable sans JavaScript. La galerie est parcourable au clavier et au doigt,
+      et les animations sont neutralisées pour les personnes ayant activé la réduction des
+      animations dans leur système.
     </p>
 
     <h2 id="credits">Crédits photographiques</h2>
-    <p>
-      Toutes les images de ce site proviennent de banques d'images libres de droits autorisant
-      l'usage commercial. Les licences Unsplash et Pexels n'exigent pas d'attribution&nbsp;:
-      elle est donnée ici par correction, et pour que la provenance de chaque fichier reste
+    <p class="mince">
+      Toutes les images proviennent de banques d'images libres de droits autorisant l'usage
+      commercial. Les licences Unsplash et Pexels n'exigent pas d'attribution : elle est
+      donnée ici par correction, et pour que la provenance de chaque fichier reste
       vérifiable.
     </p>
-    <p>
+    <p class="mince">
       <strong>Un même étalonnage a été appliqué à toutes les images</strong> — alignement
       colorimétrique sur la série de référence, puis courbe commune — afin qu'un ensemble
-      composé de plusieurs sources se lise comme un seul lieu. La correction est intégrée aux
-      fichiers, pas appliquée par le navigateur.
+      composé de plusieurs sources se lise comme un seul lieu. La correction est intégrée
+      aux fichiers, pas appliquée par le navigateur.
     </p>
 
     <!-- CREDITS:debut -->
-<table class="tableau">
+<table class="table">
   <caption class="vh">Provenance des photographies</caption>
   <thead><tr><th scope="col">Auteur</th><th scope="col">Vues</th><th scope="col">Licence</th></tr></thead>
   <tbody>
-    <tr><td><a href="https://unsplash.com/@kathmz" rel="noopener">Kath MZ</a></td><td style="text-align:left">Luminaire en osier, Mur de vannerie, Ombre de palmier, Troisième chambre <em>(4)</em></td><td>Unsplash</td></tr>
-    <tr><td><a href="https://unsplash.com/@luisjcorniel" rel="noopener">Luis J. Corniel</a></td><td style="text-align:left">Chambre principale, Coin bureau, Coin repas extérieur, Cuisine ouverte, Détail, table basse, Pergola, lit de repos, Séjour depuis la cuisine, Séjour, coin salon, Séjour, tons neutres, Séjour, vue d'ensemble, Table dressée, Terrasse et bassin <em>(12)</em></td><td>Unsplash</td></tr>
-    <tr><td><a href="https://www.pexels.com/" rel="noopener">Pexels — vue aérienne</a></td><td style="text-align:left">La baie au petit matin, La maison vue du ciel, Le croissant de sable, Le littoral et la villa, Les terrasses sur la plage <em>(5)</em></td><td>Pexels</td></tr>
-    <tr><td><a href="https://unsplash.com/@protexplastering" rel="noopener">Protex Plastering</a></td><td style="text-align:left">Douche à l'italienne, Vasque et baignoire <em>(2)</em></td><td>Unsplash</td></tr>
-    <tr><td><a href="https://unsplash.com/@spxclicks" rel="noopener">SPX Clicks</a></td><td style="text-align:left">Chambre d'amis, Chambre d'amis, angle, Chambre d'amis, bureau <em>(3)</em></td><td>Unsplash</td></tr>
-    <tr><td><a href="https://unsplash.com/@toma_ha" rel="noopener">Toma Ha</a></td><td style="text-align:left">Chevet et lin <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@davidvives" rel="noopener">David Vives</a></td><td style="text-align:left">Baie Rouge <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@erikmagkekse" rel="noopener">Erik Magkekse</a></td><td style="text-align:left">Îlet Pinel <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@kathmz" rel="noopener">Kath MZ</a></td><td style="text-align:left">La troisième chambre, Le luminaire en osier, Le mur de vannerie <em>(3)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@luisjcorniel" rel="noopener">Luis J. Corniel</a></td><td style="text-align:left">La chambre principale, La cuisine ouverte, La pergola et son lit de repos, La table basse, La table d'hôte, dressée, La terrasse et le bassin, Le coin bureau, Le coin repas extérieur, Le coin salon, Le séjour au matin, Le séjour depuis la cuisine, Le séjour, vue d'ensemble <em>(12)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@naturalai" rel="noopener">Natural AI</a></td><td style="text-align:left">Pic Paradis <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@nelyat" rel="noopener">Nelya T</a></td><td style="text-align:left">Marigot <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://www.pexels.com/" rel="noopener">Pexels</a></td><td style="text-align:left">Baie Longue, La villa vue du ciel <em>(2)</em></td><td>Pexels</td></tr>
+    <tr><td><a href="https://unsplash.com/@protexplastering" rel="noopener">Protex Plastering</a></td><td style="text-align:left">La douche à l'italienne, La vasque et la baignoire <em>(2)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@spxclicks" rel="noopener">SPX Clicks</a></td><td style="text-align:left">La deuxième chambre, La deuxième chambre, de l'autre côté, Le secrétaire de la chambre <em>(3)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@theanamcxr" rel="noopener">The Anam</a></td><td style="text-align:left">Le bassin de nage <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@toma_ha" rel="noopener">Toma Ha</a></td><td style="text-align:left">Chevet et lin lavé <em>(1)</em></td><td>Unsplash</td></tr>
+    <tr><td><a href="https://unsplash.com/@udatommo" rel="noopener">Uda Tommo</a></td><td style="text-align:left">Grand-Case <em>(1)</em></td><td>Unsplash</td></tr>
   </tbody>
 </table>
 <!-- CREDITS:fin -->
 
     <h3>Licences</h3>
-    <ul>
-      <li>
-        <strong>Licence Unsplash</strong> — usage gratuit, y compris commercial, sans autorisation
-        préalable ni attribution. Il reste interdit de revendre les photographies non modifiées ou
-        de constituer un service concurrent.
-        <a href="https://unsplash.com/fr/licence" rel="noopener">Texte de la licence</a>
-      </li>
-      <li>
-        <strong>Licence Pexels</strong> — usage gratuit, y compris commercial, sans attribution.
-        Les personnes et marques identifiables ne peuvent pas être présentées sous un jour
-        défavorable.
-        <a href="https://www.pexels.com/fr-fr/licence/" rel="noopener">Texte de la licence</a>
-      </li>
+    <ul class="mince">
+      <li><strong>Licence Unsplash</strong> — usage gratuit, y compris commercial, sans
+        autorisation préalable ni attribution. Il reste interdit de revendre les
+        photographies non modifiées ou de constituer un service concurrent.
+        <a href="https://unsplash.com/fr/licence" rel="noopener">Texte de la licence</a></li>
+      <li><strong>Licence Pexels</strong> — usage gratuit, y compris commercial, sans
+        attribution. Les personnes et marques identifiables ne peuvent pas être présentées
+        sous un jour défavorable.
+        <a href="https://www.pexels.com/fr-fr/licence/" rel="noopener">Texte de la licence</a></li>
     </ul>
 
-    <p class="avertissement" style="margin-top:2rem">
-      <strong>Avant une mise en ligne réelle.</strong> Ces photographies représentent d'autres
-      propriétés que celle décrite. Les licences en autorisent l'usage commercial, mais présenter
-      une location avec les images d'un autre bien tromperait le locataire — et l'exposerait,
-      lui comme le loueur, à une déconvenue à l'arrivée. Elles doivent être remplacées par les
-      photographies du bien concerné.
+    <p class="note" style="margin-top:2rem">
+      <strong>Avant une mise en ligne réelle.</strong> Ces photographies représentent
+      d'autres propriétés que celle décrite. Les licences en autorisent l'usage commercial,
+      mais présenter une location avec les images d'un autre bien tromperait le locataire —
+      et l'exposerait, lui comme le loueur, à une déconvenue à l'arrivée. Elles doivent
+      être remplacées par les photographies du bien concerné.
     </p>
 
   </div>
+</section>
 </main>
-
 <!-- PIED:debut -->
 <footer class="pied">
   <div class="page">
     <div class="pied__grille">
       <div>
-        <h3>Villa Alizéa</h3>
-        <p style="max-width:38ch; opacity:.8">Meublé de tourisme de 4 chambres pour 8 voyageurs, aux Terres Basses, à Saint-Martin.</p>
-        <p style="opacity:.8">N° de déclaration&nbsp;: 97801 00 0000</p>
+        <p class="pied__marque">Villa Alizéa</p>
+        <p style="max-width:36ch; opacity:.82">Meublé de tourisme de 4 chambres pour 8 voyageurs, aux Terres Basses, à Saint-Martin.</p>
+        <p style="opacity:.82">N° de déclaration : 97801 00 0000</p>
       </div>
       <div>
         <h3>Contact</h3>
         <ul>
           <li><a href="tel:+590590000000">+590 590 00 00 00</a></li>
           <li><a href="mailto:contact@villa-alizea.example">contact@villa-alizea.example</a></li>
-          <li style="opacity:.8">Baie Longue, Terres Basses, 97150 Saint-Martin</li>
+          <li style="opacity:.82">Baie Longue, Terres Basses, 97150 Saint-Martin</li>
         </ul>
       </div>
       <div>
         <h3>Le site</h3>
         <ul>
-          <li><a href="index.html#maison">La maison</a></li>
-          <li><a href="index.html#galerie">Galerie</a></li>
-          <li><a href="reserver.html">Disponibilités et réservation</a></li>
-          <li><a href="mentions.html">Mentions légales et crédits</a></li>
+          <li><a href="la-villa.html">La villa</a></li>
+          <li><a href="galerie.html">Galerie</a></li>
+          <li><a href="l-ile.html">L'île</a></li>
+          <li><a href="le-sejour.html">Le séjour</a></li>
+          <li><a href="reserver.html">Réserver</a></li>
+          <li><a href="mentions.html">Mentions légales</a></li>
         </ul>
       </div>
     </div>
-    <p class="mention-fictif">
-      <strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive&nbsp;: le nom, les textes, les tarifs et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits — le détail figure dans les <a href="mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.
-    </p>
+    <p class="fictif"><strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive : le nom, les textes, les tarifs, les avis et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits. Le détail figure dans les <a href="mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.</p>
     <div class="pied__bas">
       <span>© 2026 Villa Alizéa — maquette</span>
       <span><a href="mentions.html">Mentions légales</a> · <a href="mentions.html#credits">Crédits photo</a></span>
@@ -239,7 +254,6 @@
   </div>
 </footer>
 <!-- PIED:fin -->
-
-<script src="js/main.js?v=1" defer></script>
+<script src="js/main.js?v=3" defer></script>
 </body>
 </html>

@@ -1,112 +1,105 @@
 /* =========================================================================
-   Villa Alizéa — calendrier et récapitulatif
-   Chargé sur la seule page de réservation.
+   Villa Alizéa — calendrier, récapitulatif et confirmation
+   Chargé sur les seules pages de réservation.
    ========================================================================= */
 
-.page-interieure{padding-top:0}
-
 .reservation{
-  display:grid; grid-template-columns:minmax(0,1fr) 340px; gap:clamp(1.5rem,4vw,3rem);
-  align-items:start; margin-top:clamp(2rem,5vw,3.5rem);
+  display:grid; grid-template-columns:minmax(0,1fr) 350px; gap:clamp(1.6rem,4vw,3rem);
+  align-items:start;
 }
-@media (max-width:900px){ .reservation{grid-template-columns:1fr} }
+@media (max-width:960px){ .reservation{grid-template-columns:1fr} }
 
 /* ---- calendrier ---------------------------------------------------------- */
-.cal{border:1px solid var(--coquille); border-radius:var(--r-g); padding:clamp(1rem,3vw,1.8rem);
-     background:var(--blanc)}
-.cal[aria-busy="true"]{opacity:.55}
+.cal{border:1px solid var(--trait); padding:clamp(1.1rem,3vw,2rem); background:var(--fond)}
+.cal[aria-busy="true"]{opacity:.5}
 .cal__tete{display:flex; align-items:center; justify-content:space-between; gap:1rem;
-           margin-bottom:1.4rem}
-.cal__titre{margin:0; font-family:var(--serif); font-size:1.4rem; text-align:center; flex:1}
+           margin-bottom:1.6rem}
+.cal__titre{margin:0; font-family:var(--serif); font-size:1.35rem; text-align:center; flex:1}
 .cal__fl{
-  width:38px; height:38px; flex:none; border:1px solid var(--coquille); background:none;
-  border-radius:50%; cursor:pointer; font-size:1.15rem; line-height:1;
-  display:grid; place-items:center; transition:background .18s ease, border-color .18s ease;
+  width:40px; height:40px; flex:none; border:1px solid var(--trait); background:none;
+  cursor:pointer; font-size:1.1rem; line-height:1; display:grid; place-items:center;
+  min-height:40px; transition:border-color .2s ease, color .2s ease;
 }
-.cal__fl:hover:not([disabled]){background:var(--sable); border-color:var(--bois)}
-.cal__fl[disabled]{opacity:.3; cursor:not-allowed}
+.cal__fl:hover:not([disabled]){border-color:var(--accent); color:var(--accent)}
+.cal__fl[disabled]{opacity:.28; cursor:not-allowed}
 
-.cal__mois{display:grid; grid-template-columns:1fr 1fr; gap:clamp(1rem,3vw,2.2rem)}
-@media (max-width:680px){ .cal__mois{grid-template-columns:1fr} }
-.mois h3{font-family:var(--sans); font-size:.82rem; font-weight:600; letter-spacing:.1em;
-         text-transform:uppercase; text-align:center; margin:0 0 .8rem; color:var(--encre-doux)}
+.cal__mois{display:grid; grid-template-columns:1fr 1fr; gap:clamp(1rem,3vw,2.4rem)}
+@media (max-width:779px){ .cal__mois{grid-template-columns:1fr} }
+.mois h3{font-family:var(--sans); font-size:10.5px; font-weight:400; letter-spacing:.18em;
+         text-transform:uppercase; text-align:center; margin:0 0 1rem; color:var(--sourdine)}
 .mois table{width:100%; border-collapse:collapse; table-layout:fixed}
-.mois th{font-size:.68rem; font-weight:600; color:var(--encre-doux); padding-bottom:.5rem;
-         text-transform:uppercase; letter-spacing:.05em}
+.mois th{font-size:9.5px; font-weight:400; color:var(--sourdine); padding-bottom:.6rem;
+         text-transform:uppercase; letter-spacing:.08em}
 .mois td{padding:1px; text-align:center}
 
 .jour{
-  width:100%; aspect-ratio:1; border:0; background:none; border-radius:var(--r); cursor:pointer;
+  width:100%; aspect-ratio:1; border:0; background:none; cursor:pointer; min-height:auto;
   font-size:.88rem; font-variant-numeric:tabular-nums; color:var(--encre); position:relative;
   transition:background .14s ease, color .14s ease;
 }
-.jour:hover:not([disabled]){background:var(--sable)}
-.jour[disabled]{color:color-mix(in srgb, var(--encre-doux) 45%, transparent); cursor:not-allowed}
+.jour:hover:not([disabled]){background:var(--voile)}
+.jour[disabled]{color:color-mix(in srgb, var(--sourdine) 55%, transparent); cursor:not-allowed}
 /* Une date prise : barrée en diagonale, comme sur les plateformes. */
 .jour--pris::after{
   content:""; position:absolute; inset:22% 12%; border-top:1px solid currentColor;
-  transform:rotate(-22deg); opacity:.45;
+  transform:rotate(-22deg); opacity:.5;
 }
 .jour--vide{visibility:hidden}
-.jour--bord{background:var(--lagon); color:#fff; font-weight:600}
-.jour--bord:hover:not([disabled]){background:#245854}
-.jour--entre{background:var(--lagon-pale); border-radius:0}
-.jour--survol{background:var(--lagon-pale); border-radius:0}
-.jour--debut{border-radius:var(--r) 0 0 var(--r)}
-.jour--fin{border-radius:0 var(--r) var(--r) 0}
-.jour--aujourdhui{box-shadow:inset 0 0 0 1px var(--bois)}
+.jour--bord{background:var(--accent); color:var(--fond)}
+.jour--bord:hover:not([disabled]){background:var(--accent2)}
+.jour--entre{background:var(--accent-pale)}
+.jour--aujourdhui{box-shadow:inset 0 0 0 1px var(--trait)}
 
-.cal__legende{display:flex; gap:1.2rem; flex-wrap:wrap; margin:1.6rem 0 0; font-size:.78rem;
-              color:var(--encre-doux)}
-.cal__legende span{display:inline-flex; align-items:center; gap:.4rem}
-.pastille{width:11px; height:11px; border-radius:3px; display:inline-block; flex:none}
-.pastille--libre{border:1px solid var(--coquille); background:var(--blanc)}
-.pastille--pris{background:var(--sable); position:relative; overflow:hidden}
-.pastille--pris::after{content:""; position:absolute; inset:0; border-top:1px solid var(--encre-doux);
-  top:50%; transform:rotate(-22deg); opacity:.5}
-.pastille--choisi{background:var(--lagon)}
-.cal__source{margin:.8rem 0 0; font-size:.74rem; color:var(--encre-doux)}
+.cal__legende{display:flex; gap:1.4rem; flex-wrap:wrap; margin:1.8rem 0 0; font-size:.78rem;
+              color:var(--encre2)}
+.cal__legende span{display:inline-flex; align-items:center; gap:.45rem}
+.pastille{width:11px; height:11px; display:inline-block; flex:none}
+.pastille--libre{border:1px solid var(--trait); background:var(--fond)}
+.pastille--pris{background:var(--voile); position:relative; overflow:hidden}
+.pastille--pris::after{content:""; position:absolute; inset:0; top:50%;
+  border-top:1px solid var(--encre2); transform:rotate(-22deg); opacity:.55}
+.pastille--choisi{background:var(--accent)}
+.cal__source{margin:.9rem 0 0; font-size:.76rem; color:var(--sourdine)}
 
 /* ---- récapitulatif ------------------------------------------------------- */
-.recap{
-  border:1px solid var(--coquille); border-radius:var(--r-g); padding:1.6rem;
-  background:var(--sable); position:sticky; top:calc(var(--entete) + 1rem);
-}
-@media (max-width:900px){ .recap{position:static} }
-.recap__titre{font-size:1.35rem; margin:0 0 1.2rem}
-.recap__dates{display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-bottom:1rem}
-.recap__dates > div{background:var(--blanc); border:1px solid var(--coquille);
-  border-radius:var(--r); padding:.6rem .8rem}
-.recap__etiq{display:block; font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
-             color:var(--encre-doux)}
-.recap__dates strong{font-size:.95rem; font-weight:600}
+.recap{border:1px solid var(--trait); padding:1.8rem 1.6rem; background:var(--voile);
+       position:sticky; top:calc(var(--tete) + 1rem)}
+@media (max-width:960px){ .recap{position:static} }
+.recap__titre{font-size:1.35rem; margin:0 0 1.4rem}
+.recap__dates{display:grid; grid-template-columns:1fr 1fr; gap:.8rem; margin-bottom:1.2rem}
+.recap__dates > div{background:var(--fond); border:1px solid var(--trait); padding:.65rem .85rem}
+.recap__etiq{display:block; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+             color:var(--sourdine); margin-bottom:.2rem}
+.recap__dates strong{font-size:.95rem; font-weight:400; font-family:var(--serif)}
 .recap__voyageurs{display:flex; align-items:center; justify-content:space-between; gap:.8rem;
-  font-size:.85rem; font-weight:600; margin-bottom:1.2rem}
-.recap__voyageurs select{font:inherit; font-size:.9rem; padding:.45rem .6rem; border-radius:var(--r);
-  border:1px solid var(--coquille); background:var(--blanc); color:var(--encre)}
+  font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--sourdine);
+  margin-bottom:1.3rem}
+.recap__voyageurs select{font-family:var(--sans); font-size:15px; padding:.4rem .5rem;
+  border:1px solid var(--trait); background:var(--fond); color:var(--encre)}
 
-.recap__detail{border-top:1px solid var(--coquille); padding-top:1rem; margin-bottom:1.2rem;
-               min-height:120px}
-.recap__vide{margin:0; font-size:.88rem; color:var(--encre-doux)}
-.ligne{display:flex; justify-content:space-between; gap:1rem; font-size:.89rem; padding:.28rem 0}
-.ligne span:first-child{color:var(--encre-doux)}
-.ligne--total{border-top:1px solid var(--coquille); margin-top:.6rem; padding-top:.7rem;
-              font-weight:700; font-size:1rem}
-.ligne--acompte{background:var(--lagon-pale); margin:.7rem -.6rem 0; padding:.6rem;
-  border-radius:var(--r); font-weight:700; color:var(--lagon)}
+.recap__detail{border-top:1px solid var(--trait); padding-top:1.1rem; margin-bottom:1.3rem;
+               min-height:128px}
+.recap__vide{margin:0; font-size:.88rem; color:var(--encre2)}
+.ligne{display:flex; justify-content:space-between; gap:1rem; font-size:.89rem; padding:.3rem 0}
+.ligne span:first-child{color:var(--encre2)}
+.ligne--total{border-top:1px solid var(--trait); margin-top:.7rem; padding-top:.8rem;
+              font-weight:400; font-family:var(--serif); font-size:1.05rem}
+.ligne--acompte{background:var(--fond); margin:.8rem -.6rem 0; padding:.7rem .6rem;
+  color:var(--accent); font-weight:500}
 .recap__erreur{margin:0; font-size:.87rem; color:#9C3A28; background:#FBEDE9;
-  border-left:3px solid #9C3A28; padding:.7rem .85rem; border-radius:0 var(--r) var(--r) 0}
+  border-left:2px solid #9C3A28; padding:.75rem .9rem}
 .recap__payer{width:100%}
-.recap__note{margin:.7rem 0 0; font-size:.8rem; min-height:1.2em}
-.recap__rassure{margin:1.1rem 0 0; font-size:.76rem; color:var(--encre-doux); line-height:1.55}
+.recap__note{margin:.8rem 0 0; font-size:.8rem; min-height:1.2em}
+.recap__rassure{margin:1.2rem 0 0; font-size:.76rem; color:var(--encre2); line-height:1.6}
 
 /* ---- confirmation -------------------------------------------------------- */
 .confirmation{max-width:640px; margin-inline:auto; text-align:center}
 .confirmation__coche{
-  width:66px; height:66px; margin:0 auto 1.5rem; border-radius:50%; background:var(--lagon-pale);
-  color:var(--lagon); display:grid; place-items:center; font-size:2rem;
+  width:66px; height:66px; margin:0 auto 1.6rem; border-radius:50%;
+  background:var(--accent-pale); color:var(--accent2);
+  display:grid; place-items:center; font-size:1.9rem;
 }
 .confirmation__resume{
-  text-align:left; border:1px solid var(--coquille); border-radius:var(--r-g);
-  padding:1.5rem; margin:2rem 0; background:var(--sable);
+  text-align:left; border:1px solid var(--trait); padding:1.6rem; margin:2.2rem 0;
+  background:var(--voile);
 }

@@ -100,12 +100,142 @@
     "modeDemo": true
   },
   "avis": {
-    "placeId": "GOOGLE_PLACE_ID",
-    "modeDemo": true
+    "note": 4.9,
+    "total": 47,
+    "plateformes": [
+      {
+        "cle": "airbnb",
+        "nom": "Airbnb",
+        "note": 4.9,
+        "nb": 26
+      },
+      {
+        "cle": "booking",
+        "nom": "Booking.com",
+        "note": 9.4,
+        "nb": 14,
+        "sur": 10
+      },
+      {
+        "cle": "google",
+        "nom": "Google",
+        "note": 4.8,
+        "nb": 7
+      }
+    ],
+    "liste": [
+      {
+        "auteur": "Camille R.",
+        "source": "airbnb",
+        "note": 5,
+        "date": "Mars 2026",
+        "texte": "La maison est encore plus ouverte que sur les photos. Nous avons pris tous les petits déjeuners sur la terrasse, avec le bruit de la houle en fond. Baie Longue est à cinq minutes à pied et nous n'y avons jamais croisé personne."
+      },
+      {
+        "auteur": "Thomas & Léa",
+        "source": "booking",
+        "note": 10,
+        "sur": 10,
+        "date": "Février 2026",
+        "texte": "Quatre chambres vraiment indépendantes, ce qui change tout quand on part à deux couples avec des enfants. Accueil impeccable, et le ménage de fin de séjour évite les discussions."
+      },
+      {
+        "auteur": "Marie-Claude D.",
+        "source": "google",
+        "note": 5,
+        "date": "Janvier 2026",
+        "texte": "Nous cherchions du calme sans être coupés de tout : les Terres Basses sont parfaites pour ça. Marigot en dix minutes pour le marché du samedi."
+      },
+      {
+        "auteur": "Julien P.",
+        "source": "airbnb",
+        "note": 4,
+        "date": "Décembre 2025",
+        "texte": "Très belle villa, bien tenue. Un bémol honnête : la climatisation de la chambre du fond est un peu bruyante la nuit. Les propriétaires nous ont dit qu'elle serait remplacée."
+      },
+      {
+        "auteur": "Sophie & Marc",
+        "source": "booking",
+        "note": 9.5,
+        "sur": 10,
+        "date": "Novembre 2025",
+        "texte": "Le bassin de nage est un vrai bassin, pas une baignoire. Nous y avons fait des longueurs tous les matins. Nous reviendrons."
+      },
+      {
+        "auteur": "Anne-Laure V.",
+        "source": "google",
+        "note": 5,
+        "date": "Octobre 2025",
+        "texte": "La cuisine est un vrai plaisir : plan de travail immense, tout l'équipement, et une table où l'on tient à dix. Nous n'avons dîné dehors que deux fois en dix jours."
+      }
+    ]
   },
   "paiement": {
     "prestataire": "stripe",
     "mode": "test",
     "clePubliqueTest": "STRIPE_PUBLISHABLE_KEY"
+  },
+  "ile": [
+    {
+      "cle": "ile-baielongue",
+      "nom": "Baie Longue",
+      "sousTitre": "La plage de la villa",
+      "texte": "Un kilomètre et demi de sable clair. Les villas se tiennent en retrait, derrière le cordon de raisiniers ; sur la plage elle-même, ni commerce ni parasol de location. Le sentier part du bas du jardin.",
+      "km": 0.4,
+      "pied": "5 min",
+      "voiture": "2 min",
+      "video": true
+    },
+    {
+      "cle": "ile-baierouge",
+      "nom": "Baie Rouge",
+      "sousTitre": "Les arches de roche",
+      "texte": "Deux arches naturelles creusées dans la falaise, une eau très claire et des rouleaux courts qui plaisent aux enfants. Le meilleur endroit de l'île pour le coucher de soleil.",
+      "km": 2.5,
+      "pied": "30 min",
+      "voiture": "6 min"
+    },
+    {
+      "cle": "ile-marigot",
+      "nom": "Marigot",
+      "sousTitre": "Le chef-lieu, côté français",
+      "texte": "Le marché du matin sous les tôles colorées, le fort Louis pour la vue sur Anguilla, et la marina Fort-Louis. Le mercredi et le samedi, les étals débordent sur le quai.",
+      "km": 7,
+      "pied": "—",
+      "voiture": "12 min"
+    },
+    {
+      "cle": "ile-grandcase",
+      "nom": "Grand-Case",
+      "sousTitre": "La rue des restaurants",
+      "texte": "Une seule rue, une trentaine de tables, et les <em>lolos</em> sur le port — les grillades au charbon servies sur des bancs de bois. Réserver le soir, surtout de janvier à avril.",
+      "km": 14,
+      "pied": "—",
+      "voiture": "20 min"
+    },
+    {
+      "cle": "ile-pinel",
+      "nom": "Îlet Pinel",
+      "sousTitre": "La réserve naturelle",
+      "texte": "Un îlet de vingt hectares dans la réserve, à dix minutes de navette depuis l'embarcadère de Cul-de-Sac. Eau translucide, sentier de découverte, deux restaurants de plage. Les navettes partent toutes les demi-heures.",
+      "km": 21,
+      "pied": "—",
+      "voiture": "30 min + navette"
+    },
+    {
+      "cle": "ile-picparadis",
+      "nom": "Pic Paradis",
+      "sousTitre": "Le point haut",
+      "texte": "424 mètres, le sommet de l'île, et le seul endroit d'où l'on voit les deux côtes à la fois. En contrebas, la forêt de Loterie Farm et ses parcours dans les arbres. Prévoir de bonnes chaussures et de l'eau.",
+      "km": 12,
+      "pied": "—",
+      "voiture": "25 min + 25 min de marche"
+    }
+  ],
+  "acces": {
+    "aeroport": "Aéroport Princess Juliana (SXM)",
+    "km": 9,
+    "voiture": "15 min",
+    "note": "Transfert privé sur demande, 60 € l'aller."
   }
 }

@@ -21,19 +21,38 @@ SORTIE = os.path.join(RACINE, "assets", "hero")
 FF     = open(os.path.join(RACINE, "src", ".ffmpeg")).read().strip()
 
 # (nom, nb d'images, largeur, hauteur, qualite AVIF)
-# Budgets tenus : large 32 x 43 Ko = 1,35 Mo ; portrait 16 x 26 Ko = 0,40 Mo.
-# Mesures dans src/budget.md ; ne pas augmenter sans refaire les mesures.
-PROFILS = [("l", 32, 1200, 675, 32),      # large  : 16/9
-           ("p", 16,  640, 854, 32)]      # portrait mobile : 3/4
+# --- Dimensionnement, mesure a l'appui ------------------------------------
+# Le defaut de la premiere version : 32 images reparties sur les 13 s du plan,
+# soit 2,4 images/s. L'ecart entre deux images voisines valait alors environ
+# cinq fois l'ecart natif de la video, et l'oeil voyait la succession.
+#
+# On garde donc un segment COURT, echantillonne dense : 3,5 s a 20 images/s.
+# L'ecart inter-image retombe a x1,37 le natif (mesure par src/mouvement.py),
+# en dessous du seuil ou la succession se remarque.
+#
+#   Bureau  1280x720 q30 : 44,0 Ko/img x 70 = 3,01 Mo
+#   Mobile   640x854 q27 : 20,0 Ko/img x 70 = 1,37 Mo
+#
+# Le chargement reste progressif : affiche fixe immediate, puis une image sur
+# quatre, puis le reste.
+DEBUT, DUREE, CADENCE = 3.8, 3.5, 20        # secondes, secondes, images/s
+PROFILS = [("l", 70, 1280, 720, 30),      # large  : 16/9
+           ("p", 70,  640, 854, 27)]      # portrait mobile : 3/4
 
 
 def extraire(n):
+    """Extrait le segment retenu, a la cadence retenue."""
     tmp = "/tmp/hero-brut"
     shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
-    subprocess.run([FF, "-hide_banner", "-loglevel", "error", "-i", SRC,
-                    "-vf", "fps=%f" % (n / 13.3), "-frames:v", str(n + 2),
+    subprocess.run([FF, "-hide_banner", "-loglevel", "error",
+                    "-ss", str(DEBUT), "-t", str(DUREE + 0.2), "-i", SRC,
+                    "-vf", "fps=%d" % CADENCE, "-frames:v", str(n + 2),
                     os.path.join(tmp, "b%04d.png")], check=True)
-    return sorted(os.listdir(tmp))[:n], tmp
+    noms = sorted(os.listdir(tmp))
+    if len(noms) < n:
+        raise SystemExit("segment trop court : %d images extraites, %d attendues"
+                         % (len(noms), n))
+    return noms[:n], tmp
 
 
 def main():

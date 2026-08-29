@@ -137,7 +137,9 @@ function rendreMois(premier) {
 }
 
 function rendre() {
-  const large = window.matchMedia("(min-width: 681px)").matches;
+  // Même seuil que la feuille de style : sous cette largeur, la grille
+  // .cal__mois repasse sur une colonne et un second mois serait illisible.
+  const large = window.matchMedia("(min-width: 780px)").matches;
   const html = rendreMois(etat.mois) + (large ? rendreMois(moisSuivant(etat.mois, 1)) : "");
   $("#cal-mois").innerHTML = html;
   const fin = large ? moisSuivant(etat.mois, 1) : etat.mois;
@@ -246,8 +248,11 @@ $("#r-payer").addEventListener("click", async () => {
     const d = await r.json();
     if (!r.ok) throw new Error(d.message || "Paiement indisponible.");
     if (d.mode === "demonstration") {
-      note.textContent = "Maquette : aucune clé Stripe n'est configurée, "
-                       + "le parcours de paiement est simulé.";
+      // Le calcul, la vérification de disponibilité et l'appel serveur sont
+      // ceux de la production. Seule manque la clé qui ouvre la page Stripe.
+      note.textContent = "Maquette : aucune clé Stripe n'est configurée. "
+                       + "Renseignez STRIPE_SECRET_KEY (clé sk_test_…) pour "
+                       + "ouvrir le vrai paiement en bac à sable.";
     }
     location.href = d.url;
   } catch (e) {

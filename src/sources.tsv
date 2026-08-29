@@ -1,28 +1,30 @@
-cle	fournisseur	ident	auteur	licence	piece
-sejour-01	unsplash	1747336754845-0fac9b2581cc	Luis J. Corniel	Unsplash	Séjour, vue d'ensemble
-sejour-02	unsplash	1747336754838-024761fd5a7b	Luis J. Corniel	Unsplash	Séjour depuis la cuisine
-sejour-03	unsplash	1747336754900-1b9edb05b002	Luis J. Corniel	Unsplash	Séjour, coin salon
-sejour-04	unsplash	1747336754870-ca7b10cc75f5	Luis J. Corniel	Unsplash	Séjour, tons neutres
-cuisine-01	unsplash	1747336754979-cb1078ce73f5	Luis J. Corniel	Unsplash	Cuisine ouverte
-cuisine-02	unsplash	1747336754816-bda489b6349f	Luis J. Corniel	Unsplash	Table dressée
-detail-01	unsplash	1747336754868-82d5bef02448	Luis J. Corniel	Unsplash	Détail, table basse
-bureau-01	unsplash	1747336754882-dfa5c49f15da	Luis J. Corniel	Unsplash	Coin bureau
-chambre-01	unsplash	1747336754884-c48ca119a9e0	Luis J. Corniel	Unsplash	Chambre principale
-terrasse-01	unsplash	1747336755062-b9c6c43edf83	Luis J. Corniel	Unsplash	Terrasse et bassin
-terrasse-02	unsplash	1747336755075-ea212debe1d0	Luis J. Corniel	Unsplash	Pergola, lit de repos
-terrasse-03	unsplash	1747336754890-85fc2ccf6d80	Luis J. Corniel	Unsplash	Coin repas extérieur
-chambre-02	unsplash	1718894071402-fb944e2a1849	SPX Clicks	Unsplash	Chambre d'amis
-chambre-03	unsplash	1718894071528-1108a094cc78	SPX Clicks	Unsplash	Chambre d'amis, angle
-chambre-04	unsplash	1718894071320-550cd7195ec4	SPX Clicks	Unsplash	Chambre d'amis, bureau
-chambre-05	unsplash	1681949289585-c7a974cfa1a7	Kath MZ	Unsplash	Troisième chambre
-bain-01	unsplash	1783040016976-dca83dc5155e	Protex Plastering	Unsplash	Douche à l'italienne
-bain-02	unsplash	1783040016931-213518180297	Protex Plastering	Unsplash	Vasque et baignoire
-detail-02	unsplash	1682126381814-d11325b8bef8	Kath MZ	Unsplash	Mur de vannerie
-detail-03	unsplash	1682126380690-7766c681049c	Kath MZ	Unsplash	Luminaire en osier
-detail-04	unsplash	1689767041257-a7b125f694d3	Toma Ha	Unsplash	Chevet et lin
-plage-01	unsplash	1679196938875-16312b722f2b	Kath MZ	Unsplash	Ombre de palmier
-ciel-01	pexels	17404328	Pexels — vue aérienne	Pexels	La maison vue du ciel
-ciel-02	pexels	31931883	Pexels — vue aérienne	Pexels	Le littoral et la villa
-ciel-03	pexels	37841349	Pexels — vue aérienne	Pexels	La baie au petit matin
-ciel-04	pexels	37957946	Pexels — vue aérienne	Pexels	Le croissant de sable
-ciel-05	pexels	38094658	Pexels — vue aérienne	Pexels	Les terrasses sur la plage
+cle	fournisseur	ident	auteur	licence	legende	groupe
+sejour-01	unsplash	1747336754845-0fac9b2581cc	Luis J. Corniel	Unsplash	Le séjour, vue d'ensemble	sejour
+sejour-02	unsplash	1747336754838-024761fd5a7b	Luis J. Corniel	Unsplash	Le séjour depuis la cuisine	sejour
+sejour-03	unsplash	1747336754900-1b9edb05b002	Luis J. Corniel	Unsplash	Le coin salon	sejour
+sejour-04	unsplash	1747336754870-ca7b10cc75f5	Luis J. Corniel	Unsplash	Le séjour au matin	sejour
+bureau-01	unsplash	1747336754882-dfa5c49f15da	Luis J. Corniel	Unsplash	Le coin bureau	sejour
+cuisine-01	unsplash	1747336754979-cb1078ce73f5	Luis J. Corniel	Unsplash	La cuisine ouverte	cuisine
+cuisine-02	unsplash	1747336754816-bda489b6349f	Luis J. Corniel	Unsplash	La table d'hôte, dressée	cuisine
+chambre-01	unsplash	1747336754884-c48ca119a9e0	Luis J. Corniel	Unsplash	La chambre principale	chambres
+chambre-02	unsplash	1718894071402-fb944e2a1849	SPX Clicks	Unsplash	La deuxième chambre	chambres
+chambre-03	unsplash	1718894071528-1108a094cc78	SPX Clicks	Unsplash	La deuxième chambre, de l'autre côté	chambres
+chambre-04	unsplash	1718894071320-550cd7195ec4	SPX Clicks	Unsplash	Le secrétaire de la chambre	chambres
+chambre-05	unsplash	1681949289585-c7a974cfa1a7	Kath MZ	Unsplash	La troisième chambre	chambres
+bain-01	unsplash	1783040016976-dca83dc5155e	Protex Plastering	Unsplash	La douche à l'italienne	bain
+bain-02	unsplash	1783040016931-213518180297	Protex Plastering	Unsplash	La vasque et la baignoire	bain
+terrasse-01	unsplash	1747336755062-b9c6c43edf83	Luis J. Corniel	Unsplash	La terrasse et le bassin	exterieur
+terrasse-02	unsplash	1747336755075-ea212debe1d0	Luis J. Corniel	Unsplash	La pergola et son lit de repos	exterieur
+terrasse-03	unsplash	1747336754890-85fc2ccf6d80	Luis J. Corniel	Unsplash	Le coin repas extérieur	exterieur
+piscine-01	unsplash	1596178067639-5c6e68aea6dc	The Anam	Unsplash	Le bassin de nage	exterieur
+ciel-01	extrait	vid-31931883	Pexels	Pexels	La villa vue du ciel	exterieur
+detail-01	unsplash	1747336754868-82d5bef02448	Luis J. Corniel	Unsplash	La table basse	detail
+detail-02	unsplash	1682126381814-d11325b8bef8	Kath MZ	Unsplash	Le mur de vannerie	detail
+detail-03	unsplash	1682126380690-7766c681049c	Kath MZ	Unsplash	Le luminaire en osier	detail
+detail-04	unsplash	1689767041257-a7b125f694d3	Toma Ha	Unsplash	Chevet et lin lavé	detail
+ile-baielongue	extrait	vid-37957946	Pexels	Pexels	Baie Longue	ile
+ile-baierouge	unsplash	1732800643780-9605ca7d83fd	David Vives	Unsplash	Baie Rouge	ile
+ile-marigot	unsplash	1680650547945-fbf61ebad47e	Nelya T	Unsplash	Marigot	ile
+ile-grandcase	unsplash	1764397576424-c9c03e42c5b9	Uda Tommo	Unsplash	Grand-Case	ile
+ile-pinel	unsplash	1757769056231-8929c994701a	Erik Magkekse	Unsplash	Îlet Pinel	ile
+ile-picparadis	unsplash	1760220827280-c8e09699cb4f	Natural AI	Unsplash	Pic Paradis	ile

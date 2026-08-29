@@ -65,6 +65,7 @@ createServer(async (req, res) => {
     });
     res.end(await readFile(abs));
   } catch {
+    console.log("404 " + chemin);
     res.writeHead(404, { "content-type": "text/html; charset=utf-8" });
     res.end("<h1>404</h1><p>" + chemin + "</p>");
   }

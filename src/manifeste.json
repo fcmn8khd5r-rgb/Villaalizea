@@ -6,7 +6,8 @@
   "poids": 174010,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Séjour, vue d'ensemble",
+  "piece": "Le séjour, vue d'ensemble",
+  "groupe": "sejour",
   "ident": "1747336754845-0fac9b2581cc"
  },
  "sejour-02": {
@@ -16,7 +17,8 @@
   "poids": 182652,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Séjour depuis la cuisine",
+  "piece": "Le séjour depuis la cuisine",
+  "groupe": "sejour",
   "ident": "1747336754838-024761fd5a7b"
  },
  "sejour-03": {
@@ -26,7 +28,8 @@
   "poids": 179837,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Séjour, coin salon",
+  "piece": "Le coin salon",
+  "groupe": "sejour",
   "ident": "1747336754900-1b9edb05b002"
  },
  "sejour-04": {
@@ -36,8 +39,20 @@
   "poids": 262722,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Séjour, tons neutres",
+  "piece": "Le séjour au matin",
+  "groupe": "sejour",
   "ident": "1747336754870-ca7b10cc75f5"
+ },
+ "bureau-01": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBdl4AAijby1+hWTVUAA/uc7G0+x03qbq/wQgYn+UIkkSHdtvHQOdr5GXlGpthVlyXlRdAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 145311,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Le coin bureau",
+  "groupe": "sejour",
+  "ident": "1747336754882-dfa5c49f15da"
  },
  "cuisine-01": {
   "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZQCw7BaidobiLhHkAP6QKEUm66eCI950kV6A6HVpyhGuMOOWTUrjnDwKfYsEwAA=",
@@ -46,7 +61,8 @@
   "poids": 221388,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Cuisine ouverte",
+  "piece": "La cuisine ouverte",
+  "groupe": "cuisine",
   "ident": "1747336754979-cb1078ce73f5"
  },
  "cuisine-02": {
@@ -56,28 +72,9 @@
   "poids": 177054,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Table dressée",
+  "piece": "La table d'hôte, dressée",
+  "groupe": "cuisine",
   "ident": "1747336754816-bda489b6349f"
- },
- "detail-01": {
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdABuh84wqTGaAAP6UGF8/aFL3fXh7s2B2fxwGJ2g8/ZDBv8zqRLsGF58Reg+ZLewgAAA=",
-  "w": 2400,
-  "h": 1596,
-  "poids": 180245,
-  "auteur": "Luis J. Corniel",
-  "licence": "Unsplash",
-  "piece": "Détail, table basse",
-  "ident": "1747336754868-82d5bef02448"
- },
- "bureau-01": {
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBdl4AAijby1+hWTVUAA/uc7G0+x03qbq/wQgYn+UIkkSHdtvHQOdr5GXlGpthVlyXlRdAA=",
-  "w": 2400,
-  "h": 1596,
-  "poids": 145311,
-  "auteur": "Luis J. Corniel",
-  "licence": "Unsplash",
-  "piece": "Coin bureau",
-  "ident": "1747336754882-dfa5c49f15da"
  },
  "chambre-01": {
   "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDmFZWawv0TmAAD9zFIVnWy5qUa8W994i/KZnpo6z20s4SaV9XAAAA==",
@@ -86,38 +83,9 @@
   "poids": 132756,
   "auteur": "Luis J. Corniel",
   "licence": "Unsplash",
-  "piece": "Chambre principale",
+  "piece": "La chambre principale",
+  "groupe": "chambres",
   "ident": "1747336754884-c48ca119a9e0"
- },
- "terrasse-01": {
-  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABwAwCdASoUAA0APuliq04pJaQiMAgBIB0JQBOmUABhM6g0DSAA3+ImE8ugCEVIiocpLq4PttbxolZEjiEsyfcNqSIdS17Z+c3vMNRnzMUr5sE4rmuAAA==",
-  "w": 2400,
-  "h": 1596,
-  "poids": 427745,
-  "auteur": "Luis J. Corniel",
-  "licence": "Unsplash",
-  "piece": "Terrasse et bassin",
-  "ident": "1747336755062-b9c6c43edf83"
- },
- "terrasse-02": {
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDDVzjFGlSeOYAD+Vv4cTR2fkxRMyNm0taHeKiIELRiIRrgBqDJ8phmrif3VFFxUAAA=",
-  "w": 2400,
-  "h": 1596,
-  "poids": 510594,
-  "auteur": "Luis J. Corniel",
-  "licence": "Unsplash",
-  "piece": "Pergola, lit de repos",
-  "ident": "1747336755075-ea212debe1d0"
- },
- "terrasse-03": {
-  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBOgAs3s3KxcHlt6AADtYqonlfDhQ5ReRxQ6Q4S6wqWJ40AzTXNNByUeRbYCAAA=",
-  "w": 2400,
-  "h": 1596,
-  "poids": 308020,
-  "auteur": "Luis J. Corniel",
-  "licence": "Unsplash",
-  "piece": "Coin repas extérieur",
-  "ident": "1747336754890-85fc2ccf6d80"
  },
  "chambre-02": {
   "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQBACdASoUAA0APuliqE2pJaOiMAgBIB0JYwC7ACHhp9yIhciMzej3gAD+16XQJSeR+Q/KOy/tvr7KDj31rVOnsMTDVSPA07XOjG7pGkxtYkAAAAA=",
@@ -126,7 +94,8 @@
   "poids": 137521,
   "auteur": "SPX Clicks",
   "licence": "Unsplash",
-  "piece": "Chambre d'amis",
+  "piece": "La deuxième chambre",
+  "groupe": "chambres",
   "ident": "1718894071402-fb944e2a1849"
  },
  "chambre-03": {
@@ -136,7 +105,8 @@
   "poids": 189748,
   "auteur": "SPX Clicks",
   "licence": "Unsplash",
-  "piece": "Chambre d'amis, angle",
+  "piece": "La deuxième chambre, de l'autre côté",
+  "groupe": "chambres",
   "ident": "1718894071528-1108a094cc78"
  },
  "chambre-04": {
@@ -146,7 +116,8 @@
   "poids": 145313,
   "auteur": "SPX Clicks",
   "licence": "Unsplash",
-  "piece": "Chambre d'amis, bureau",
+  "piece": "Le secrétaire de la chambre",
+  "groupe": "chambres",
   "ident": "1718894071320-550cd7195ec4"
  },
  "chambre-05": {
@@ -156,7 +127,8 @@
   "poids": 344892,
   "auteur": "Kath MZ",
   "licence": "Unsplash",
-  "piece": "Troisième chambre",
+  "piece": "La troisième chambre",
+  "groupe": "chambres",
   "ident": "1681949289585-c7a974cfa1a7"
  },
  "bain-01": {
@@ -166,7 +138,8 @@
   "poids": 82042,
   "auteur": "Protex Plastering",
   "licence": "Unsplash",
-  "piece": "Douche à l'italienne",
+  "piece": "La douche à l'italienne",
+  "groupe": "bain",
   "ident": "1783040016976-dca83dc5155e"
  },
  "bain-02": {
@@ -176,8 +149,75 @@
   "poids": 99571,
   "auteur": "Protex Plastering",
   "licence": "Unsplash",
-  "piece": "Vasque et baignoire",
+  "piece": "La vasque et la baignoire",
+  "groupe": "bain",
   "ident": "1783040016931-213518180297"
+ },
+ "terrasse-01": {
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABwAwCdASoUAA0APuliq04pJaQiMAgBIB0JQBOmUABhM6g0DSAA3+ImE8ugCEVIiocpLq4PttbxolZEjiEsyfcNqSIdS17Z+c3vMNRnzMUr5sE4rmuAAA==",
+  "w": 2400,
+  "h": 1596,
+  "poids": 427745,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "La terrasse et le bassin",
+  "groupe": "exterieur",
+  "ident": "1747336755062-b9c6c43edf83"
+ },
+ "terrasse-02": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDDVzjFGlSeOYAD+Vv4cTR2fkxRMyNm0taHeKiIELRiIRrgBqDJ8phmrif3VFFxUAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 510594,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "La pergola et son lit de repos",
+  "groupe": "exterieur",
+  "ident": "1747336755075-ea212debe1d0"
+ },
+ "terrasse-03": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBOgAs3s3KxcHlt6AADtYqonlfDhQ5ReRxQ6Q4S6wqWJ40AzTXNNByUeRbYCAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 308020,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "Le coin repas extérieur",
+  "groupe": "exterieur",
+  "ident": "1747336754890-85fc2ccf6d80"
+ },
+ "piscine-01": {
+  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAwCdASoUAA0APulkqE0pJaQiMAgBIB0JQBOgAF+XlwVAAPth2x0berNFzj0kJUpNUJQG247s33O2Cp6QIq8Vuj0t/CmN4Z7FhWI2Tk5AAA==",
+  "w": 2400,
+  "h": 1602,
+  "poids": 590156,
+  "auteur": "The Anam",
+  "licence": "Unsplash",
+  "piece": "Le bassin de nage",
+  "groupe": "exterieur",
+  "ident": "1596178067639-5c6e68aea6dc"
+ },
+ "ciel-01": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAAsAPulgqU0pJaQiMAgBIB0JZQAAW3HJLnzSf2QAAP5bMBeAixMMY9HCIY3eJ/y+Z8/Kg38rk/Uq7pi73VbliAA=",
+  "w": 2560,
+  "h": 1440,
+  "poids": 406949,
+  "auteur": "Pexels",
+  "licence": "Pexels",
+  "piece": "La villa vue du ciel",
+  "groupe": "exterieur",
+  "ident": "vid-31931883"
+ },
+ "detail-01": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdABuh84wqTGaAAP6UGF8/aFL3fXh7s2B2fxwGJ2g8/ZDBv8zqRLsGF58Reg+ZLewgAAA=",
+  "w": 2400,
+  "h": 1596,
+  "poids": 180245,
+  "auteur": "Luis J. Corniel",
+  "licence": "Unsplash",
+  "piece": "La table basse",
+  "groupe": "detail",
+  "ident": "1747336754868-82d5bef02448"
  },
  "detail-02": {
   "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBOmUABoV2KFIDXPGoAA/uczUoZV+R+eh1b+XpVLpLr5I5pujINyBTxcXHnEe6gLXEkq0ljMkAAA",
@@ -186,7 +226,8 @@
   "poids": 218210,
   "auteur": "Kath MZ",
   "licence": "Unsplash",
-  "piece": "Mur de vannerie",
+  "piece": "Le mur de vannerie",
+  "groupe": "detail",
   "ident": "1682126381814-d11325b8bef8"
  },
  "detail-03": {
@@ -196,7 +237,8 @@
   "poids": 133822,
   "auteur": "Kath MZ",
   "licence": "Unsplash",
-  "piece": "Luminaire en osier",
+  "piece": "Le luminaire en osier",
+  "groupe": "detail",
   "ident": "1682126380690-7766c681049c"
  },
  "detail-04": {
@@ -206,67 +248,74 @@
   "poids": 120487,
   "auteur": "Toma Ha",
   "licence": "Unsplash",
-  "piece": "Chevet et lin",
+  "piece": "Chevet et lin lavé",
+  "groupe": "detail",
   "ident": "1689767041257-a7b125f694d3"
  },
- "plage-01": {
-  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAwCdASoQABQAPulkqE0pJaQiMAgBIB0JYwCw7B4kg8eBACxZigAA9c/ZBXMCTVCGzvsK1SogrBHbwufAYBb1geoR2Axd//WQAA==",
+ "ile-baielongue": {
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAAsAPuliqU2pJaQiMAgBIB0JYgCdACHw1gSkg62qjGzAAMsmHm4piZ7AII8nIwEv9rKUfEbSxcIXPqQ3XO71XEAbH6/oAAA=",
+  "w": 2560,
+  "h": 1440,
+  "poids": 496399,
+  "auteur": "Pexels",
+  "licence": "Pexels",
+  "piece": "Baie Longue",
+  "groupe": "ile",
+  "ident": "vid-37957946"
+ },
+ "ile-baierouge": {
+  "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA8APulgq00pJaQiMAgBIB0JQBgbhDrj82JKWmuwAP7vvp3Ca/2HzoXWB+HuJA6O9T9VLG69VahU9q49iAAA",
   "w": 2400,
-  "h": 3000,
-  "poids": 384789,
-  "auteur": "Kath MZ",
+  "h": 1806,
+  "poids": 278595,
+  "auteur": "David Vives",
   "licence": "Unsplash",
-  "piece": "Ombre de palmier",
-  "ident": "1679196938875-16312b722f2b"
+  "piece": "Baie Rouge",
+  "groupe": "ile",
+  "ident": "1732800643780-9605ca7d83fd"
  },
- "ciel-01": {
-  "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABwAwCdASoUAAsAPulgqk2pJaQiMAgBIB0JYgCsLwAAjnv6CmAA/hXYAV6DW/w5PYktRd5VKQFt26+BpDH1TxFvAAA=",
-  "w": 2560,
-  "h": 1440,
-  "poids": 355770,
-  "auteur": "Pexels — vue aérienne",
-  "licence": "Pexels",
-  "piece": "La maison vue du ciel",
-  "ident": "17404328"
+ "ile-marigot": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAwCdASoNABQAPuliqE2pJaOiMAgBIB0JQBWAA9XHRNWIRPY9E4AAzUJ2S2dmdPY3/VCS/+qZe30o5XHw3OY4Vtkj5OrTcAA=",
+  "w": 2400,
+  "h": 3600,
+  "poids": 680521,
+  "auteur": "Nelya T",
+  "licence": "Unsplash",
+  "piece": "Marigot",
+  "groupe": "ile",
+  "ident": "1680650547945-fbf61ebad47e"
  },
- "ciel-02": {
-  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAwAwCdASoUAAsAPulkq04pJaQiMAgBIB0JZQAAW6oyu7JAAP5byV79ZGZN93umxrVyCJdL2FEL2LRoS+fnVf5JqKtH2mzYAAA=",
-  "w": 2560,
-  "h": 1440,
-  "poids": 432967,
-  "auteur": "Pexels — vue aérienne",
-  "licence": "Pexels",
-  "piece": "Le littoral et la villa",
-  "ident": "31931883"
+ "ile-grandcase": {
+  "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAwAwCdASoLABQAPulgqE0pJaOiMAgBIB0JYwC7ACHWqEQAAP7ow+iddFrXPFi7qdxY8gosH4MEY9wP6K5E+mJN5NKwXymAAAA=",
+  "w": 2400,
+  "h": 4265,
+  "poids": 228012,
+  "auteur": "Uda Tommo",
+  "licence": "Unsplash",
+  "piece": "Grand-Case",
+  "groupe": "ile",
+  "ident": "1764397576424-c9c03e42c5b9"
  },
- "ciel-03": {
-  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JQBWAAsBJ6Yq1ESSwAAD9HwDdd+pZEk1+DEvZdQ4Iu48UyWkz1msW/7h9h988oKAAAA==",
-  "w": 2560,
-  "h": 1440,
-  "poids": 240271,
-  "auteur": "Pexels — vue aérienne",
-  "licence": "Pexels",
-  "piece": "La baie au petit matin",
-  "ident": "37841349"
+ "ile-pinel": {
+  "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAABQAwCdASoUAA8APulgqk2pJaQiMAgBIB0JQBfnBDikP4TnQAD+Zl6E0kinGfk48g3NEWIuD+WUzoLnovCv/MSngv78LgAA",
+  "w": 2400,
+  "h": 1800,
+  "poids": 360739,
+  "auteur": "Erik Magkekse",
+  "licence": "Unsplash",
+  "piece": "Îlet Pinel",
+  "groupe": "ile",
+  "ident": "1757769056231-8929c994701a"
  },
- "ciel-04": {
-  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoUAAsAPuliqU2pJaQiMAgBIB0JYgCdMoADUEd/oRw1z3YAAMsmIW4MU4zwnY5xOKfDtx4s7txY4/Jt8C0cO25nFslozoKYAAA=",
-  "w": 2560,
-  "h": 1440,
-  "poids": 493038,
-  "auteur": "Pexels — vue aérienne",
-  "licence": "Pexels",
-  "piece": "Le croissant de sable",
-  "ident": "37957946"
- },
- "ciel-05": {
-  "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoUAAsAPulep00pJSOiMAgBIB0JaACw7BuD2hBWf1JEgAD6YNyv7YqdrvsbSAzhG2H9ojcpSnUnoDiWkJiBEkmIDSAAAA==",
-  "w": 2560,
-  "h": 1440,
-  "poids": 528426,
-  "auteur": "Pexels — vue aérienne",
-  "licence": "Pexels",
-  "piece": "Les terrasses sur la plage",
-  "ident": "38094658"
+ "ile-picparadis": {
+  "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBOgAkHvKJ0GHsQIEAD9NTRbgeUvzDV6YCrd2n7eGxQ0XLOGVMijXXQK4/dXyTH9xAAA",
+  "w": 2400,
+  "h": 1602,
+  "poids": 833604,
+  "auteur": "Natural AI",
+  "licence": "Unsplash",
+  "piece": "Pic Paradis",
+  "groupe": "ile",
+  "ident": "1760220827280-c8e09699cb4f"
  }
 }

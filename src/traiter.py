@@ -20,11 +20,14 @@ QUAL     = {"avif": {"quality": 52, "speed": 4}, "webp": {"quality": 74, "method
 
 # Force de l'alignement selon l'origine : le lot de reference bouge a peine,
 # les sources exterieures sont ramenees plus fermement.
+# Force de l'alignement colorimetrique, par auteur. Le lot de reference
+# bouge a peine ; les sources exterieures sont ramenees plus fermement.
 FORCE = {"Luis J. Corniel": 0.22, "SPX Clicks": 0.58, "Protex Plastering": 0.55,
-         "Kath MZ": 0.60, "Toma Ha": 0.58,
-         # Les vues aeriennes sont ramenees moins fort : leur turquoise est
-         # l'interet du plan, l'ecraser vers le creme le rendrait terne.
-         "Pexels — vue aérienne": 0.34}
+         "Kath MZ": 0.60, "Toma Ha": 0.58, "The Anam": 0.62}
+# Les images de l'ile gardent leur caractere : ce sont des LIEUX, pas des
+# pieces de la maison. On les rapproche assez pour qu'elles appartiennent au
+# meme site, pas au point de les rendre ternes.
+FORCE_ILE = 0.30
 
 
 def flou_base64(im, largeur=20):
@@ -35,12 +38,13 @@ def flou_base64(im, largeur=20):
     return "data:image/webp;base64," + base64.b64encode(b.getvalue()).decode()
 
 
-def traiter(cle, auteur, cible):
+def traiter(cle, auteur, cible, groupe=""):
     src = os.path.join(ORIG, cle + ".jpg")
     if not os.path.exists(src):
         return None
     im = Image.open(src).convert("RGB")
-    im = etalonner(im, cible, force_align=FORCE.get(auteur, 0.55))
+    force = FORCE_ILE if groupe == "ile" else FORCE.get(auteur, 0.55)
+    im = etalonner(im, cible, force_align=force)
     fiche = {"lqip": flou_base64(im), "w": im.width, "h": im.height}
     poids = 0
     for suff, larg in LARGEURS.items():
@@ -68,14 +72,16 @@ def main():
         cle = (l.get("cle") or "").strip()
         if not cle:
             continue
-        f = traiter(cle, l["auteur"].strip(), cible)
+        f = traiter(cle, l["auteur"].strip(), cible, l.get("groupe", "").strip())
         if not f:
             print("  absent :", cle); continue
         f.update(auteur=l["auteur"].strip(), licence=l["licence"].strip(),
-                 piece=l["piece"].strip(), ident=l["ident"].strip())
+                 piece=l["legende"].strip(), groupe=l.get("groupe", "").strip(),
+                 ident=l["ident"].strip())
         manifeste[cle] = f
         total += f["poids"]
-        print("  %-12s %6.1f Ko  %s" % (cle, f["poids"] / 1024, f["piece"]))
+        print("  %-16s %-10s %6.1f Ko  %s"
+              % (cle, f["groupe"], f["poids"] / 1024, f["piece"]))
     json.dump(manifeste, open(os.path.join(RACINE, "src", "manifeste.json"), "w"),
               ensure_ascii=False, indent=1)
     print("\n%d images — %.1f Mo au total (4 fichiers chacune)"

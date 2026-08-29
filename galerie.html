@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galerie — Villa Alizéa</title>
+<meta name="description" content="Vingt-trois vues de la Villa Alizéa : séjour, cuisine, chambres, salles d'eau, terrasse et bassin. Navigation au clavier et au doigt.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="mask-icon" href="favicon.svg" color="#B3552F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
+<link rel="stylesheet" href="css/style.css?v=3">
+
+<script>document.documentElement.className+=" anime";</script>
+</head>
+<body>
+<!-- TETE:debut -->
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="tete">
+  <a class="marque" href="index.html">Villa Alizéa</a>
+  <nav class="menu" aria-label="Principale">
+      <a href="la-villa.html">La villa</a>
+      <a href="galerie.html" aria-current="page">Galerie</a>
+      <a href="l-ile.html">L'île</a>
+      <a href="le-sejour.html">Le séjour</a>
+  </nav>
+  <a class="btn" href="reserver.html">Réserver</a>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="tiroir"
+          aria-label="Ouvrir le menu"><i></i></button>
+</header>
+<div class="tiroir" id="tiroir" hidden>
+  <button class="tiroir__x" type="button" aria-label="Fermer le menu">&times;</button>
+  <a href="la-villa.html">La villa</a>
+  <a href="galerie.html">Galerie</a>
+  <a href="l-ile.html">L'île</a>
+  <a href="le-sejour.html">Le séjour</a>
+  <a href="reserver.html">Réserver</a>
+</div>
+<!-- TETE:fin -->
+<main id="contenu">
+<header class="entree">
+  <div class="page">
+    <p class="oeil" data-anim>Galerie</p>
+    <h1 data-anim>Vingt-trois vues</h1>
+    <p class="chapo" data-anim>
+      Cliquez sur une photo pour l'agrandir. Une fois ouverte, les flèches du clavier
+      et le glissement du doigt permettent de passer de l'une à l'autre.
+    </p>
+  </div>
+</header>
+
+<section class="section" style="padding-top:0">
+  <div class="page">
+    <div class="onglets" role="group" aria-label="Filtrer la galerie">
+      <!-- ONGLETS:debut -->
+<button type="button" class="onglet est-actif" data-filtre="tout">Tout</button>
+<button type="button" class="onglet" data-filtre="sejour">Séjour et cuisine</button>
+<button type="button" class="onglet" data-filtre="chambres">Chambres</button>
+<button type="button" class="onglet" data-filtre="bain">Salles d'eau</button>
+<button type="button" class="onglet" data-filtre="exterieur">Dehors</button>
+<button type="button" class="onglet" data-filtre="detail">Détails</button>
+
+<!-- ONGLETS:fin -->
+    </div>
+    <p class="vh" role="status" aria-live="polite" id="galerie-etat"></p>
+    <div class="mosaique" id="galerie">
+      <!-- GALERIE:debut -->
+<figure data-groupe="sejour" data-anim>
+  <a href="assets/img/sejour-01-g.webp" data-cle="sejour-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/sejour-01-v.avif">
+      <img src="assets/img/sejour-01-v.webp" alt="Le séjour, vue d'ensemble" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JQBOgAfGSIrY2D/kIAOFBEFPLpa5Smus+93kZ07fAF7cfkKbEK4yLSrW9MHelKIAAAA==) center/cover">
+    </picture>
+    <figcaption>Le séjour, vue d'ensemble</figcaption>
+  </a>
+</figure>
+<figure data-groupe="exterieur" data-anim>
+  <a href="assets/img/terrasse-02-g.webp" data-cle="terrasse-02">
+    <picture>
+      <source type="image/avif" srcset="assets/img/terrasse-02-v.avif">
+      <img src="assets/img/terrasse-02-v.webp" alt="La pergola et son lit de repos" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDDVzjFGlSeOYAD+Vv4cTR2fkxRMyNm0taHeKiIELRiIRrgBqDJ8phmrif3VFFxUAAA=) center/cover">
+    </picture>
+    <figcaption>La pergola et son lit de repos</figcaption>
+  </a>
+</figure>
+<figure data-groupe="chambres" data-anim>
+  <a href="assets/img/chambre-01-g.webp" data-cle="chambre-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/chambre-01-v.avif">
+      <img src="assets/img/chambre-01-v.webp" alt="La chambre principale" width="640" height="422"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDmFZWawv0TmAAD9zFIVnWy5qUa8W994i/KZnpo6z20s4SaV9XAAAA==) center/cover">
+    </picture>
+    <figcaption>La chambre principale</figcaption>
+  </a>
+</figure>
+<figure data-groupe="cuisine" data-anim>
+  <a href="assets/img/cuisine-01-g.webp" data-cle="cuisine-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/cuisine-01-v.avif">
+      <img src="assets/img/cuisine-01-v.webp" alt="La cuisine ouverte" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZQCw7BaidobiLhHkAP6QKEUm66eCI950kV6A6HVpyhGuMOOWTUrjnDwKfYsEwAA=) center/cover">
+    </picture>
+    <figcaption>La cuisine ouverte</figcaption>
+  </a>
+</figure>
+<figure data-groupe="exterieur" data-anim>
+  <a href="assets/img/ciel-01-g.webp" data-cle="ciel-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/ciel-01-v.avif">
+      <img src="assets/img/ciel-01-v.webp" alt="La villa vue du ciel" width="640" height="360"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAAsAPulgqU0pJaQiMAgBIB0JZQAAW3HJLnzSf2QAAP5bMBeAixMMY9HCIY3eJ/y+Z8/Kg38rk/Uq7pi73VbliAA=) center/cover">
+    </picture>
+    <figcaption>La villa vue du ciel</figcaption>
+  </a>
+</figure>
+<figure data-groupe="bain" data-anim>
+  <a href="assets/img/bain-02-g.webp" data-cle="bain-02">
+    <picture>
+      <source type="image/avif" srcset="assets/img/bain-02-v.avif">
+      <img src="assets/img/bain-02-v.webp" alt="La vasque et la baignoire" width="640" height="800"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoQABQAPulgqE0pJaQiMAgBIB0JQBOgAskX2QAQXdfbSgAA9C7vrESZHq9EOv7G9ns+ZH8TbbAx68mTVTSkhs5gagTusZAA) center/cover">
+    </picture>
+    <figcaption>La vasque et la baignoire</figcaption>
+  </a>
+</figure>
+<figure data-groupe="chambres" data-anim>
+  <a href="assets/img/chambre-03-g.webp" data-cle="chambre-03">
+    <picture>
+      <source type="image/avif" srcset="assets/img/chambre-03-v.avif">
+      <img src="assets/img/chambre-03-v.webp" alt="La deuxième chambre, de l'autre côté" width="640" height="427"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdACG6EpIwWwzK0AD+xM+3e+scaUgDz4qP3ZOHz9hCdRBW3/stzVfoAAAA) center/cover">
+    </picture>
+    <figcaption>La deuxième chambre, de l'autre côté</figcaption>
+  </a>
+</figure>
+<figure data-groupe="detail" data-anim>
+  <a href="assets/img/detail-02-g.webp" data-cle="detail-02">
+    <picture>
+      <source type="image/avif" srcset="assets/img/detail-02-v.avif">
+      <img src="assets/img/detail-02-v.webp" alt="Le mur de vannerie" width="640" height="427"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBOmUABoV2KFIDXPGoAA/uczUoZV+R+eh1b+XpVLpLr5I5pujINyBTxcXHnEe6gLXEkq0ljMkAAA) center/cover">
+    </picture>
+    <figcaption>Le mur de vannerie</figcaption>
+  </a>
+</figure>
+<figure data-groupe="sejour" data-anim>
+  <a href="assets/img/sejour-02-g.webp" data-cle="sejour-02">
+    <picture>
+      <source type="image/avif" srcset="assets/img/sejour-02-v.avif">
+      <img src="assets/img/sejour-02-v.webp" alt="Le séjour depuis la cuisine" width="640" height="417"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAwAwCdASoUAA0APuliqU2pJaQiMAgBIB0JQBOgAU1GlTQAAP317O9kQcNOT/MFieRV7g1cZKLvkHKqpB4Yhr6mPq4AAA==) center/cover">
+    </picture>
+    <figcaption>Le séjour depuis la cuisine</figcaption>
+  </a>
+</figure>
+<figure data-groupe="exterieur" data-anim>
+  <a href="assets/img/terrasse-01-g.webp" data-cle="terrasse-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/terrasse-01-v.avif">
+      <img src="assets/img/terrasse-01-v.webp" alt="La terrasse et le bassin" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABwAwCdASoUAA0APuliq04pJaQiMAgBIB0JQBOmUABhM6g0DSAA3+ImE8ugCEVIiocpLq4PttbxolZEjiEsyfcNqSIdS17Z+c3vMNRnzMUr5sE4rmuAAA==) center/cover">
+    </picture>
+    <figcaption>La terrasse et le bassin</figcaption>
+  </a>
+</figure>
+<figure data-groupe="exterieur" data-anim>
+  <a href="assets/img/piscine-01-g.webp" data-cle="piscine-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/piscine-01-v.avif">
+      <img src="assets/img/piscine-01-v.webp" alt="Le bassin de nage" width="640" height="427"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAwCdASoUAA0APulkqE0pJaQiMAgBIB0JQBOgAF+XlwVAAPth2x0berNFzj0kJUpNUJQG247s33O2Cp6QIq8Vuj0t/CmN4Z7FhWI2Tk5AAA==) center/cover">
+    </picture>
+    <figcaption>Le bassin de nage</figcaption>
+  </a>
+</figure>
+<figure data-groupe="chambres" data-anim>
+  <a href="assets/img/chambre-02-g.webp" data-cle="chambre-02">
+    <picture>
+      <source type="image/avif" srcset="assets/img/chambre-02-v.avif">
+      <img src="assets/img/chambre-02-v.webp" alt="La deuxième chambre" width="640" height="427"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQBACdASoUAA0APuliqE2pJaOiMAgBIB0JYwC7ACHhp9yIhciMzej3gAD+16XQJSeR+Q/KOy/tvr7KDj31rVOnsMTDVSPA07XOjG7pGkxtYkAAAAA=) center/cover">
+    </picture>
+    <figcaption>La deuxième chambre</figcaption>
+  </a>
+</figure>
+<figure data-groupe="bain" data-anim>
+  <a href="assets/img/bain-01-g.webp" data-cle="bain-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/bain-01-v.avif">
+      <img src="assets/img/bain-01-v.webp" alt="La douche à l'italienne" width="640" height="800"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoQABQAPulgqE0pJaOiMAgBIB0JYwCw7BbkbExF7QAA/sQo5tf1579gaRZ6ZKEVS3h5lpy64/IK7aBl1za8pjeIAAA=) center/cover">
+    </picture>
+    <figcaption>La douche à l'italienne</figcaption>
+  </a>
+</figure>
+<figure data-groupe="cuisine" data-anim>
+  <a href="assets/img/cuisine-02-g.webp" data-cle="cuisine-02">
+    <picture>
+      <source type="image/avif" srcset="assets/img/cuisine-02-v.avif">
+      <img src="assets/img/cuisine-02-v.webp" alt="La table d'hôte, dressée" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoUAA0APuliqU2pJaQiMAgBIB0JQBOgBFu0nyj19+Ek3oAA/eij4Zd5IArZuXve2qgQg1XMgrMGPCGbxkAAAA==) center/cover">
+    </picture>
+    <figcaption>La table d'hôte, dressée</figcaption>
+  </a>
+</figure>
+<figure data-groupe="detail" data-anim>
+  <a href="assets/img/detail-01-g.webp" data-cle="detail-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/detail-01-v.avif">
+      <img src="assets/img/detail-01-v.webp" alt="La table basse" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACQAwCdASoUAA0APulgqE0pJaQiMAgBIB0JYwCdABuh84wqTGaAAP6UGF8/aFL3fXh7s2B2fxwGJ2g8/ZDBv8zqRLsGF58Reg+ZLewgAAA=) center/cover">
+    </picture>
+    <figcaption>La table basse</figcaption>
+  </a>
+</figure>
+<figure data-groupe="sejour" data-anim>
+  <a href="assets/img/sejour-03-g.webp" data-cle="sejour-03">
+    <picture>
+      <source type="image/avif" srcset="assets/img/sejour-03-v.avif">
+      <img src="assets/img/sejour-03-v.webp" alt="Le coin salon" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDwA7ErxZ/0gAP6Ly0NRJicmYL5BHOc2Z73NImQzscyNmiCuGDgojvYAAAA=) center/cover">
+    </picture>
+    <figcaption>Le coin salon</figcaption>
+  </a>
+</figure>
+<figure data-groupe="exterieur" data-anim>
+  <a href="assets/img/terrasse-03-g.webp" data-cle="terrasse-03">
+    <picture>
+      <source type="image/avif" srcset="assets/img/terrasse-03-v.avif">
+      <img src="assets/img/terrasse-03-v.webp" alt="Le coin repas extérieur" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBOgAs3s3KxcHlt6AADtYqonlfDhQ5ReRxQ6Q4S6wqWJ40AzTXNNByUeRbYCAAA=) center/cover">
+    </picture>
+    <figcaption>Le coin repas extérieur</figcaption>
+  </a>
+</figure>
+<figure data-groupe="chambres" data-anim>
+  <a href="assets/img/chambre-04-g.webp" data-cle="chambre-04">
+    <picture>
+      <source type="image/avif" srcset="assets/img/chambre-04-v.avif">
+      <img src="assets/img/chambre-04-v.webp" alt="Le secrétaire de la chambre" width="640" height="427"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAwCdASoUAA0APulgqE2pJaQiMAgBIB0JYwCdACHeguDzTY6cF7YAAP7fRTFpYfJyj4jbNiog6qrZo0jg0IBefF+GEbCpUnN78AAA) center/cover">
+    </picture>
+    <figcaption>Le secrétaire de la chambre</figcaption>
+  </a>
+</figure>
+<figure data-groupe="sejour" data-anim>
+  <a href="assets/img/bureau-01-g.webp" data-cle="bureau-01">
+    <picture>
+      <source type="image/avif" srcset="assets/img/bureau-01-v.avif">
+      <img src="assets/img/bureau-01-v.webp" alt="Le coin bureau" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAwCdASoUAA0APulgqU2pJaQiMAgBIB0JQBdl4AAijby1+hWTVUAA/uc7G0+x03qbq/wQgYn+UIkkSHdtvHQOdr5GXlGpthVlyXlRdAA=) center/cover">
+    </picture>
+    <figcaption>Le coin bureau</figcaption>
+  </a>
+</figure>
+<figure data-groupe="detail" data-anim>
+  <a href="assets/img/detail-03-g.webp" data-cle="detail-03">
+    <picture>
+      <source type="image/avif" srcset="assets/img/detail-03-v.avif">
+      <img src="assets/img/detail-03-v.webp" alt="Le luminaire en osier" width="640" height="960"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAwCdASoNABQAPulgqE2pJaOiMAgBIB0JZACdL1ABbLrvGliEmgAA/lRmbFqCiCdJtpXooiFEU+LFzV2llgUcw6TvLn7AAAA=) center/cover">
+    </picture>
+    <figcaption>Le luminaire en osier</figcaption>
+  </a>
+</figure>
+<figure data-groupe="chambres" data-anim>
+  <a href="assets/img/chambre-05-g.webp" data-cle="chambre-05">
+    <picture>
+      <source type="image/avif" srcset="assets/img/chambre-05-v.avif">
+      <img src="assets/img/chambre-05-v.webp" alt="La troisième chambre" width="640" height="800"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABQAPulkqU4pJaQiMAgBIB0JQBOgBDvrTceGy4uQAAD+sFUdFViw4ndUr204MOUFxxe8um1eLJzgc0g1Puw68dP0DKKAAAA=) center/cover">
+    </picture>
+    <figcaption>La troisième chambre</figcaption>
+  </a>
+</figure>
+<figure data-groupe="sejour" data-anim>
+  <a href="assets/img/sejour-04-g.webp" data-cle="sejour-04">
+    <picture>
+      <source type="image/avif" srcset="assets/img/sejour-04-v.avif">
+      <img src="assets/img/sejour-04-v.webp" alt="Le séjour au matin" width="640" height="426"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABwAwCdASoUAA0APulgqE0pJaOiMAgBIB0JZQC7ABiirfEoO8gA/sOl6oxXnlLr1/ceW69jc3wmwcT40kpqeYp8OYm3OnNcAAA=) center/cover">
+    </picture>
+    <figcaption>Le séjour au matin</figcaption>
+  </a>
+</figure>
+<figure data-groupe="detail" data-anim>
+  <a href="assets/img/detail-04-g.webp" data-cle="detail-04">
+    <picture>
+      <source type="image/avif" srcset="assets/img/detail-04-v.avif">
+      <img src="assets/img/detail-04-v.webp" alt="Chevet et lin lavé" width="640" height="959"
+           loading="lazy" decoding="async"
+           style="background:url(data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAwBACdASoNABQAPulgqE0pJaQiMAgBIB0JYwCdMoADTp547pYBtObx0cAA/owevUsluKcRUXBWeUZaSiNqszPeo8OQAA==) center/cover">
+    </picture>
+    <figcaption>Chevet et lin lavé</figcaption>
+  </a>
+</figure>
+<!-- GALERIE:fin -->
+    </div>
+  </div>
+</section>
+</main>
+<!-- PIED:debut -->
+<footer class="pied">
+  <div class="page">
+    <div class="pied__grille">
+      <div>
+        <p class="pied__marque">Villa Alizéa</p>
+        <p style="max-width:36ch; opacity:.82">Meublé de tourisme de 4 chambres pour 8 voyageurs, aux Terres Basses, à Saint-Martin.</p>
+        <p style="opacity:.82">N° de déclaration : 97801 00 0000</p>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="tel:+590590000000">+590 590 00 00 00</a></li>
+          <li><a href="mailto:contact@villa-alizea.example">contact@villa-alizea.example</a></li>
+          <li style="opacity:.82">Baie Longue, Terres Basses, 97150 Saint-Martin</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Le site</h3>
+        <ul>
+          <li><a href="la-villa.html">La villa</a></li>
+          <li><a href="galerie.html">Galerie</a></li>
+          <li><a href="l-ile.html">L'île</a></li>
+          <li><a href="le-sejour.html">Le séjour</a></li>
+          <li><a href="reserver.html">Réserver</a></li>
+          <li><a href="mentions.html">Mentions légales</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fictif"><strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive : le nom, les textes, les tarifs, les avis et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits. Le détail figure dans les <a href="mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.</p>
+    <div class="pied__bas">
+      <span>© 2026 Villa Alizéa — maquette</span>
+      <span><a href="mentions.html">Mentions légales</a> · <a href="mentions.html#credits">Crédits photo</a></span>
+    </div>
+  </div>
+</footer>
+<!-- PIED:fin -->
+<script src="js/main.js?v=3" defer></script>
+<script src="js/credits.js?v=3" defer></script>
+<script src="js/galerie.js?v=3" defer></script>
+<div class="visio" id="visio" role="dialog" aria-modal="true" aria-label="Visionneuse" hidden>
+  <div class="visio__scene" id="visio-scene"></div>
+  <div class="visio__bas">
+    <span class="visio__compte" id="visio-compte"></span>
+    <span class="visio__legende" id="visio-legende"></span>
+    <span class="visio__credit" id="visio-credit"></span>
+  </div>
+  <button class="visio__x" type="button" aria-label="Fermer">&times;</button>
+  <button class="visio__fl visio__fl--p" type="button" aria-label="Photo précédente">&#8249;</button>
+  <button class="visio__fl visio__fl--s" type="button" aria-label="Photo suivante">&#8250;</button>
+</div>
+</body>
+</html>
