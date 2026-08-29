@@ -80,9 +80,23 @@ mais de **resserrer le mouvement**. On garde donc un segment court, échantillon
 | | |
 |---|---|
 | Segment retenu | **3,5 s** du plan (à partir de t = 2,0 s) |
-| Cadence | **20 images par seconde** |
-| Nombre d'images | **70** |
-| Écart entre images voisines | **×1,35 le natif** (contre ×5 avant) |
+| Cadence | **50 images/s** en bureau, **40** en mobile |
+| Nombre d'images | **175** et **140** |
+| Écart entre images voisines | **0,69 %** de l'échelle des gris |
+
+La vidéo source est à 25 images/s : échantillonner plus dense n'aurait fait que dupliquer.
+On passe donc par une **interpolation à compensation de mouvement** (`minterpolate` en mode
+`mci`), qui fabrique de vraies positions intermédiaires au lieu de superposer deux images.
+Un fondu entre voisines superpose deux positions et double les contours — c'est ce
+doublement qui se lit comme un tremblement, même quand l'écart est faible.
+
+Trois relevés successifs, sur le même protocole :
+
+| | Écart entre images voisines |
+|---|---|
+| 32 images sur 13 s | ~10 % — diaporama |
+| 70 images sur 3,5 s | 1,98 % — fluide, mais un grain subsiste |
+| **175 images interpolées sur 3,5 s** | **0,69 %** |
 
 Le facteur ×1,37 est mesuré, pas estimé : `src/mouvement.py` compare l'écart absolu moyen
 entre images consécutives à celui de la vidéo à sa cadence native. Un fondu entre images
@@ -90,25 +104,23 @@ voisines achève de lisser.
 
 ### Le poids, et le temps d'affichage
 
-| | Bureau 1280×720 | Mobile 640×854 |
+| | Bureau 1280×720 | Mobile 576×768 |
 |---|---|---|
-| Séquence complète | **2,30 Mo** | **1,00 Mo** |
-| Première vague (1 image sur 4) | 604 Ko | 264 Ko |
-| **Page d'accueil, première visite** | **2,43 Mo** | **1,09 Mo** |
-
-Le lagon et le ciel se compressent mieux que la houle et le feuillage du plan précédent :
-à cadence et dimensions égales, la séquence pèse un tiers de moins.
+| Images | 175 | 140 |
+| Séquence complète | **4,34 Mo** | **1,31 Mo** |
+| Plafond convenu | 5 Mo | 1,5 Mo |
 
 Temps mesurés sur les poids réels, à débit constant :
 
-| Réseau | Affiche | 1ʳᵉ vague (mobile) | Séquence complète (mobile) |
-|---|---|---|---|
-| 4G moyenne, 10 Mb/s | < 0,1 s | **0,2 s** | 0,8 s |
-| 4G faible, 5 Mb/s | < 0,1 s | 0,4 s | 1,7 s |
-| 3G, 1,5 Mb/s | < 0,1 s | 1,4 s | 5,6 s |
+| Réseau | Séquence bureau | Séquence mobile |
+|---|---|---|
+| Bon réseau, 25 Mb/s | 1,5 s | 0,4 s |
+| 4G moyenne, 10 Mb/s | 3,6 s | 1,1 s |
+| 4G faible, 5 Mb/s | 7,3 s | 2,2 s |
 
 Le visiteur n'attend jamais devant un écran vide : **82 Ko** suffisent au premier rendu
-(HTML + CSS + affiche), et la séquence arrive derrière, par vagues.
+(HTML + CSS + affiche), l'affiche reste à l'écran pendant le préchargement, et une jauge
+discrète montre l'avancement. Le hero ne s'allonge qu'une fois la séquence complète.
 
 ### La liaison d'entrée et de sortie
 
@@ -190,11 +202,15 @@ Une première version consultait `navigator.connection.downlink` et coupait l'ef
 navigateur, souvent fausse au début d'une page et sans objet en local — elle annonçait
 1,3 Mb/s sur une machine sans réseau, ce qui suffisait à désactiver l'effet pour de bon.
 
-On ne refuse désormais d'emblée que sur les signaux **sûrs** : l'économiseur de données,
-qui exprime une intention, et la 2G, qui exprime une incapacité. Sinon on charge le premier
-paquet de huit images, on **mesure le débit réellement obtenu**, et on n'abandonne que si
-la séquence entière demanderait plus de dix secondes. Le coût d'une mauvaise surprise est
-alors de huit images, pas d'un effet perdu.
+Le même travers valait pour `effectiveType`. Sur cette machine, sans aucun réseau, l'API a
+annoncé tour à tour « 3g à 1,3 Mb/s » puis « 2g à 0,25 Mb/s » — deux verdicts opposés en
+quelques minutes, sur la même absence de réseau.
+
+Une seule chose bloque donc sans discussion : **l'économiseur de données**, parce que c'est
+une intention exprimée par le visiteur et non une mesure. Pour tout le reste on **sonde** —
+une image, on mesure le débit réellement obtenu, on décide — et on refait la vérification
+après chaque paquet, au cas où le débit s'effondrerait. Sur une vraie 2G le verdict tombe
+après 26 Ko.
 
 ### Quatre replis, tous vérifiés
 

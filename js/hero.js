@@ -21,9 +21,9 @@
 
    REPLIS
      pas de JavaScript              → l'affiche reste, en plein écran ;
-     animations réduites, 2G,
+     animations réduites,
      économiseur de données         → aucun octet de séquence n'est chargé ;
-     débit mesuré trop faible       → on s'arrête après le premier paquet ;
+     débit mesuré trop faible       → on s'arrête après une image de sonde ;
      préchargement incomplet        → l'affiche reste, sans rien casser.
    ========================================================================= */
 (function () {
@@ -42,22 +42,22 @@
   if (!hero || !course || !pile) return;
 
   /* ---- faut-il charger la séquence ? -----------------------------------
-     On ne refuse d'emblée que sur les signaux SÛRS : l'économiseur de
-     données, qui exprime une intention, et la 2G, qui exprime une
-     incapacité.
+     Une seule chose bloque sans discussion : l'économiseur de données. C'est
+     une INTENTION exprimée par le visiteur, pas une mesure — elle se
+     respecte telle quelle.
 
-     On ne se fie plus à `downlink` pour décider. C'est une estimation
-     glissante, arrondie et plafonnée par le navigateur, souvent fausse au
-     tout début d'une page et sans objet en local — elle annonçait ici
-     1,3 Mb/s sur une machine sans réseau, ce qui suffisait à désactiver
-     l'effet. Une décision définitive prise sur un chiffre pareil est une
-     erreur de méthode.
+     Tout le reste est estimation, et l'estimation du navigateur n'est pas
+     fiable. Sur cette machine, sans aucun réseau, `navigator.connection` a
+     annoncé tour à tour « 3g à 1,3 Mb/s » puis « 2g à 0,25 Mb/s ». Prendre
+     une décision définitive là-dessus, c'est couper l'effet chez des gens
+     dont la connexion va très bien.
 
-     À la place, on lance le chargement et on MESURE le débit réel obtenu
-     sur le premier paquet. S'il implique une attente déraisonnable, on
-     s'arrête et l'affiche reste : on n'aura dépensé qu'un paquet. */
+     On SONDE donc : une image d'abord, on mesure le débit réellement obtenu,
+     et on décide. Sur une vraie 2G le verdict tombe après ~26 Ko, ce qui est
+     un coût acceptable pour ne pas se tromper. La vérification est refaite
+     après le premier paquet, au cas où le débit s'effondrerait ensuite. */
   var co = navigator.connection || {};
-  var lent = co.saveData === true || /^(slow-)?2g$/.test(co.effectiveType || "");
+  var lent = co.saveData === true;
   var sobre = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Au-delà de cette attente estimée pour la séquence entière, on renonce.
@@ -74,11 +74,14 @@
      Le choix se fait sur l'ORIENTATION, pas sur la largeur : une fenêtre
      étroite mais paysage doit recevoir le cadrage large. */
   var mqPortrait = window.matchMedia("(orientation: portrait), (max-width: 699px)");
-  var PROFIL = mqPortrait.matches ? { p: "p", n: 70, course: "300vh" }
-                                  : { p: "l", n: 70, course: "340vh" };
-  // Poids moyen d'une image, mesuré à la fabrication : sert à estimer
-  // l'attente restante à partir du débit constaté.
-  var POIDS_IMAGE = mqPortrait.matches ? 15000 : 34000;   // octets
+  // Le nombre d'images et leur poids viennent de la fabrication, via
+  // js/hero-data.js : écrits en dur ici, ils divergeaient en silence au
+  // premier changement de cadence.
+  var DATA = (window.ALIZEA_HERO || {});
+  var cle = mqPortrait.matches ? "p" : "l";
+  var d = DATA[cle] || { n: 70, poids: 30000 };
+  var PROFIL = { p: cle, n: d.n, course: mqPortrait.matches ? "300vh" : "340vh" };
+  var POIDS_IMAGE = d.poids;   // octets, mesuré à la fabrication
   var url = function (i) {
     return "assets/hero/" + PROFIL.p + String(i).padStart(3, "0") + ".avif";
   };
@@ -133,26 +136,30 @@
 
   function precharger() {
     if (jauge) jauge.hidden = false;
-    // Par petits paquets : lancer soixante-dix requêtes d'un coup sature la
-    // file du navigateur et retarde tout le reste de la page.
     var i = 0, depart = performance.now(), renonce = false;
-    function paquet() {
-      var lot = [];
-      for (var k = 0; k < 8 && i < PROFIL.n; k++, i++) lot.push(charger(i));
-      return Promise.all(lot).then(function () {
-        // Verdict après le premier paquet, sur ce qui s'est réellement passé.
-        if (i === 8 && !renonce) {
-          var octetsRestants = POIDS_IMAGE * (PROFIL.n - i);
-          var debit = debitMesure(depart);
-          if (debit > 0 && octetsRestants / debit > ATTENTE_MAX) {
-            renonce = true;
-            figer("connexion-lente");
-          }
-        }
-        return (i < PROFIL.n && !renonce) ? paquet() : null;
-      });
+
+    /** Le débit constaté permet-il de finir dans un délai acceptable ? */
+    function tropLent() {
+      var debit = debitMesure(depart);
+      if (!debit) return false;                 // mesure inexploitable : on continue
+      return POIDS_IMAGE * (PROFIL.n - i) / debit > ATTENTE_MAX;
     }
-    return paquet().then(function () { return !renonce; });
+
+    // Sonde : une image, puis verdict. Sur une vraie 2G on s'arrête ici.
+    return charger(i++).then(function () {
+      if (tropLent()) { renonce = true; figer("connexion-lente"); return false; }
+      // Ensuite par paquets : lancer cent soixante-quinze requêtes d'un coup
+      // saturerait la file du navigateur et retarderait le reste de la page.
+      function paquet() {
+        var lot = [];
+        for (var k = 0; k < 8 && i < PROFIL.n; k++, i++) lot.push(charger(i));
+        return Promise.all(lot).then(function () {
+          if (!renonce && tropLent()) { renonce = true; figer("connexion-lente"); }
+          return (i < PROFIL.n && !renonce) ? paquet() : null;
+        });
+      }
+      return paquet().then(function () { return !renonce; });
+    });
   }
 
   /* ---- profil de vitesse ------------------------------------------------
@@ -254,9 +261,11 @@
   var cible = 0, courant = 0, anime = false;
 
   function boucle() {
-    var d = cible - courant;
-    if (Math.abs(d) < 0.0003) { courant = cible; peindre(courant); anime = false; return; }
-    courant += d * 0.20;
+    var ecart = cible - courant;
+    if (Math.abs(ecart) < 0.0003) { courant = cible; peindre(courant); anime = false; return; }
+    // Approche plus douce qu'avant (0,20) : les à-coups d'un pavé tactile
+    // se dissolvent sur davantage d'images d'écran.
+    courant += ecart * 0.15;
     peindre(courant);
     requestAnimationFrame(boucle);
   }

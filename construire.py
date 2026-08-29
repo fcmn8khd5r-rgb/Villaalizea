@@ -396,6 +396,29 @@ def bloc_credits():
     return "\n".join(out)
 
 
+def ecrire_hero_js():
+    """Expose au navigateur ce que la fabrication a réellement produit.
+
+    Le nombre d'images et leur poids moyen étaient écrits en dur dans
+    js/hero.js : au premier changement de cadence, les deux divergeaient en
+    silence. Ils sont désormais lus depuis src/hero.json."""
+    chemin_src = os.path.join(RACINE, "src", "hero.json")
+    if not os.path.exists(chemin_src):
+        return False
+    h = json.load(open(chemin_src, encoding="utf-8"))
+    d = {c: {"n": v["n"], "poids": round(v["poids"] / v["n"])} for c, v in h.items()}
+    chemin = os.path.join(RACINE, "js", "hero-data.js")
+    contenu = ("/* GÉNÉRÉ par construire.py — ne pas modifier à la main.\n"
+               "   Nombre d'images de chaque séquence et poids moyen d'une image,\n"
+               "   mesurés à la fabrication. */\n"
+               "window.ALIZEA_HERO = %s;\n" % json.dumps(d, ensure_ascii=False, indent=1))
+    ancien = open(chemin, encoding="utf-8").read() if os.path.exists(chemin) else ""
+    if contenu != ancien:
+        open(chemin, "w", encoding="utf-8").write(contenu)
+        return True
+    return False
+
+
 def ecrire_credits_js():
     d = {c: "Photo : %s — licence %s" % (MAN[c]["auteur"], MAN[c]["licence"])
          for c in ORDRE if c in MAN}
@@ -560,6 +583,8 @@ def main():
     if not verifie:
         if ecrire_credits_js():
             print("%-20s réécrit" % "js/credits.js")
+        if ecrire_hero_js():
+            print("%-20s réécrit" % "js/hero-data.js")
         for f in ecrire_indexation():
             print("%-20s réécrit" % f)
     manque = [c for c in ORDRE if c not in MAN]

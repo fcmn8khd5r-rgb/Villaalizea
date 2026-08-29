@@ -51,18 +51,37 @@ FF     = open(os.path.join(RACINE, "src", ".ffmpeg")).read().strip()
 #
 # Le chargement reste progressif : affiche fixe immediate, puis une image sur
 # quatre, puis le reste.
-DEBUT, DUREE, CADENCE = 2.0, 3.5, 20        # secondes, secondes, images/s
-PROFILS = [("l", 70, 1280, 720, 30),      # large  : 16/9
-           ("p", 70,  640, 854, 27)]      # portrait mobile : 3/4
+DEBUT, DUREE = 2.0, 3.5                     # segment retenu, en secondes
+
+# La video source est a 25 images/s : echantillonner plus dense ne ferait que
+# dupliquer des images identiques. On passe donc par une INTERPOLATION A
+# COMPENSATION DE MOUVEMENT, qui fabrique de vraies positions intermediaires
+# au lieu de superposer deux images voisines.
+#
+# Mesure sur un extrait : en doublant la cadence, le pas entre images voisines
+# tombe de 2,05 % a 1,12 % de l'echelle des gris, avec seulement 4 %
+# d'irregularite — les images de synthese se placent correctement entre les
+# reelles, sans deformer le feuillage.
+#
+# (cle, images/s, largeur, hauteur, qualite AVIF)
+PROFILS = [("l", 50, 1280, 720, 26),      # large : 175 images, ~4,6 Mo
+           ("p", 40,  576, 768, 24)]      # portrait mobile : 140 images, ~1,4 Mo
 
 
-def extraire(n):
-    """Extrait le segment retenu, a la cadence retenue."""
+def extraire(cadence, n):
+    """Extrait le segment retenu a la cadence demandee.
+
+    Au-dela de la cadence native, minterpolate synthetise les images
+    manquantes par compensation de mouvement. C'est lent — quelques minutes —
+    mais c'est ce qui distingue un vrai deplacement d'un fondu entre deux
+    positions."""
     tmp = "/tmp/hero-brut"
     shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
+    filtre = ("minterpolate=fps=%d:mi_mode=mci:mc_mode=aobmc:"
+              "me_mode=bidir:vsbmc=1" % cadence)
     subprocess.run([FF, "-hide_banner", "-loglevel", "error",
                     "-ss", str(DEBUT), "-t", str(DUREE + 0.2), "-i", SRC,
-                    "-vf", "fps=%d" % CADENCE, "-frames:v", str(n + 2),
+                    "-vf", filtre, "-frames:v", str(n + 3),
                     os.path.join(tmp, "b%04d.png")], check=True)
     noms = sorted(os.listdir(tmp))
     if len(noms) < n:
@@ -76,8 +95,11 @@ def main():
     c = json.load(open(os.path.join(RACINE, "src", "cible.json")))
     cible = (np.array(c["moyenne"], "float32"), np.array(c["ecart"], "float32"))
     fiche = {}
-    for nom, n, lw, lh, q in PROFILS:
-        noms, tmp = extraire(n)
+    for nom, cadence, lw, lh, q in PROFILS:
+        n = int(round(DUREE * cadence))
+        print("  %s : %d images a %d/s — interpolation en cours, patientez..."
+              % (nom, n, cadence))
+        noms, tmp = extraire(cadence, n)
         poids = 0
         for i, f in enumerate(noms):
             im = Image.open(os.path.join(tmp, f)).convert("RGB")
@@ -99,8 +121,9 @@ def main():
             if i == 0:                      # image d'affiche = repli sans JS
                 im.save(os.path.join(SORTIE, "affiche-%s.avif" % nom), quality=62, speed=3)
                 im.save(os.path.join(SORTIE, "affiche-%s.webp" % nom), quality=80, method=6)
-        fiche[nom] = {"n": n, "w": lw, "h": lh, "poids": poids}
-        print("%s : %d images, %.0f Ko (%.1f Ko/image)" % (nom, n, poids/1024, poids/1024/n))
+        fiche[nom] = {"n": n, "cadence": cadence, "w": lw, "h": lh, "poids": poids}
+        print("  %s : %d images, %.2f Mo (%.1f Ko/image)"
+              % (nom, n, poids/1048576, poids/1024/n))
         shutil.rmtree(tmp, ignore_errors=True)
     json.dump(fiche, open(os.path.join(RACINE, "src", "hero.json"), "w"), indent=1)
 
