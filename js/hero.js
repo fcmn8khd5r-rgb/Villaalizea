@@ -22,8 +22,8 @@
    REPLIS
      pas de JavaScript              → l'affiche reste, en plein écran ;
      animations réduites, 2G,
-     économiseur de données,
-     3G sous 1,4 Mb/s               → aucun octet de séquence n'est chargé ;
+     économiseur de données         → aucun octet de séquence n'est chargé ;
+     débit mesuré trop faible       → on s'arrête après le premier paquet ;
      préchargement incomplet        → l'affiche reste, sans rien casser.
    ========================================================================= */
 (function () {
@@ -38,18 +38,30 @@
   var curseur = document.getElementById("curseur");
   var jauge   = document.getElementById("jauge");
   var affiche = document.getElementById("hero-affiche");
+  var ecran   = document.getElementById("hero-ecran");
   if (!hero || !course || !pile) return;
 
   /* ---- faut-il charger la séquence ? -----------------------------------
-     L'économiseur de données et la 2G ferment la porte sans discussion.
-     Pour la 3G, l'étiquette seule ne suffit pas : elle couvre une bande
-     très large. On consulte donc le débit estimé. */
+     On ne refuse d'emblée que sur les signaux SÛRS : l'économiseur de
+     données, qui exprime une intention, et la 2G, qui exprime une
+     incapacité.
+
+     On ne se fie plus à `downlink` pour décider. C'est une estimation
+     glissante, arrondie et plafonnée par le navigateur, souvent fausse au
+     tout début d'une page et sans objet en local — elle annonçait ici
+     1,3 Mb/s sur une machine sans réseau, ce qui suffisait à désactiver
+     l'effet. Une décision définitive prise sur un chiffre pareil est une
+     erreur de méthode.
+
+     À la place, on lance le chargement et on MESURE le débit réel obtenu
+     sur le premier paquet. S'il implique une attente déraisonnable, on
+     s'arrête et l'affiche reste : on n'aura dépensé qu'un paquet. */
   var co = navigator.connection || {};
-  var debit = typeof co.downlink === "number" ? co.downlink : 10;
-  var lent = co.saveData === true ||
-             /^(slow-)?2g$/.test(co.effectiveType || "") ||
-             (co.effectiveType === "3g" && debit < 1.4);
+  var lent = co.saveData === true || /^(slow-)?2g$/.test(co.effectiveType || "");
   var sobre = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Au-delà de cette attente estimée pour la séquence entière, on renonce.
+  var ATTENTE_MAX = 10;   // secondes
 
   function figer(raison) {
     hero.classList.add("hero--fixe");
@@ -64,6 +76,9 @@
   var mqPortrait = window.matchMedia("(orientation: portrait), (max-width: 699px)");
   var PROFIL = mqPortrait.matches ? { p: "p", n: 70, course: "300vh" }
                                   : { p: "l", n: 70, course: "340vh" };
+  // Poids moyen d'une image, mesuré à la fabrication : sert à estimer
+  // l'attente restante à partir du débit constaté.
+  var POIDS_IMAGE = mqPortrait.matches ? 15000 : 34000;   // octets
   var url = function (i) {
     return "assets/hero/" + PROFIL.p + String(i).padStart(3, "0") + ".avif";
   };
@@ -103,19 +118,41 @@
     if (jauge) jauge.style.setProperty("--part", (arrivees / PROFIL.n * 100) + "%");
   }
 
+  /** Débit réellement obtenu sur les images déjà arrivées, en octets/s.
+      Renvoie 0 si la mesure n'est pas exploitable. */
+  function debitMesure(depuis) {
+    if (!window.performance || !performance.getEntriesByType) return 0;
+    var octets = 0;
+    performance.getEntriesByType("resource").forEach(function (r) {
+      if (!/\/assets\/hero\/[lp]\d{3}\.avif$/.test(r.name)) return;
+      octets += r.transferSize || r.encodedBodySize || 0;
+    });
+    var duree = (performance.now() - depuis) / 1000;
+    return duree > 0.05 && octets > 0 ? octets / duree : 0;
+  }
+
   function precharger() {
     if (jauge) jauge.hidden = false;
     // Par petits paquets : lancer soixante-dix requêtes d'un coup sature la
     // file du navigateur et retarde tout le reste de la page.
-    var i = 0;
+    var i = 0, depart = performance.now(), renonce = false;
     function paquet() {
       var lot = [];
       for (var k = 0; k < 8 && i < PROFIL.n; k++, i++) lot.push(charger(i));
       return Promise.all(lot).then(function () {
-        return i < PROFIL.n ? paquet() : null;
+        // Verdict après le premier paquet, sur ce qui s'est réellement passé.
+        if (i === 8 && !renonce) {
+          var octetsRestants = POIDS_IMAGE * (PROFIL.n - i);
+          var debit = debitMesure(depart);
+          if (debit > 0 && octetsRestants / debit > ATTENTE_MAX) {
+            renonce = true;
+            figer("connexion-lente");
+          }
+        }
+        return (i < PROFIL.n && !renonce) ? paquet() : null;
       });
     }
-    return paquet();
+    return paquet().then(function () { return !renonce; });
   }
 
   /* ---- profil de vitesse ------------------------------------------------
@@ -187,14 +224,21 @@
       }
     }
 
-    // Liaison d'entrée : le titre se retire, le voile s'allège.
+    // Liaison d'entrée : le titre se retire, les voiles s'allègent.
+    var s = Math.min(1, p / 0.17), d = s * s * (3 - 2 * s);
     if (texte) {
-      var s = Math.min(1, p / 0.17), d = s * s * (3 - 2 * s);
       texte.style.opacity = String(1 - d);
       texte.style.transform = "translate3d(0," + (-34 * d) + "px,0)";
       texte.style.pointerEvents = d > 0.6 ? "none" : "";
     }
-    if (voile) voile.style.opacity = String(1 - 0.45 * Math.min(1, p / 0.3));
+    // L'écran de lisibilité n'existe que pour le texte : une fois celui-ci
+    // parti, le garder revient à assombrir l'image pour rien — et c'est
+    // justement dans la seconde moitié que le plan a le plus à montrer.
+    if (ecran) {
+      var e = Math.min(1, p / 0.24);
+      ecran.style.opacity = String(1 - e * e * (3 - 2 * e));
+    }
+    if (voile) voile.style.opacity = String(1 - 0.55 * Math.min(1, p / 0.32));
     // Liaison de sortie : le hero se dissout dans la couleur de la page.
     if (sortie) {
       var t = Math.max(0, (p - 0.87) / 0.13);
@@ -241,7 +285,8 @@
     peindre(courant);
   }
 
-  precharger().then(function () {
+  precharger().then(function (complet) {
+    if (!complet) return;                       // renoncé faute de débit
     if (echecs > PROFIL.n * 0.15) { figer("chargement-incomplet"); return; }
     // On n'allonge la page que si le visiteur est encore en haut : sinon on
     // décalerait le contenu sous ses yeux. S'il remonte, on activera alors.

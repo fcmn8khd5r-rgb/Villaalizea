@@ -293,7 +293,7 @@ body.bloque{overflow:hidden}
    la gauche, là où se trouve le texte : la droite de l'image reste intacte.
    `python3 src/lisibilite.py` recontrôle le résultat image par image. */
 .hero__ecran{
-  position:absolute; inset:0; pointer-events:none;
+  position:absolute; inset:0; pointer-events:none; will-change:opacity;
   /* Profil vérifié par src/lisibilite.py sur les 140 images : le pire cas
      donne 5,8:1 sur le sur-titre en petites capitales, 7:1 sur le titre. */
   background:linear-gradient(0deg,

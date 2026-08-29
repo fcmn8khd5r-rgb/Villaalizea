@@ -16,6 +16,8 @@ Le hero piloté au défilement est la seule chose en plus.
 
 ## Lancer le site
 
+Double-cliquez **`Ouvrir le site.command`**, ou en ligne de commande :
+
 ```bash
 node src/serveur-local.mjs 8150
 ```
@@ -181,6 +183,19 @@ ramène le pire cas à :
 
 `python3 src/lisibilite.py` recontrôle après toute modification de la séquence ou du voile.
 
+### Décider sur une mesure, pas sur une estimation
+
+Une première version consultait `navigator.connection.downlink` et coupait l'effet sous
+1,4 Mb/s. Mauvaise méthode : c'est une estimation glissante, arrondie et plafonnée par le
+navigateur, souvent fausse au début d'une page et sans objet en local — elle annonçait
+1,3 Mb/s sur une machine sans réseau, ce qui suffisait à désactiver l'effet pour de bon.
+
+On ne refuse désormais d'emblée que sur les signaux **sûrs** : l'économiseur de données,
+qui exprime une intention, et la 2G, qui exprime une incapacité. Sinon on charge le premier
+paquet de huit images, on **mesure le débit réellement obtenu**, et on n'abandonne que si
+la séquence entière demanderait plus de dix secondes. Le coût d'une mauvaise surprise est
+alors de huit images, pas d'un effet perdu.
+
 ### Quatre replis, tous vérifiés
 
 | Situation | Comportement | Octets de séquence |
@@ -188,7 +203,7 @@ ramène le pire cas à :
 | Pas de JavaScript | L'affiche reste, en plein écran ; le hero fait une hauteur d'écran | 0 |
 | `prefers-reduced-motion` | Idem, `data-repli="animations-reduites"` | **0** |
 | Économiseur de données, 2G | Idem, `data-repli="connexion-lente"` | **0** |
-| 3G sous 1,4 Mb/s | Idem — au-dessus, la séquence se charge | **0** |
+| Débit mesuré trop faible | On s'arrête après le premier paquet | 8 images |
 | Images inaccessibles | Idem, `data-repli="chargement-impossible"` | — |
 
 `essai-replis.html?cas=sobre|lent|donnees|normal` rejoue chacun de ces cas.
