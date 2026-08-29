@@ -279,8 +279,30 @@ body.bloque{overflow:hidden}
 .hero__voile{
   position:absolute; inset:0; pointer-events:none; will-change:opacity;
   background:
-    linear-gradient(180deg, rgba(20,17,14,.46) 0%, rgba(20,17,14,.12) 26%, rgba(20,17,14,0) 50%),
-    linear-gradient(0deg,  rgba(20,17,14,.60) 0%, rgba(20,17,14,.14) 32%, rgba(20,17,14,0) 60%);
+    linear-gradient(180deg, rgba(20,17,14,.34) 0%, rgba(20,17,14,.10) 24%, rgba(20,17,14,0) 46%),
+    linear-gradient(0deg,  rgba(20,17,14,.26) 0%, rgba(20,17,14,.06) 30%, rgba(20,17,14,0) 55%);
+}
+
+/* Écran de lisibilité, calculé et non estimé.
+   Mesuré sur les 70 images : la bande où se pose le texte a une luminance
+   moyenne de 146 et monte à 201 sur les zones claires — le blanc n'y tenait
+   que 2,5:1, alors qu'il en faut 4,5. Le masque confine l'assombrissement à
+   la gauche, là où se trouve le texte : la droite de l'image reste intacte.
+   `python3 src/lisibilite.py` recontrôle le résultat image par image. */
+.hero__ecran{
+  position:absolute; inset:0; pointer-events:none;
+  /* Profil vérifié par src/lisibilite.py sur les 140 images : le pire cas
+     donne 5,8:1 sur le sur-titre en petites capitales, 7:1 sur le titre. */
+  background:linear-gradient(0deg,
+    rgba(16,13,11,.66) 0%,  rgba(16,13,11,.62) 26%,
+    rgba(16,13,11,.52) 46%, rgba(16,13,11,.30) 62%,
+    rgba(16,13,11,.08) 74%, transparent 84%);
+  -webkit-mask-image:linear-gradient(90deg, #000 0%, #000 52%, transparent 86%);
+          mask-image:linear-gradient(90deg, #000 0%, #000 52%, transparent 86%);
+}
+@media (max-width:700px){
+  /* En portrait le texte occupe toute la largeur : le masque n'a plus lieu d'être. */
+  .hero__ecran{-webkit-mask-image:none; mask-image:none}
 }
 /* Voile de sortie : le hero se dissout dans la couleur de la page plutôt
    que de la heurter. */
@@ -316,13 +338,30 @@ body.bloque{overflow:hidden}
   writing-mode:vertical-rl; opacity:.8}
 @media (max-width:900px){ .hero__pilote{display:none} }
 
-.hero__jauge{position:absolute; left:0; bottom:0; height:2px; width:0;
-  background:color-mix(in srgb, var(--accent-pale) 85%, transparent);
-  transition:width .4s ease, opacity .6s ease}
+/* Indicateur de préchargement : discret, en bas à gauche, il disparaît dès
+   que la séquence est complète et que l'effet s'active. */
+.hero__jauge{
+  position:absolute; left:clamp(18px,4vw,56px); bottom:clamp(1.6rem,4vh,2.4rem);
+  display:flex; align-items:center; gap:.7rem; color:#fff; pointer-events:none;
+}
+.hero__jauge[hidden]{display:none}
+.hero__jauge span{font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; opacity:.62}
+.hero__jauge i{display:block; width:78px; height:1px; background:rgba(255,255,255,.28);
+               position:relative; overflow:hidden}
+.hero__jauge i::after{
+  content:""; position:absolute; inset:0 auto 0 0; width:var(--part,0%);
+  background:#fff; transition:width .35s ease;
+}
 
 /* Repli actif : la séquence n'est pas chargée. On revient à l'affiche et
    le hero cesse d'être long. */
 .hero--fixe .hero__toile,.hero--fixe .hero__pilote,.hero--fixe .hero__jauge{display:none}
+/* Tant que la séquence n'est pas complète, le hero garde une hauteur
+   d'écran : le visiteur ne défile pas dans une image immobile. */
+.anime .hero__course{height:100svh}
+.anime .hero--prete .hero__course{height:var(--course, 340vh)}
+.hero--prete .hero__pilote{opacity:1}
+.hero__pilote{opacity:0; transition:opacity .6s ease}
 .anime .hero--fixe .hero__course{height:100svh}
 
 /* ---- étiquettes de prestations ------------------------------------------ */

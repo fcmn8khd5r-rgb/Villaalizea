@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Marcellus&display=swap">
 <link rel="preload" as="image" href="assets/hero/affiche-l.avif" fetchpriority="high" media="(min-width:700px) and (orientation:landscape)">
 <link rel="preload" as="image" href="assets/hero/affiche-p.avif" fetchpriority="high" media="(max-width:699px), (orientation:portrait)">
-<link rel="stylesheet" href="css/style.css?v=7">
+<link rel="stylesheet" href="css/style.css?v=9">
 <script>document.documentElement.className+=" anime";</script>
 </head>
 <body>
@@ -60,6 +60,7 @@
         </picture>
       </div>
       <div class="hero__voile" id="hero-voile"></div>
+      <div class="hero__ecran"></div>
       <div class="hero__sortie" id="hero-sortie"></div>
 
       <div class="hero__texte" id="hero-texte">
@@ -76,7 +77,9 @@
         <span>Défilez pour survoler</span>
         <span class="hero__piste"><i class="hero__curseur" id="curseur"></i></span>
       </div>
-      <div class="hero__jauge" id="jauge"></div>
+      <div class="hero__jauge" id="jauge" hidden aria-hidden="true">
+        <i></i><span>Chargement du survol</span>
+      </div>
     </div>
   </div>
 </section>
@@ -331,6 +334,6 @@
 <!-- PIED:fin -->
 
 <script src="js/main.js?v=5" defer></script>
-<script src="js/hero.js?v=7" defer></script>
+<script src="js/hero.js?v=8" defer></script>
 </body>
 </html>

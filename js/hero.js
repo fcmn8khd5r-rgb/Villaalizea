@@ -1,31 +1,30 @@
 /* =========================================================================
    Villa Alizéa — la caméra pilotée au défilement
    =========================================================================
-   Le hero n'est pas une vidéo : c'est une séquence d'images. Une vidéo
+   Le hero n'est pas une vidéo mais une séquence d'images : une vidéo
    « scrubbée » bloque sur Safari mobile, qui ne sait chercher que les
-   images clés ; tout encoder en images clés triplerait le poids.
+   images clés, et tout encoder en images clés triplerait le poids.
 
-   FLUIDITÉ — ce qui a été corrigé
-   La première version répartissait 32 images sur les 13 s du plan, soit
-   2,4 images par seconde : l'écart entre deux images voisines valait environ
-   cinq fois l'écart natif de la vidéo, et l'œil voyait la succession.
-   On garde désormais un segment COURT échantillonné dense — 3,5 s à
-   20 images/s, 70 images — ce qui ramène cet écart à ×1,37 le natif.
-   Un fondu entre images voisines achève de lisser.
+   TROIS CAUSES DE SACCADE, ET LEUR REMÈDE
+   1. Chargement progressif pendant le pilotage. Tant que les vagues 2 et 3
+      arrivaient, l'affichage retombait sur l'image chargée la plus proche
+      et sautait de quatre en quatre. On charge donc TOUTE la séquence
+      avant d'activer l'effet ; jusque-là, l'affiche fixe reste, et le hero
+      garde une hauteur d'écran — le visiteur ne défile pas dans le vide.
+   2. Position d'image calquée sur la position de défilement. Une molette
+      ou un pavé tactile envoient des sauts irréguliers, que l'image
+      reproduisait tels quels. La position visée est désormais LISSÉE :
+      l'image rejoint la cible par approche exponentielle, ce qui absorbe
+      les à-coups sans introduire de retard perceptible.
+   3. Seuil de redessin trop grossier, qui avalait les variations fines.
+      Pendant l'animation, on redessine à chaque image.
 
-   LIAISON — entrée et sortie
-   Une caméra ne démarre pas d'un coup. La course reçoit un profil de
-   vitesse trapézoïdal : accélération, plateau, décélération. Aux deux
-   extrémités la vitesse est NULLE, si bien qu'on ne perçoit ni le départ
-   ni l'arrêt. Le titre se retire pendant la mise en route, l'image se
-   rapproche légèrement, et le hero se dissout dans la page à la sortie.
-
-   REPLIS, dans cet ordre
-     1. pas de JavaScript      → l'image d'affiche reste, en plein écran ;
-     2. animations réduites,
-        économiseur de données,
-        connexion 2G/3G        → aucun octet de séquence n'est chargé ;
-     3. échec de chargement    → on garde ce qui est arrivé, sans casser.
+   REPLIS
+     pas de JavaScript              → l'affiche reste, en plein écran ;
+     animations réduites, 2G,
+     économiseur de données,
+     3G sous 1,4 Mb/s               → aucun octet de séquence n'est chargé ;
+     préchargement incomplet        → l'affiche reste, sans rien casser.
    ========================================================================= */
 (function () {
   "use strict";
@@ -43,11 +42,8 @@
 
   /* ---- faut-il charger la séquence ? -----------------------------------
      L'économiseur de données et la 2G ferment la porte sans discussion.
-     Pour la 3G, la seule étiquette ne suffit pas : elle couvre une bande
-     très large (0,4 à 4 Mb/s). On regarde donc le débit estimé. À 1,4 Mb/s,
-     la première vague mobile (260 Ko) arrive en moins de deux secondes,
-     derrière une affiche déjà à l'écran — cela vaut la peine. En dessous,
-     on s'abstient. */
+     Pour la 3G, l'étiquette seule ne suffit pas : elle couvre une bande
+     très large. On consulte donc le débit estimé. */
   var co = navigator.connection || {};
   var debit = typeof co.downlink === "number" ? co.downlink : 10;
   var lent = co.saveData === true ||
@@ -58,29 +54,27 @@
   function figer(raison) {
     hero.classList.add("hero--fixe");
     hero.setAttribute("data-repli", raison);
-    if (jauge) jauge.style.display = "none";
+    if (jauge) jauge.hidden = true;
   }
   if (lent || sobre) { figer(sobre ? "animations-reduites" : "connexion-lente"); return; }
 
   /* ---- profil : large 16/9 ou portrait 3/4 -----------------------------
      Le choix se fait sur l'ORIENTATION, pas sur la largeur : une fenêtre
-     étroite mais paysage doit recevoir le cadrage large, sinon l'image 3/4
-     est rognée en haut et en bas et la maison sort du cadre. */
+     étroite mais paysage doit recevoir le cadrage large. */
   var mqPortrait = window.matchMedia("(orientation: portrait), (max-width: 699px)");
-  var portrait = mqPortrait.matches;
-  var PROFIL = portrait ? { p: "p", n: 70, course: "300vh" }
-                        : { p: "l", n: 70, course: "340vh" };
-  course.style.setProperty("--course", PROFIL.course);
-
+  var PROFIL = mqPortrait.matches ? { p: "p", n: 70, course: "300vh" }
+                                  : { p: "l", n: 70, course: "340vh" };
   var url = function (i) {
     return "assets/hero/" + PROFIL.p + String(i).padStart(3, "0") + ".avif";
   };
 
-  /* ---- le canvas -------------------------------------------------------- */
+  /* ---- la toile --------------------------------------------------------- */
   var cnv = document.createElement("canvas");
   cnv.className = "hero__toile";
   pile.appendChild(cnv);
   var ctx = cnv.getContext("2d", { alpha: false });
+  var img = new Array(PROFIL.n);
+  var prete = false;
 
   function dimensionner() {
     var r = Math.min(window.devicePixelRatio || 1, 2);
@@ -88,61 +82,49 @@
     if (!l || !h) return;
     cnv.width = Math.round(l * r); cnv.height = Math.round(h * r);
     cnv.style.width = l + "px";    cnv.style.height = h + "px";
-    peindre(progression(), true);
+    if (prete) peindre(courant, true);
   }
 
-  /* ---- chargement par vagues -------------------------------------------
-     Vague 1 : une image sur quatre — le pilotage répond tout de suite.
-     Vagues suivantes : on comble les trous, en arrière-plan.             */
-  var img = new Array(PROFIL.n), pret = new Array(PROFIL.n).fill(false), arrivees = 0;
+  /* ---- préchargement complet, puis activation --------------------------- */
+  var arrivees = 0, echecs = 0;
 
   function charger(i) {
     return new Promise(function (ok) {
-      if (img[i]) return ok();
       var e = new Image();
       e.decoding = "async";
-      e.onload = function () {
-        img[i] = e; pret[i] = true; arrivees++;
-        if (jauge) jauge.style.width = (arrivees / PROFIL.n * 100) + "%";
-        if (arrivees === 1) { dimensionner(); hero.classList.add("hero--prete"); }
-        ok();
-      };
-      e.onerror = function () { ok(); };   // une image manquante ne casse rien
+      e.onload  = function () { img[i] = e; compter(); ok(); };
+      e.onerror = function () { echecs++;   compter(); ok(); };
       e.src = url(i);
     });
   }
 
-  function vagues() {
-    var chaine = Promise.resolve();
-    [4, 2, 1].forEach(function (pas) {
-      chaine = chaine.then(function () {
-        var lot = [];
-        for (var i = 0; i < PROFIL.n; i += pas) if (!img[i]) lot.push(i);
-        return Promise.all(lot.map(charger));
+  function compter() {
+    arrivees++;
+    if (jauge) jauge.style.setProperty("--part", (arrivees / PROFIL.n * 100) + "%");
+  }
+
+  function precharger() {
+    if (jauge) jauge.hidden = false;
+    // Par petits paquets : lancer soixante-dix requêtes d'un coup sature la
+    // file du navigateur et retarde tout le reste de la page.
+    var i = 0;
+    function paquet() {
+      var lot = [];
+      for (var k = 0; k < 8 && i < PROFIL.n; k++, i++) lot.push(charger(i));
+      return Promise.all(lot).then(function () {
+        return i < PROFIL.n ? paquet() : null;
       });
-    });
-    chaine.then(function () {
-      if (arrivees === 0) { figer("chargement-impossible"); return; }
-      if (jauge) jauge.style.opacity = "0";
-    });
+    }
+    return paquet();
   }
 
   /* ---- profil de vitesse ------------------------------------------------
-     Une caméra accélère, tient sa vitesse, puis ralentit. On applique donc
-     à la course une vitesse nulle aux deux bouts : le mouvement s'installe
-     et s'éteint sans que le visiteur perçoive de bascule.
-
-       vitesse(u) = adoucie(u / A)          sur les A premiers pour cent
-                    1                       au milieu
-                    adoucie((1 - u) / A)    sur les A derniers
-
-     La position affichée est l'intégrale normalisée de cette vitesse.   */
-  var A = 0.22;                                    // part consacrée aux liaisons
-  var AIRE = 1 - A;                                // intégrale totale de la vitesse
-
-  function primitive(u) {                          // ∫ (3u² − 2u³) du
-    return u * u * u - u * u * u * u / 2;
-  }
+     Une caméra accélère, tient sa vitesse, puis ralentit. La course reçoit
+     donc une vitesse nulle aux deux bouts : le mouvement s'installe et
+     s'éteint sans que le visiteur perçoive de bascule. La position affichée
+     est l'intégrale normalisée de cette vitesse. */
+  var A = 0.22, AIRE = 1 - A;
+  var primitive = function (u) { return u * u * u - u * u * u * u / 2; };
 
   function position(p) {
     var i;
@@ -153,15 +135,6 @@
   }
 
   /* ---- rendu ------------------------------------------------------------ */
-  function proche(i) {                             // image chargée la plus proche
-    if (pret[i]) return i;
-    for (var d = 1; d < PROFIL.n; d++) {
-      if (pret[i - d]) return i - d;
-      if (pret[i + d]) return i + d;
-    }
-    return -1;
-  }
-
   function couvrir(e, zoom) {                      // équivalent de object-fit: cover
     var rc = cnv.width / cnv.height, ri = e.naturalWidth / e.naturalHeight, w, h;
     if (ri > rc) { h = cnv.height; w = h * ri; } else { w = cnv.width; h = w / ri; }
@@ -177,6 +150,15 @@
     ctx.globalAlpha = 1;
   }
 
+  function proche(i) {                             // filet de sécurité
+    if (img[i]) return i;
+    for (var d = 1; d < PROFIL.n; d++) {
+      if (img[i - d]) return i - d;
+      if (img[i + d]) return i + d;
+    }
+    return -1;
+  }
+
   function progression() {
     var r = course.getBoundingClientRect();
     var total = r.height - window.innerHeight;
@@ -184,82 +166,106 @@
     return Math.min(1, Math.max(0, -r.top / total));
   }
 
-  var derI = -1, derFrac = -1, derP = -1;
-  function peindre(p, force) {
-    /* --- la séquence, au profil de vitesse --- */
-    var q = position(p);
-    var exact = q * (PROFIL.n - 1);
+  function peindre(p) {
+    var exact = position(p) * (PROFIL.n - 1);
     var i = Math.floor(exact), frac = exact - i;
     if (i >= PROFIL.n - 1) { i = PROFIL.n - 1; frac = 0; }
 
-    /* --- rapprochement léger pendant la mise en route ---
-       L'image entre légèrement rapprochée et se pose à 1 : le mouvement
-       paraît naître du plan fixe au lieu de s'y substituer.
-       Le rapprochement suit la MÊME courbe adoucie que la séquence. Sans
-       cela il variait le plus vite au tout début, et l'entrée bougeait plus
-       que le milieu — l'inverse de l'effet recherché. */
+    // Rapprochement léger pendant la mise en route, sur la même courbe
+    // adoucie que la séquence : sans cela il variait le plus vite au tout
+    // début et l'entrée bougeait plus que le milieu.
     var uz = Math.min(1, p / 0.30);
     var zoom = 1 + 0.032 * (1 - uz * uz * (3 - 2 * uz));
-    // L'affiche suit exactement le même rapprochement, sinon le relais de
-    // l'une vers l'autre se verrait comme un saut d'échelle.
     if (affiche) affiche.style.transform = "scale(" + zoom.toFixed(4) + ")";
 
-    if (force || i !== derI || Math.abs(frac - derFrac) > 0.015 ||
-        Math.abs(p - derP) > 0.004) {
-      derI = i; derFrac = frac; derP = p;
-      var a = proche(i);
-      if (a >= 0) {
-        poser(img[a], 1, zoom);
-        if (frac > 0.01) {                         // fondu vers l'image suivante
-          var b = proche(i + 1);
-          if (b >= 0 && b !== a) poser(img[b], frac, zoom);
-        }
+    var a = proche(i);
+    if (a >= 0) {
+      poser(img[a], 1, zoom);
+      if (frac > 0.004) {                          // fondu vers l'image suivante
+        var b = proche(i + 1);
+        if (b >= 0 && b !== a) poser(img[b], frac, zoom);
       }
     }
 
-    /* --- liaison d'entrée : le titre se retire, le voile s'allège --- */
+    // Liaison d'entrée : le titre se retire, le voile s'allège.
     if (texte) {
-      var s = Math.min(1, p / 0.17);               // 0 → 1 sur les 17 premiers %
-      var d = s * s * (3 - 2 * s);
+      var s = Math.min(1, p / 0.17), d = s * s * (3 - 2 * s);
       texte.style.opacity = String(1 - d);
       texte.style.transform = "translate3d(0," + (-34 * d) + "px,0)";
       texte.style.pointerEvents = d > 0.6 ? "none" : "";
     }
-    if (voile) voile.style.opacity = String(1 - 0.55 * Math.min(1, p / 0.3));
-
-    /* --- liaison de sortie : le hero se dissout dans la page --- */
+    if (voile) voile.style.opacity = String(1 - 0.45 * Math.min(1, p / 0.3));
+    // Liaison de sortie : le hero se dissout dans la couleur de la page.
     if (sortie) {
       var t = Math.max(0, (p - 0.87) / 0.13);
       sortie.style.opacity = String(t * t);
     }
-
     if (curseur) curseur.style.transform = "translateY(" + (p * 79) + "px)";
   }
 
-  /* ---- boucle ----------------------------------------------------------- */
-  var tourne = false;
-  function surDefilement() {
-    if (tourne) return;
-    tourne = true;
-    requestAnimationFrame(function () { peindre(progression()); tourne = false; });
+  /* ---- lissage de la progression ----------------------------------------
+     La cible vient du défilement, la valeur affichée la rejoint par
+     approche exponentielle. C'est ce qui absorbe les à-coups d'une molette
+     ou d'un pavé tactile sans introduire de retard perceptible. */
+  var cible = 0, courant = 0, anime = false;
+
+  function boucle() {
+    var d = cible - courant;
+    if (Math.abs(d) < 0.0003) { courant = cible; peindre(courant); anime = false; return; }
+    courant += d * 0.20;
+    peindre(courant);
+    requestAnimationFrame(boucle);
+  }
+
+  function relancer() {
+    if (anime) return;
+    anime = true;
+    requestAnimationFrame(boucle);
   }
 
   var actif = true;
+  function surDefilement() {
+    if (!prete || !actif) return;
+    cible = progression();
+    relancer();
+  }
+
+  /* ---- activation -------------------------------------------------------- */
+  function activer() {
+    prete = true;
+    course.style.setProperty("--course", PROFIL.course);
+    hero.classList.add("hero--prete");
+    if (jauge) jauge.hidden = true;
+    dimensionner();
+    cible = courant = progression();
+    peindre(courant);
+  }
+
+  precharger().then(function () {
+    if (echecs > PROFIL.n * 0.15) { figer("chargement-incomplet"); return; }
+    // On n'allonge la page que si le visiteur est encore en haut : sinon on
+    // décalerait le contenu sous ses yeux. S'il remonte, on activera alors.
+    if (window.scrollY < 40) { activer(); return; }
+    if (jauge) jauge.hidden = true;
+    var guet = function () {
+      if (window.scrollY < 40) {
+        window.removeEventListener("scroll", guet);
+        activer();
+      }
+    };
+    window.addEventListener("scroll", guet, { passive: true });
+  });
+
+  window.addEventListener("scroll", surDefilement, { passive: true });
+  window.addEventListener("resize", dimensionner);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", dimensionner);
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (es) { actif = es[0].isIntersecting; }, { threshold: 0 })
       .observe(course);
   }
-  window.addEventListener("scroll", function () { if (actif) surDefilement(); }, { passive: true });
-  window.addEventListener("resize", dimensionner);
-  if (window.visualViewport) window.visualViewport.addEventListener("resize", dimensionner);
-
   // Une rotation change le cadrage attendu : on recharge plutôt que de
   // mélanger deux séquences aux proportions différentes.
   mqPortrait.addEventListener("change", function (e) {
     if ((e.matches ? "p" : "l") !== PROFIL.p) location.reload();
   });
-
-  dimensionner();
-  peindre(progression(), true);
-  vagues();
 })();

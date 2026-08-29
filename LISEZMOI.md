@@ -133,6 +133,54 @@ adoucie**. Sans cela, le rapprochement variait le plus vite au tout début et l'
 bougeait plus que le milieu : l'inverse de l'effet recherché. À la sortie, un voile couleur
 de page monte et le hero s'y dissout au lieu de la heurter.
 
+### La fluidité du pilotage
+
+Trois causes de saccade, corrigées :
+
+1. **Le chargement progressif pendant le pilotage.** Tant que les vagues 2 et 3 arrivaient,
+   l'affichage retombait sur l'image chargée la plus proche et sautait de quatre en quatre.
+   La séquence est désormais **entièrement préchargée avant que l'effet ne s'active**.
+   Jusque-là, l'affiche fixe reste et le hero garde une hauteur d'écran : le visiteur ne
+   défile pas dans une image immobile. Un indicateur discret montre l'avancement.
+2. **La position d'image calquée sur la position de défilement.** Une molette ou un pavé
+   tactile envoient des sauts irréguliers, que l'image reproduisait tels quels. La cible
+   vient toujours du défilement, mais la valeur affichée la rejoint par **approche
+   exponentielle** (20 % de l'écart par image).
+3. **Un seuil de redessin trop grossier**, qui avalait les variations fines. Pendant
+   l'animation, on redessine à chaque image.
+
+Mesuré sur le rendu, avec des pas de défilement volontairement irréguliers :
+
+| | Irrégularité relative |
+|---|---|
+| Les pas de défilement envoyés | 0,62 |
+| Ce que montre l'image | **0,30** |
+
+L'à-coup est divisé par deux — et le résultat est le même à 70 ms qu'à 400 ms entre deux
+pas, c'est-à-dire pendant un défilement rapide comme au repos.
+
+Si le préchargement échoue sur plus de 15 % des images, l'effet ne s'active pas et
+l'affiche fixe reste : `data-repli="chargement-incomplet"`.
+
+### La lisibilité du texte
+
+Le blanc du hero ne tenait que **2,5:1** sur le fond, là où il en faut 4,5. Mesure faite,
+pas estimée : `src/lisibilite.py` calcule la luminance du fond sous chaque ligne de texte,
+sur les 140 images des deux séquences, applique l'opacité de l'écran à cette hauteur et en
+tire le rapport de contraste.
+
+Un écran dégradé, confiné à la gauche par un masque pour ne pas assombrir toute l'image,
+ramène le pire cas à :
+
+| Ligne | Exigé | Obtenu |
+|---|---|---|
+| Sur-titre (petites capitales) | 4,5:1 | **5,8:1** |
+| Titre | 3:1 | **7,0:1** |
+| Phrase | 4,5:1 | **8,7:1** |
+| Bouton | 4,5:1 | **10,1:1** |
+
+`python3 src/lisibilite.py` recontrôle après toute modification de la séquence ou du voile.
+
 ### Quatre replis, tous vérifiés
 
 | Situation | Comportement | Octets de séquence |
@@ -243,8 +291,13 @@ python3 src/hero.py          # extrait et étalonne les deux séquences du hero
 python3 construire.py        # régénère les blocs des pages
 ```
 
-`src/mouvement.py <video> <debut> <duree>` mesure l'écart entre images consécutives à
-plusieurs cadences : c'est l'outil qui a servi à dimensionner la séquence.
+Trois outils de mesure, qui ont servi à trancher plutôt qu'à justifier après coup :
+
+| Outil | Répond à |
+|---|---|
+| `src/mouvement.py <video> <début> <durée>` | À quelle cadence échantillonner pour que ce soit fluide ? |
+| `src/typemouvement.py <video> <début> <durée>` | Ce plan recule-t-il vraiment, ou est-ce un travelling ? |
+| `src/lisibilite.py` | Le texte du hero tient-il le contraste sur toutes les images ? |
 
 `src/orig/` (environ 400 Mo d'originaux et de vidéos) n'est ni versionné ni déployé : tout
 est refabricable depuis `src/sources.tsv`, qui liste la provenance, l'auteur et la licence
