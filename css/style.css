@@ -16,7 +16,8 @@
   --serif:Marcellus, "Iowan Old Style", Palatino, Georgia, serif;
   --sans:Jost, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --page:min(1180px, 100% - clamp(2.5rem, 8vw, 9rem));
-  --tete:82px;
+  --bandeau:clamp(26px,3.2vw,30px);
+  --tete:calc(82px + var(--bandeau));
   --courbe:cubic-bezier(0.16, 0.84, 0.24, 1);
 }
 
@@ -97,12 +98,32 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
 /* ---- en-tête ------------------------------------------------------------ */
 .tete{
   position:fixed; inset:0 0 auto; z-index:40; height:var(--tete);
-  display:flex; align-items:center; gap:clamp(10px,1.4vw,24px);
-  padding-inline:clamp(18px,4vw,56px);
+  display:flex; flex-direction:column;
   border-bottom:1px solid transparent; backdrop-filter:blur(8px);
   transition:background .5s ease, border-color .5s ease, box-shadow .5s ease, color .5s ease;
   color:var(--fond);
 }
+.tete__barre{
+  flex:1 1 auto; min-height:0;
+  display:flex; align-items:center; gap:clamp(10px,1.4vw,24px);
+  padding-inline:clamp(18px,4vw,56px);
+}
+/* Le site est une démonstration : on le dit avant tout le reste, et le
+   bandeau garde son propre fond pour rester lisible au-dessus du hero. */
+.bandeau{
+  flex:0 0 var(--bandeau);
+  display:flex; align-items:center; justify-content:center;
+  padding-inline:clamp(12px,4vw,56px);
+  background:var(--encre); color:var(--fond) !important;
+  font-size:clamp(9px,1.05vw,10px); letter-spacing:.13em; text-transform:uppercase;
+  text-align:center; line-height:1; white-space:nowrap;
+}
+.bandeau__court{display:none}
+@media (max-width:760px){
+  .bandeau__long{display:none}
+  .bandeau__court{display:inline}
+}
+@media (hover:hover){ .bandeau:hover{text-decoration:underline; text-underline-offset:3px} }
 .tete.est-posee{
   background:color-mix(in srgb, var(--fond) 92%, transparent);
   border-bottom-color:var(--trait); color:var(--encre);
@@ -230,7 +251,8 @@ body.bloque{overflow:hidden}
 
 /* ---- tableaux ----------------------------------------------------------- */
 .table{width:100%; border-collapse:collapse; font-size:.94rem}
-.table th,.table td{text-align:left; padding:.9rem .5rem; border-bottom:1px solid var(--trait)}
+.table th,.table td{text-align:left; padding:.9rem .5rem; border-bottom:1px solid var(--trait);
+                    overflow-wrap:anywhere}
 .table th{font-size:10.5px; font-weight:400; letter-spacing:.16em; text-transform:uppercase;
           color:var(--sourdine)}
 .table td:last-child,.table th:last-child{text-align:right}

@@ -97,12 +97,19 @@ def bloc_tete(page):
     return (
       '<a class="evitement" href="#contenu">Aller au contenu</a>\n'
       '<header class="tete">\n'
-      '  <a class="marque" href="index.html">%s</a>\n'
-      '  <nav class="menu" aria-label="Principale">%s\n'
-      '  </nav>\n'
-      '  <a class="btn" href="reserver.html"%s>Réserver</a>\n'
-      '  <button class="burger" type="button" aria-expanded="false" aria-controls="tiroir"\n'
-      '          aria-label="Ouvrir le menu"><i></i></button>\n'
+      '  <a class="bandeau" href="mentions.html">\n'
+      '    <span class="bandeau__long">Site de démonstration — la Villa Alizéa '
+      'n\'existe pas</span>\n'
+      '    <span class="bandeau__court">Démonstration — cette villa n\'existe pas</span>\n'
+      '  </a>\n'
+      '  <div class="tete__barre">\n'
+      '    <a class="marque" href="index.html">%s</a>\n'
+      '    <nav class="menu" aria-label="Principale">%s\n'
+      '    </nav>\n'
+      '    <a class="btn" href="reserver.html"%s>Réserver</a>\n'
+      '    <button class="burger" type="button" aria-expanded="false" aria-controls="tiroir"\n'
+      '            aria-label="Ouvrir le menu"><i></i></button>\n'
+      '  </div>\n'
       '</header>\n'
       '<div class="tiroir" id="tiroir" hidden>\n'
       '  <button class="tiroir__x" type="button" aria-label="Fermer le menu">&times;</button>'
@@ -440,8 +447,7 @@ def bloc_editeur():
     e = CFG["editeur"]; h = e["hebergeur"]
     siren = e["siren"].strip()
     ligne_siren = ('<tr><td>SIREN</td><td>%s</td></tr>' % siren) if siren else (
-        '<tr><td>SIREN</td><td><strong style="color:var(--accent)">'
-        '&lt; à compléter &gt;</strong></td></tr>')
+        '<tr><td>SIREN</td><td>Immatriculation en cours</td></tr>')
     return (
       '<table class="table">\n'
       '  <caption class="vh">Identité de l\'éditeur</caption>\n'

@@ -17,10 +17,10 @@ cd "$(dirname "$0")"
 python3 - <<'PY'
 import json, sys
 e = json.load(open("config/villa.json", encoding="utf-8"))["editeur"]
-manque = [c for c in ("studio", "responsable", "adresse", "courriel", "siren")
+manque = [c for c in ("studio", "responsable", "adresse", "courriel")
           if not str(e.get(c, "")).strip()]
 if manque:
-    print("\n  PUBLICATION REFUSÉE — mentions légales incomplètes.")
+    print("\n  PUBLICATION REFUSÉE — identité de l'éditeur incomplète.")
     print("  Champ(s) vide(s) dans config/villa.json, bloc « editeur » : "
           + ", ".join(manque))
     print("  Renseignez-les, relancez `python3 construire.py`, puis ce script.\n")
