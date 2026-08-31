@@ -3,11 +3,11 @@
    mesurés à la fabrication. */
 window.ALIZEA_HERO = {
  "l": {
-  "n": 175,
-  "poids": 26002
+  "n": 264,
+  "poids": 16344
  },
  "p": {
-  "n": 140,
-  "poids": 9776
+  "n": 176,
+  "poids": 6433
  }
 };

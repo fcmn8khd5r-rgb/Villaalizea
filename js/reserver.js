@@ -10,7 +10,7 @@
    les coordonnées sont dans le HTML, et un encart renvoie vers le
    formulaire de demande.
    ========================================================================= */
-import { calculer } from "./tarifs.mjs";
+import { calculer, nuitsMinimum } from "./tarifs.mjs";
 
 const $ = s => document.querySelector(s);
 const jour = d => d.toISOString().slice(0, 10);
@@ -80,8 +80,24 @@ function majSource(d) {
 const estPrise = s => etat.prises.has(s);
 
 /** Une date d'arrivée est possible si la nuit n'est pas déjà prise. */
+/** Nombre de nuits libres d'affilée à partir de s (0 si s est déjà pris). */
+function nuitsLibres(s) {
+  let n = 0;
+  const c = new Date(s + "T00:00:00Z");
+  while (n < 400 && !estPrise(jour(c))) { n++; c.setUTCDate(c.getUTCDate() + 1); }
+  return n;
+}
+
+/** Une arrivée n'est proposée que si un séjour VALIDE peut y commencer.
+ *
+ *  Sans cette condition, le calendrier ouvrait des impasses : la veille d'une
+ *  réservation était cliquable, et le visiteur découvrait le refus « séjour
+ *  minimum de 5 nuits » seulement après avoir choisi ses deux dates. Un
+ *  calendrier ne doit jamais proposer ce qu'il refusera ensuite. */
 function arriveePossible(s) {
-  return !estPrise(s) && s >= jour(new Date());
+  if (estPrise(s) || s < jour(new Date())) return false;
+  const libres = nuitsLibres(s);
+  return libres >= nuitsMinimum(s, libres);
 }
 
 /** Un départ est possible s'il suit l'arrivée et qu'aucune nuit entre les
@@ -90,7 +106,9 @@ function departPossible(s) {
   if (!etat.arrivee || s <= etat.arrivee) return false;
   for (let c = new Date(etat.arrivee + "T00:00:00Z"); jour(c) < s; c.setUTCDate(c.getUTCDate() + 1))
     if (estPrise(jour(c))) return false;
-  return true;
+  // Même raison que pour l'arrivée : ne pas proposer un départ qui sera refusé.
+  const nuits = Math.round((new Date(s) - new Date(etat.arrivee)) / 86400000);
+  return nuits >= nuitsMinimum(etat.arrivee, nuits);
 }
 
 /* ---- rendu ---------------------------------------------------------------- */

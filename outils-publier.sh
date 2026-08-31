@@ -32,11 +32,11 @@ python3 construire.py --verifie > /dev/null
 
 rm -rf _site && mkdir -p _site
 for f in *.html; do
-  [ "$f" = "essai-replis.html" ] && continue
+  case "$f" in essai-*.html) continue;; esac
   cp "$f" _site/
 done
 cp -R assets css js _site/
 cp favicon.svg robots.txt sitemap.xml _site/ 2>/dev/null || true
 
 echo "  _site assemblé : $(find _site -type f | wc -l | tr -d ' ') fichiers, $(du -sh _site | cut -f1)"
-echo "  exclus : src/ (dont $(du -sh src/orig 2>/dev/null | cut -f1 || echo 0) de sources), essai-replis.html, config/"
+echo "  exclus : src/ (dont $(du -sh src/orig 2>/dev/null | cut -f1 || echo 0) de sources), les pages essai-*.html, config/"

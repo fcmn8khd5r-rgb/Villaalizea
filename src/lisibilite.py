@@ -11,7 +11,7 @@ import numpy as np
 from PIL import Image
 
 # Profil de l'écran : (hauteur depuis le bas en %, opacité du noir)
-ECRAN = [(0, .66), (26, .62), (46, .52), (62, .30), (74, .08), (84, 0)]
+ECRAN = [(0, .70), (26, .66), (46, .57), (62, .33), (74, .09), (84, 0)]
 
 # Lignes de texte : (nom, bas en % de hauteur, haut en %, gauche %, droite %, ratio exigé)
 LIGNES = [("sur-titre",   44, 49, 2, 52, 4.5),

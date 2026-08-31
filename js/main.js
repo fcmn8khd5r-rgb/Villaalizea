@@ -27,11 +27,21 @@
   if (burger && tiroir) {
     var basculer = function (o) {
       tiroir.hidden = false;
-      requestAnimationFrame(function () { tiroir.toggleAttribute("data-ouvert", o); });
       burger.setAttribute("aria-expanded", String(o));
       document.body.classList.toggle("bloque", o);
-      if (o) { var a = tiroir.querySelector("a"); if (a) a.focus(); }
-      else { burger.focus(); setTimeout(function () { tiroir.hidden = true; }, 400); }
+      // Le focus doit attendre DEUX trames : la feuille de style garde le
+      // tiroir invisible tant que `data-ouvert` n'est pas posé, et la
+      // transition ne bascule la visibilité qu'à la trame suivante. Demandé
+      // trop tôt, le focus est refusé sans erreur — et la tabulation
+      // continuait derrière le tiroir ouvert.
+      requestAnimationFrame(function () {
+        tiroir.toggleAttribute("data-ouvert", o);
+        if (o) requestAnimationFrame(function () {
+          var a = tiroir.querySelector("a");
+          if (a) a.focus();
+        });
+      });
+      if (!o) { burger.focus(); setTimeout(function () { tiroir.hidden = true; }, 400); }
     };
     burger.addEventListener("click", function () {
       basculer(burger.getAttribute("aria-expanded") !== "true");

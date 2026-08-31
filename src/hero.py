@@ -9,63 +9,88 @@ rend le pilotage immediat, puis les images intermediaires en arriere-plan.
 Deux cadrages : 16/9 pour les grands ecrans, 3/4 pour le portrait mobile,
 afin que la maison reste dans le cadre au lieu d'etre rognee.
 """
-import json, os, subprocess, sys, shutil
+import json, os, re, subprocess, sys, shutil
 from PIL import Image
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from etalonnage import etalonner
 import numpy as np
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC    = os.path.join(RACINE, "src", "orig", "vid-31931888.mp4")
+SRC    = os.path.join(RACINE, "src", "orig", "vid-27815370.mp4")
 SORTIE = os.path.join(RACINE, "assets", "hero")
 FF     = open(os.path.join(RACINE, "src", ".ffmpeg")).read().strip()
 
-# (nom, nb d'images, largeur, hauteur, qualite AVIF)
 # --- Le plan --------------------------------------------------------------
-# Un DEZOOM, pas un travelling. Le drone part d'entre les cocotiers au ras de
-# l'eau et recule jusqu'a decouvrir le lagon et la cote qui file a l'horizon.
+# DEUX BATEAUX TRAVERSENT UNE BAIE, vus du ciel : chacun tire un long sillage
+# blanc sur une eau qui va de l'emeraude au bleu profond, des caps verts
+# ferment l'horizon. Pexels 27815370, 2160x3840 a 60 im/s, 9,1 s, 33 Mb/s.
 #
-# Deux raisons de l'avoir choisi :
-#   - AUCUNE construction sur les 15,5 s du plan. Le hero ne montre donc
-#     aucune villa qui pourrait contredire celle de la galerie — c'etait le
-#     defaut le plus grave de la version precedente.
-#   - Un fort parallaxe entre les palmiers de premier plan et l'horizon.
-#     C'est lui qui rend le pilotage au defilement utile plutot que
-#     decoratif : sans profondeur, deplacer la camera ne revele rien.
+# --- Six plans avant celui-ci ---------------------------------------------
+#   cocoteraie      le decor ne bougeait pas — seule la camera se deplacait ;
+#   plage sauvage   idem : sable et dune sont immobiles par nature ;
+#   recif et ecume  tout bougeait, mais le sujet n'etait pas saisissant ;
+#   banc de sable   beau et tres mobile — mais irrealiste a Saint-Martin ;
+#   plage caribeenne  credible, mais son CONTENU restait immobile : seule la
+#                     camera bougeait, encore une fois.
 #
-# Le plan decelere de lui-meme en s'ouvrant (5,0 % puis 2,65 % d'ecart entre
-# images voisines), ce qui epouse le profil de vitesse trapezoidal au lieu de
-# le contrarier.
+# --- Ce qu'un bateau apporte, et qu'aucun paysage ne peut donner -----------
+# Un bateau est un OBJET DISCRET : l'oeil le suit, et son deplacement se lit
+# immediatement, meme s'il ne represente qu'une petite part des pixels. C'est
+# ce que les mesures moyennees ne captent pas — src/animation.py donne 3,6 de
+# tremblement ici, contre 14 pour un sillage qui emplit le cadre, et pourtant
+# c'est ici qu'on voit le mieux quelque chose bouger.
+#
+# Cerise : un sillage FIN sur une eau lisse comprime tres bien — 15 a 19 Ko
+# l'image, la ou un sillage plein cadre en demandait 45. Le budget passe donc
+# en qualite (32) et en nombre d'images (264, une sur deux de la source).
+DEBUT, DUREE = 0.1, 8.8                     # segment retenu, en secondes
 
-# --- Dimensionnement, mesure a l'appui ------------------------------------
-# Le defaut de la premiere version : 32 images reparties sur les 13 s du plan,
-# soit 2,4 images/s. L'ecart entre deux images voisines valait alors environ
-# cinq fois l'ecart natif de la video, et l'oeil voyait la succession.
+# --- Aucune interpolation --------------------------------------------------
+# La source est a 60 im/s : 30 im/s en sortie, c'est UNE IMAGE SUR DEUX, donc
+# des images reelles a intervalle regulier. Le profil portrait descend a 20
+# im/s (une sur trois) pour tenir la memoire d'un telephone.
 #
-# On garde donc un segment COURT, echantillonne dense : 3,5 s a 20 images/s.
-# L'ecart inter-image retombe a x1,37 le natif (mesure par src/mouvement.py),
-# en dessous du seuil ou la succession se remarque.
+# (cle, images/s, largeur, hauteur, qualite AVIF, coupe horizontale,
+#  coupe verticale, zoom)
 #
-#   Bureau  1280x720 q30 : 44,0 Ko/img x 70 = 3,01 Mo
-#   Mobile   640x854 q27 : 20,0 Ko/img x 70 = 1,37 Mo
+# Le ZOOM de 1,35 est le levier qui rend le mouvement des bateaux VISIBLE :
+# resserre, chacun parcourt une bien plus grande fraction du cadre. Il tombe
+# juste : 2160 / 1,35 = 1600, soit exactement la largeur de sortie — aucun
+# reechantillonnage, donc aucune perte de nettete.
 #
-# Le chargement reste progressif : affiche fixe immediate, puis une image sur
-# quatre, puis le reste.
-DEBUT, DUREE = 2.0, 3.5                     # segment retenu, en secondes
+# La coupe verticale, elle, sert a EXCLURE les caps bruns de l'horizon : ils
+# sont arides, ils ne passent pas pour Saint-Martin. Il ne reste que l'eau et
+# les bateaux, sans indice geographique.
+# --- La zone sure, et pourquoi il a fallu la mesurer ----------------------
+# La toile est peinte en `cover` : l'image remplit le cadre et deborde de ce
+# qui ne rentre pas. Ce qui deborde depend de la FORME de l'ecran, et la marge
+# est loin d'etre negligeable :
+#
+#   ecran 21/9 (2560x1080)      12 % coupes en HAUT et en bas
+#   tablette 4/3 en paysage     12,5 % coupes a GAUCHE et a droite
+#   telephone allonge (9/19,5)  19,5 % coupes sur les cotes, en portrait
+#
+# Le premier reglage placait les coques a 15 % du haut : elles disparaissaient
+# sur un ecran large et passaient sous la barre de navigation sur les autres.
+# Il ne restait que les sillages.
+#
+# Les valeurs ci-dessous sont donc MESUREES et non choisies a l'oeil : on
+# repere la coque image par image — le point clair le plus haut de chaque
+# trainee — et on verifie qu'elle reste dans la zone qui survit a tous les
+# cadrages.
+#
+#   large    coque a 35 % du haut, entre 75 % et 86 % de la largeur
+#   portrait coque a 15 % du haut, entre 67 % et 79 % de la largeur
+PROFILS = [("l", 30, 1600, 900, 32, 0.50, 0.36, 1.35),   # large   : 264 images
+           ("p", 20,  416, 555, 33, 0.72, 0.62, 1.35)]   # portrait: 176 images
 
-# La video source est a 25 images/s : echantillonner plus dense ne ferait que
-# dupliquer des images identiques. On passe donc par une INTERPOLATION A
-# COMPENSATION DE MOUVEMENT, qui fabrique de vraies positions intermediaires
-# au lieu de superposer deux images voisines.
-#
-# Mesure sur un extrait : en doublant la cadence, le pas entre images voisines
-# tombe de 2,05 % a 1,12 % de l'echelle des gris, avec seulement 4 %
-# d'irregularite — les images de synthese se placent correctement entre les
-# reelles, sans deformer le feuillage.
-#
-# (cle, images/s, largeur, hauteur, qualite AVIF)
-PROFILS = [("l", 50, 1280, 720, 26),      # large : 175 images, ~4,6 Mo
-           ("p", 40,  576, 768, 24)]      # portrait mobile : 140 images, ~1,4 Mo
+
+def cadence_source():
+    """Cadence reelle du fichier, lue dans l'entete."""
+    out = subprocess.run([FF, "-hide_banner", "-i", SRC],
+                         capture_output=True, text=True).stderr
+    m = re.search(r"(\d+(?:\.\d+)?) fps", out)
+    return float(m.group(1)) if m else 0.0
 
 
 def extraire(cadence, n):
@@ -77,8 +102,23 @@ def extraire(cadence, n):
     positions."""
     tmp = "/tmp/hero-brut"
     shutil.rmtree(tmp, ignore_errors=True); os.makedirs(tmp)
-    filtre = ("minterpolate=fps=%d:mi_mode=mci:mc_mode=aobmc:"
-              "me_mode=bidir:vsbmc=1" % cadence)
+    # On reduit AVANT tout traitement : travailler sur du 4K coute des minutes
+    # pour rien, puisque la plus grande sortie fait 1600 px de large. 2160 px
+    # laisse de la marge au recadrage portrait, qui ne garde que les trois
+    # quarts de la largeur.
+    #
+    # Et on n'interpole QUE si l'on demande plus d'images que la source n'en
+    # a. Sinon on prend ses images telles quelles : elles sont vraies, et
+    # elles gardent le fremissement que l'interpolation lisserait.
+    native = cadence_source()
+    # Tolerance de 2 % : une source annoncee a 29,97 im/s pour une sortie a 30
+    # est la MEME cadence, et basculer sur l'interpolation pour trois
+    # centiemes lisserait l'ecume — exactement ce qu'on vient chercher.
+    if native and cadence <= native * 1.02:
+        filtre = "scale=2160:-2,fps=%d" % cadence
+    else:
+        filtre = ("scale=2160:-2,minterpolate=fps=%d:mi_mode=mci:mc_mode=aobmc:"
+                  "me_mode=bidir:vsbmc=1" % cadence)
     subprocess.run([FF, "-hide_banner", "-loglevel", "error",
                     "-ss", str(DEBUT), "-t", str(DUREE + 0.2), "-i", SRC,
                     "-vf", filtre, "-frames:v", str(n + 3),
@@ -90,27 +130,48 @@ def extraire(cadence, n):
     return noms[:n], tmp
 
 
-def main():
+def main(profils=None):
+    """profils : liste de cles a fabriquer, ou None pour tout.
+
+    Refabriquer un seul profil evite de rejouer un encodage de vingt minutes
+    quand on ne retouche que le cadrage de l'autre. hero.json est alors mis a
+    jour, pas reecrit."""
     os.makedirs(SORTIE, exist_ok=True)
     c = json.load(open(os.path.join(RACINE, "src", "cible.json")))
     cible = (np.array(c["moyenne"], "float32"), np.array(c["ecart"], "float32"))
+    chemin_fiche = os.path.join(RACINE, "src", "hero.json")
     fiche = {}
-    for nom, cadence, lw, lh, q in PROFILS:
+    if profils and os.path.exists(chemin_fiche):
+        fiche = json.load(open(chemin_fiche, encoding="utf-8"))
+    for nom, cadence, lw, lh, q, ox, oy, zoom in PROFILS:
+        if profils and nom not in profils:
+            continue
         n = int(round(DUREE * cadence))
-        print("  %s : %d images a %d/s — interpolation en cours, patientez..."
-              % (nom, n, cadence))
+        synth = cadence > cadence_source() * 1.02
+        print("  %s : %d images a %d/s — %s"
+              % (nom, n, cadence,
+                 "interpolation en cours, patientez..." if synth
+                 else "images reelles du plan, sans interpolation"))
         noms, tmp = extraire(cadence, n)
         poids = 0
         for i, f in enumerate(noms):
             im = Image.open(os.path.join(tmp, f)).convert("RGB")
-            # recadrage centre au bon rapport, puis mise a l'echelle
-            r_cible, r = lw / lh, im.width / im.height
-            if r > r_cible:
-                w = round(im.height * r_cible)
-                im = im.crop(((im.width - w) // 2, 0, (im.width - w) // 2 + w, im.height))
-            else:
-                h = round(im.width / r_cible)
-                im = im.crop((0, (im.height - h) // 2, im.width, (im.height - h) // 2 + h))
+            # Recadrage au bon rapport, puis mise a l'echelle.
+            #
+            # Le point de coupe n'est pas force au centre : passer un plan
+            # 16/9 en 3/4 jette les deux tiers de la largeur, et le tiers a
+            # garder n'est pas toujours celui du milieu.
+            #
+            # Le ZOOM resserre encore le cadre. Ce n'est pas un effet : un
+            # bateau qui traverse un cadre resserre parcourt une plus grande
+            # FRACTION de l'image, donc son deplacement se voit davantage,
+            # sans qu'on ait touche ni au plan ni a la vitesse.
+            r_cible = lw / lh
+            w = min(im.width, im.height * r_cible)
+            h = w / r_cible
+            w /= zoom; h /= zoom
+            gx = round((im.width - w) * ox); gy = round((im.height - h) * oy)
+            im = im.crop((gx, gy, gx + round(w), gy + round(h)))
             im = im.resize((lw, lh), Image.LANCZOS)
             # Alignement volontairement leger : pousse plus loin, le turquoise
             # du lagon vire au laiteux et le plan perd ce qui fait son prix.
@@ -125,8 +186,8 @@ def main():
         print("  %s : %d images, %.2f Mo (%.1f Ko/image)"
               % (nom, n, poids/1048576, poids/1024/n))
         shutil.rmtree(tmp, ignore_errors=True)
-    json.dump(fiche, open(os.path.join(RACINE, "src", "hero.json"), "w"), indent=1)
+    json.dump(fiche, open(chemin_fiche, "w"), indent=1)
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:] or None)

@@ -6,6 +6,7 @@ src/manifeste.json.
 Un prix, une coordonnée, une distance ou une légende ne s'écrivent qu'à un
 seul endroit. `python3 construire.py --verifie` contrôle sans rien écrire.
 """
+import hashlib
 import json, os, re, sys
 
 RACINE = os.path.dirname(os.path.abspath(__file__))
@@ -574,12 +575,44 @@ def appliquer(chemin, verifie=False):
     return touche, s != ancien
 
 
+def versionner(chemin, verifie=False):
+    """Recale le ?v= de chaque CSS et JS local sur le CONTENU du fichier.
+
+    Le numero etait ecrit a la main, page par page. Consequence inevitable :
+    apres une retouche de css/style.css, index.html passait a v=19 pendant que
+    les neuf autres pages restaient a v=11 — et un visiteur qui revenait
+    recevait l'ancienne feuille sur tout le site sauf l'accueil.
+
+    Ici la version est l'empreinte du fichier : elle change quand, et
+    seulement quand, le fichier change, et elle est la meme partout."""
+    s = open(chemin, encoding="utf-8").read()
+    avant = s
+
+    def remplacer(m):
+        actif = m.group("f")
+        reel = os.path.join(RACINE, actif)
+        if not os.path.exists(reel):
+            return m.group(0)
+        h = hashlib.sha1(open(reel, "rb").read()).hexdigest()[:8]
+        return '%s="%s?v=%s"' % (m.group("a"), actif, h)
+
+    s = re.sub(r'(?P<a>href|src)="(?P<f>(?:css|js)/[A-Za-z0-9._-]+\.(?:css|js|mjs))(?:\?v=[^"]*)?"',
+               remplacer, s)
+    if s != avant and not verifie:
+        open(chemin, "w", encoding="utf-8").write(s)
+    return s != avant
+
+
 def main():
     verifie = "--verifie" in sys.argv
     for p in sorted(f for f in os.listdir(RACINE) if f.endswith(".html")):
-        touche, change = appliquer(os.path.join(RACINE, p), verifie)
-        if touche:
-            print("%-20s %s%s" % (p, ", ".join(touche), "  (modifié)" if change else "  (à jour)"))
+        chemin = os.path.join(RACINE, p)
+        touche, change = appliquer(chemin, verifie)
+        rev = versionner(chemin, verifie)
+        if touche or rev:
+            print("%-20s %s%s%s" % (p, ", ".join(touche) or "—",
+                                    "  (modifié)" if change else "  (à jour)",
+                                    "  versions recalées" if rev else ""))
     if not verifie:
         if ecrire_credits_js():
             print("%-20s réécrit" % "js/credits.js")

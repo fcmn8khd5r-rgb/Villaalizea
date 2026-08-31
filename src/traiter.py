@@ -29,6 +29,13 @@ FORCE = {"Luis J. Corniel": 0.22, "SPX Clicks": 0.58, "Protex Plastering": 0.55,
 # meme site, pas au point de les rendre ternes.
 FORCE_ILE = 0.30
 
+# Cles dont les fichiers sont fabriques par un script dedie. La ligne reste
+# dans src/sources.tsv — c'est elle qui declenche le telechargement et qui
+# alimente les credits — mais traiter.py ne produit pas d'images pour elles,
+# sans quoi on deploierait un cadrage que personne n'affiche.
+#   aerienne -> src/aerienne.py (deux cadrages, large et portrait)
+AILLEURS = {"aerienne": "src/aerienne.py"}
+
 
 def flou_base64(im, largeur=20):
     p = im.copy()
@@ -71,6 +78,12 @@ def main():
     for l in lignes:
         cle = (l.get("cle") or "").strip()
         if not cle:
+            continue
+        if cle in AILLEURS:
+            manifeste[cle] = {"auteur": l["auteur"].strip(), "licence": l["licence"].strip(),
+                              "piece": l["legende"].strip(), "groupe": l.get("groupe", "").strip(),
+                              "ident": l["ident"].strip(), "poids": 0, "ailleurs": AILLEURS[cle]}
+            print("  %-16s %-10s   fabriquée par %s" % (cle, l.get("groupe", ""), AILLEURS[cle]))
             continue
         f = traiter(cle, l["auteur"].strip(), cible, l.get("groupe", "").strip())
         if not f:

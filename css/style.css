@@ -273,9 +273,12 @@ body.bloque{overflow:hidden}
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
   transform-origin:center; will-change:transform;
 }
+/* La toile est peinte un poil plus large que le cadre : la marge sert au
+   glissement lie a la souris, qui ne doit jamais decouvrir un bord. */
 .hero__toile{
   position:absolute; inset:0; width:100%; height:100%; display:block;
   opacity:0; transition:opacity 900ms ease;
+  transform:scale(1.035) translateX(var(--par, 0%));
 }
 .anime .hero--prete .hero__toile{opacity:1}
 
@@ -294,12 +297,14 @@ body.bloque{overflow:hidden}
    `python3 src/lisibilite.py` recontrôle le résultat image par image. */
 .hero__ecran{
   position:absolute; inset:0; pointer-events:none; will-change:opacity;
-  /* Profil vérifié par src/lisibilite.py sur les 140 images : le pire cas
-     donne 5,8:1 sur le sur-titre en petites capitales, 7:1 sur le titre. */
+  /* Profil vérifié par src/lisibilite.py sur toutes les images de la
+     séquence. Il a été renforcé quand le plan est passé à l'écume : sur du
+     blanc, le sur-titre en petites capitales tombait à 4,3:1 là où il en faut
+     4,5. Toute modification du plan impose de relancer la mesure. */
   background:linear-gradient(0deg,
-    rgba(16,13,11,.66) 0%,  rgba(16,13,11,.62) 26%,
-    rgba(16,13,11,.52) 46%, rgba(16,13,11,.30) 62%,
-    rgba(16,13,11,.08) 74%, transparent 84%);
+    rgba(16,13,11,.70) 0%,  rgba(16,13,11,.66) 26%,
+    rgba(16,13,11,.57) 46%, rgba(16,13,11,.33) 62%,
+    rgba(16,13,11,.09) 74%, transparent 84%);
   -webkit-mask-image:linear-gradient(90deg, #000 0%, #000 52%, transparent 86%);
           mask-image:linear-gradient(90deg, #000 0%, #000 52%, transparent 86%);
 }
@@ -484,9 +489,9 @@ body.bloque{overflow:hidden}
 /* =========================================================================
    Le seuil — la charnière entre le paysage et la maison
    =========================================================================
-   Le hero montre le rivage, jamais la villa. Sans marque nette, le visiteur
-   prendrait la côte survolée pour la propriété. Ce bloc annonce le passage
-   et le rend visible : une phrase, puis la première image de l'intérieur.
+   Le hero montre la mer, jamais la villa. Sans marque nette, rien ne relie
+   le survol aux photographies qui suivent. Ce bloc annonce le passage et le
+   rend visible : une phrase, puis la première image de l'intérieur.
    ========================================================================= */
 .seuil{padding:clamp(3.5rem,9vw,7rem) 0 0; text-align:center}
 .seuil__mot{

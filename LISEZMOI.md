@@ -30,7 +30,7 @@ calendrier tomberait sur son repli.
 
 | Fichier | Contenu |
 |---|---|
-| `index.html` | Hero piloté, le lieu et ses chiffres, aperçu de la galerie, l'île, avis, appel à réserver |
+| `index.html` | Hero piloté, le seuil, le lieu et ses chiffres, aperçu de la galerie, l'île, avis, appel à réserver |
 | `la-villa.html` | Les cinq pièces en détail, les six prestations |
 | `galerie.html` | 22 vues, filtrables par pièce, visionneuse clavier et tactile |
 | `l-ile.html` | Six lieux avec image, distance et temps de trajet ; vidéo de Baie Longue |
@@ -44,29 +44,96 @@ calendrier tomberait sur son repli.
 
 ### Le plan, et pourquoi celui-là
 
-Un **dézoom**, pas un travelling. Le drone part d'entre les cocotiers au ras de l'eau et
-recule jusqu'à découvrir le lagon et la côte qui file à l'horizon.
+**Deux bateaux traversent une baie**, vus du ciel : chacun tire un long sillage blanc sur une
+eau qui va de l'émeraude au bleu profond. Le cadre est resserré sur l'eau — aucune côte,
+aucun relief, donc aucun lieu identifiable.
 
-Deux raisons, dans cet ordre :
+Source : [Pexels n° 27815370](https://www.pexels.com/video/drone-view-of-boats-on-ocean-27815370/),
+de Khrystyna Ivanova, licence Pexels. 2160 × 3840 à 60 im/s, 9,1 s.
 
-1. **Aucune construction sur les 15,5 s du plan.** La version précédente montrait une villa
-   blanche à piscine — qui n'était pas celle des intérieurs. Une villa visible dans le hero
-   qui diffère de celle de la galerie rend tout le reste suspect. Aucun plan ne permettant
-   de partir de la villa des photos (elle n'a jamais été filmée), la seule issue était de
-   n'en montrer aucune.
-2. **Un fort parallaxe** entre les palmiers de premier plan et l'horizon. C'est lui qui rend
-   le pilotage au défilement utile plutôt que décoratif : sans profondeur, déplacer la
-   caméra ne révèle rien. Le travelling latéral précédent n'en avait pas.
+### Six plans avant celui-ci, et ce que chacun a appris
 
-Le plan répond à deux questions qu'un locataire se pose vraiment — « est-ce vraiment
-isolé » et « à quoi ressemble le bord de mer ici ». Il ne situe pas la villa, et ne le
-prétend pas : le hero annonce le rivage, et **le seuil** qui le suit dit explicitement qu'on
-entre dans la maison.
+| Plan | Ce qui n'allait pas |
+|---|---|
+| Cocoteraie parcourue | le décor ne bougeait pas — seule la caméra se déplaçait |
+| Plage sauvage et dune | idem : sable et dune sont immobiles par nature |
+| Récif et écume | tout bougeait, mais le sujet n'était pas saisissant |
+| Banc de sable | beau et très mobile — mais irréaliste à Saint-Martin |
+| Plage caribéenne | crédible, mais son *contenu* restait immobile |
 
-Le choix a été fait sur mesure, pas sur les titres : `src/typemouvement.py` décompose le
-mouvement de chaque plan en translation et en divergence radiale, ce qui permet de savoir
-lequel recule réellement. Sur dix-sept plans examinés, cinq reculaient vraiment ; trois
-contenaient des bâtiments identifiables.
+### Ce qu'un bateau apporte, et qu'aucun paysage ne peut donner
+
+Un bateau est un **objet discret** : l'œil le suit, et son déplacement se lit immédiatement,
+même s'il ne représente qu'une petite part des pixels. C'est précisément ce que les mesures
+moyennées ne captent pas — `src/animation.py` donne 3,6 de tremblement ici, contre 14 pour un
+sillage qui emplit le cadre, et pourtant c'est ici qu'on voit le mieux quelque chose bouger.
+
+Un paysage, si beau soit-il, n'offre que du décor fixe qu'une caméra survole. Cinq essais ont
+été nécessaires pour en tirer la conséquence : **pour qu'on voie bouger, il faut un sujet qui
+bouge, pas seulement une caméra qui bouge.**
+
+### La zone sûre : ce que la forme de l'écran emporte
+
+La toile est peinte en `cover` — l'image remplit le cadre, et ce qui ne rentre pas déborde.
+Ce qui déborde dépend de la **forme** de l'écran, et la marge est loin d'être négligeable :
+
+| Écran | Ce qui est coupé |
+|---|---|
+| 21/9 (2560 × 1080) | **12 %** en haut et en bas |
+| Tablette 4/3 en paysage | **12,5 %** à gauche et à droite |
+| Téléphone allongé (9/19,5) | **19,5 %** sur les côtés du profil portrait |
+
+Le premier cadrage plaçait les coques à **15 % du haut**. Sur un écran large elles
+disparaissaient purement et simplement, et sur les autres elles passaient sous la barre de
+navigation : il ne restait que les sillages. Le hero perdait son sujet précisément sur les
+grands écrans, là où il est censé impressionner.
+
+Les points de coupe ne sont donc plus choisis à l'œil mais **mesurés** : on repère la coque
+image par image — le point clair le plus haut de chaque traînée — et on vérifie qu'elle
+reste dans la zone qui survit à tous les cadrages.
+
+| Profil | Coque, hauteur | Coque, largeur | Zone sûre |
+|---|---|---|---|
+| Large | 35 % du haut | 75 – 86 % | 12 – 88 % en hauteur, 12,5 – 87,5 % en largeur |
+| Portrait | 15 % du haut | 67 – 79 % | 19,5 – 80,5 % en largeur |
+
+La leçon vaut au-delà de ce plan : **un sujet cadré au bord n'est pas cadré**, dès lors que
+l'image est servie en `cover` à des écrans de formes libres.
+
+### Deux réglages qui rendent ce mouvement visible
+
+| Levier | Valeur | Effet |
+|---|---|---|
+| **Zoom du cadrage** | 1,35 | chaque bateau parcourt une bien plus grande fraction du cadre |
+| **Hauteur de course** | 150 vh | le même trajet se fait en deux fois moins de défilement |
+
+Le zoom tombe juste : 2160 / 1,35 = 1600, soit exactement la largeur de sortie — le recadrage
+se fait donc **sans aucun rééchantillonnage**, et la netteté est celle du capteur.
+
+La coupe verticale, elle, sert à exclure les caps bruns de l'horizon : arides, ils ne
+passaient pas pour Saint-Martin. Il ne reste que l'eau et les bateaux.
+
+Cerise : un sillage **fin** sur une eau lisse comprime très bien — 19 Ko l'image, là où un
+sillage plein cadre en demandait 45. Le budget passe donc en qualité (32) et en nombre
+d'images (264, une sur deux de la source).
+
+### Faire bouger davantage : trois leviers, pas un seul
+
+Ce que l'on perçoit, c'est **combien la scène avance pour un geste donné**, et cela dépend
+d'autant du montage que du plan :
+
+| Levier | Avant | Après | Ce que ça coûte |
+|---|---|---|---|
+| Sujet du plan | décor fixe | **un long banc de sable parcouru** | rien |
+| Profil d'entrée | 22 % | **4 %** | rien |
+| Hauteur de course | 340 vh | **175 vh** | rien |
+| Durée parcourue | 4,5 s | **18 s** | rien |
+
+Le premier de ces leviers est de loin le plus important, et c'est celui que j'avais introduit
+moi-même : à lui seul il multipliait par douze ce qu'un petit geste fait avancer.
+
+Les deux derniers ne coûtent ni poids ni fluidité : l'écart entre deux images affichées ne
+change pas, on les traverse seulement plus vite.
 
 ### La fluidité — ce qui a été corrigé
 
@@ -104,48 +171,67 @@ voisines achève de lisser.
 
 ### Le poids, et le temps d'affichage
 
-| | Bureau 1280×720 | Mobile 576×768 |
+| | Bureau 1600×900 | Mobile 416×555 |
 |---|---|---|
-| Images | 175 | 140 |
-| Séquence complète | **4,34 Mo** | **1,31 Mo** |
+| Images | 264 | 176 |
+| Séquence complète | **4,11 Mo** | **1,08 Mo** |
 | Plafond convenu | 5 Mo | 1,5 Mo |
 
-Temps mesurés sur les poids réels, à débit constant :
+Un sillage **fin** sur une eau lisse comprime très bien — 16 Ko l'image, là où un sillage
+plein cadre en demandait 45 et de l'écume 34.
+
+**Le plafond a été tenu délibérément.** Doubler la fluidité (60 im/s, 528 images) coûterait
+environ 9,4 Mo, soit sept secondes de chargement en 4G moyenne. Les prospects ouvrent le lien
+depuis leur téléphone, souvent en déplacement : mieux vaut un hero un peu moins fluide qui
+s'affiche tout de suite qu'un hero parfait que personne n'attend. La netteté, elle, est déjà
+au maximum de ce plan — le recadrage mesure exactement 1600 px dans la source, soit la
+largeur de sortie : le pixel est transporté tel quel.
 
 | Réseau | Séquence bureau | Séquence mobile |
 |---|---|---|
-| Bon réseau, 25 Mb/s | 1,5 s | 0,4 s |
-| 4G moyenne, 10 Mb/s | 3,6 s | 1,1 s |
-| 4G faible, 5 Mb/s | 7,3 s | 2,2 s |
+| Bon réseau, 25 Mb/s | 1,4 s | 0,4 s |
+| 4G moyenne, 10 Mb/s | 3,5 s | 0,9 s |
+| 4G faible, 5 Mb/s | 6,9 s | 1,8 s |
 
 Le visiteur n'attend jamais devant un écran vide : **82 Ko** suffisent au premier rendu
 (HTML + CSS + affiche), l'affiche reste à l'écran pendant le préchargement, et une jauge
-discrète montre l'avancement. Le hero ne s'allonge qu'une fois la séquence complète.
+discrète montre l'avancement.
 
-### La liaison d'entrée et de sortie
+### La liaison d'entrée et de sortie, et une erreur qu'elle a causée
 
-Une caméra ne démarre pas d'un coup. La course reçoit un **profil de vitesse trapézoïdal** —
-accélération, plateau, décélération — dont la vitesse est **nulle aux deux extrémités** :
+La course reçoit un **profil de vitesse** — accélération, plateau, décélération — dont la
+position affichée est l'intégrale normalisée. Les deux bouts **ne sont pas symétriques**, et
+c'est le résultat d'une correction.
+
+Le profil était d'abord adouci des deux côtés sur 22 % de la course, au nom du principe
+qu'« une caméra ne démarre pas d'un coup ». Mesuré, c'était désastreux :
+
+| Défilement | Images avancées, ancien profil | Nouveau profil |
+|---|---|---|
+| 60 px | **2 / 162** | 25 / 212 |
+| 120 px *(un cran de molette)* | 10 / 162 | 54 / 212 |
+| 240 px | 29 / 162 | 113 / 212 |
+
+Les 60 premiers pixels — le geste qui décide de l'impression — n'avançaient que de **deux
+images**. Le hero passait pour immobile, et aucun changement de plan n'y aurait rien fait :
+le mouvement était mangé par la courbe, pas absent de l'image.
+
+Il n'y avait d'ailleurs aucune raison d'adoucir l'entrée : avant le premier geste, l'image
+est déjà à l'arrêt sur son premier plan, il n'y a pas de rupture à masquer. La sortie, elle,
+en a besoin — le hero s'y efface pendant que la page suivante monte.
 
 ```
-vitesse(p) = adoucie(p / A)        sur les A premiers pour cent
-             1                     au milieu
-             adoucie((1 - p) / A)  sur les A derniers        (A = 0,22)
+vitesse(p) = adoucie(p / 0,04)          sur les 4 premiers pour cent
+             1                          au milieu
+             adoucie((1 - p) / 0,16)    sur les 16 derniers
 ```
 
-La position affichée est l'intégrale normalisée de cette vitesse. Mesuré sur le rendu, par
-pas de 5 % de la course :
-
-```
-1,2 → 2,6 → 4,0 → 4,3 → 3,5 → … plateau ~3,0 … → 3,4 → 2,8 → 1,8 → 0,5
-└──── le mouvement naît ────┘                      └── et s'éteint ──┘
-```
+Le ressort a été raidi en même temps (0,055 → 0,11) : trop mou, il ajoutait son propre
+retard à celui du profil, et les deux se cumulaient au démarrage.
 
 Pendant la mise en route, le titre se retire vers le haut en s'effaçant, le voile sombre
-s'allège, et l'image se pose depuis un très léger rapprochement — **suivant la même courbe
-adoucie**. Sans cela, le rapprochement variait le plus vite au tout début et l'entrée
-bougeait plus que le milieu : l'inverse de l'effet recherché. À la sortie, un voile couleur
-de page monte et le hero s'y dissout au lieu de la heurter.
+s'allège, et l'image se pose depuis un très léger rapprochement. À la sortie, un voile
+couleur de page monte et le hero s'y dissout au lieu de la heurter.
 
 ### La fluidité du pilotage
 
@@ -158,8 +244,12 @@ Trois causes de saccade, corrigées :
    défile pas dans une image immobile. Un indicateur discret montre l'avancement.
 2. **La position d'image calquée sur la position de défilement.** Une molette ou un pavé
    tactile envoient des sauts irréguliers, que l'image reproduisait tels quels. La cible
-   vient toujours du défilement, mais la valeur affichée la rejoint par **approche
-   exponentielle** (20 % de l'écart par image).
+   vient toujours du défilement, mais la valeur affichée la rejoint par un **ressort
+   amorti** (raideur 0,055, amortissement 0,53), réglé au bord du régime critique : la
+   course se prolonge d'environ un quart de seconde après l'arrêt du doigt, sans jamais
+   repartir en arrière — un dépassement, ici, se verrait comme un tremblement de la caméra.
+   L'intégrateur tourne à pas fixe de 1/60 s, quelle que soit la cadence d'affichage :
+   le comportement est donc le même sur un écran à 60 Hz et sur un à 120 Hz.
 3. **Un seuil de redessin trop grossier**, qui avalait les variations fines. Pendant
    l'animation, on redessine à chaque image.
 
@@ -173,8 +263,8 @@ Mesuré sur le rendu, avec des pas de défilement volontairement irréguliers :
 L'à-coup est divisé par deux — et le résultat est le même à 70 ms qu'à 400 ms entre deux
 pas, c'est-à-dire pendant un défilement rapide comme au repos.
 
-Si le préchargement échoue sur plus de 15 % des images, l'effet ne s'active pas et
-l'affiche fixe reste : `data-repli="chargement-incomplet"`.
+Si une seule image manque, l'effet ne s'active pas et l'affiche fixe reste : une séquence
+trouée saute, et un saut est exactement ce qu'on cherche à éviter.
 
 ### La lisibilité du texte
 
@@ -212,17 +302,31 @@ une image, on mesure le débit réellement obtenu, on décide — et on refait l
 après chaque paquet, au cas où le débit s'effondrerait. Sur une vraie 2G le verdict tombe
 après 26 Ko.
 
-### Quatre replis, tous vérifiés
+### Cinq replis, tous vérifiés
 
 | Situation | Comportement | Octets de séquence |
 |---|---|---|
 | Pas de JavaScript | L'affiche reste, en plein écran ; le hero fait une hauteur d'écran | 0 |
 | `prefers-reduced-motion` | Idem, `data-repli="animations-reduites"` | **0** |
-| Économiseur de données, 2G | Idem, `data-repli="connexion-lente"` | **0** |
-| Débit mesuré trop faible | On s'arrête après le premier paquet | 8 images |
+| Économiseur de données | Idem, `data-repli="connexion-lente"` | **0** |
+| Débit mesuré trop faible | On s'arrête après l'image sonde, `data-repli="debit-insuffisant"` | 1 image |
 | Images inaccessibles | Idem, `data-repli="chargement-impossible"` | — |
+| Séquence non fabriquée | Idem, `data-repli="sequence-absente"` | 0 |
+
+Le type de réseau annoncé par le navigateur n'est pas consulté : il s'est révélé faux trop
+souvent — 1,3 Mb/s annoncés sur une machine locale sans réseau, `effectiveType` à « 2g » sur
+une fibre. Seul l'**économiseur de données**, qui est une intention explicite de la
+personne, interdit d'emblée. Tout le reste se décide sur une mesure : on charge une image,
+on chronomètre, et on renonce si le reste demanderait plus de dix secondes.
 
 `essai-replis.html?cas=sobre|lent|donnees|normal` rejoue chacun de ces cas.
+
+### L'effet de souris
+
+Sur ordinateur et au pointeur fin uniquement, le déplacement horizontal de la souris fait
+glisser l'image d'un peu plus d'un pour cent — assez pour qu'elle réponde, trop peu pour
+qu'on sache dire pourquoi. La toile est peinte 3,5 % plus large que le cadre : la marge sert
+au glissement, qui ne découvre donc jamais un bord. Sur écran tactile, l'effet n'existe pas.
 
 ## Les intégrations
 
@@ -320,6 +424,7 @@ python3 src/telecharger.py   # récupère les originaux listés dans src/sources
 python3 src/traiter.py       # étalonne et décline en AVIF + WebP, deux largeurs
 python3 src/hero.py          # extrait et étalonne les deux séquences du hero
 python3 construire.py        # régénère les blocs des pages
+python3 src/lisibilite.py    # contrôle le contraste sur toutes les images du hero
 ```
 
 Trois outils de mesure, qui ont servi à trancher plutôt qu'à justifier après coup :
@@ -388,6 +493,44 @@ page, plus `js/credits.js`.
 rien écrire, et le générateur s'arrête net si un repère a disparu d'une page plutôt que
 d'écrire à côté.
 
+## Ce qu'une relecture complète a trouvé
+
+Passage sur les dix pages, aux trois largeurs (375, 768, 1280), plus les parcours
+interactifs. Quatre défauts réels, tous corrigés :
+
+**1. Les versions de fichiers dérivaient.** Le `?v=` de chaque CSS et JS était écrit à la
+main, page par page. Après une retouche de `css/style.css`, `index.html` était passé à
+`v=19` pendant que les neuf autres pages restaient à `v=11` : un visiteur qui revenait
+recevait l'ancienne feuille sur tout le site sauf l'accueil. `construire.py` calcule
+désormais la version comme **empreinte du contenu** — elle change quand le fichier change,
+et elle est la même partout. La classe de bug entière disparaît.
+
+**2. Le calendrier ouvrait des impasses.** Une date d'arrivée était proposée dès lors
+qu'elle était libre, sans vérifier qu'un séjour valide pouvait y commencer. La veille d'une
+réservation était donc cliquable, et le visiteur découvrait le refus « séjour minimum de
+5 nuits » après avoir choisi ses deux dates. La règle de durée minimale est maintenant
+exportée par `js/tarifs.mjs` — le même fichier que le prix — et le calendrier s'en sert pour
+n'ouvrir que ce qu'il acceptera. En octobre, 6 dates d'arrivée au lieu de 16, et plus aucun
+cul-de-sac. Un test verrouille la règle.
+
+**3. Le focus n'entrait ni dans la visionneuse ni dans le menu.** Les deux appelaient
+`.focus()` trop tôt : la feuille de style garde ces blocs en `visibility:hidden` tant que
+l'attribut d'ouverture n'est pas posé, et la transition ne bascule la visibilité qu'à la
+trame **suivante**. Un navigateur refusant le focus sur un élément invisible, la demande
+partait dans le vide sans la moindre erreur, et la tabulation continuait derrière la boîte
+ouverte. Diagnostiqué en traçant la valeur calculée de `visibility` trame par trame ; corrigé
+par une seconde `requestAnimationFrame`.
+
+**4. Quatre méta-descriptions hors plage.** Celle de l'accueil faisait 204 caractères — donc
+tronquée dans les résultats de recherche — et trois pages secondaires en avaient moins de 35.
+Toutes sont maintenant entre 90 et 170.
+
+Contrôlé et conforme par ailleurs : aucun débordement horizontal sur 10 pages × 3 largeurs,
+un seul `<h1>` par page, aucune image sans `alt`, aucun lien ni bouton vide, aucune ancre
+morte, aucun fichier référencé manquant, `sitemap.xml` et `robots.txt` cohérents avec les
+pages non indexées, et les trois routes d'API répondent — y compris le parcours de
+réservation complet jusqu'au détail du prix.
+
 ## Accessibilité
 
 - Contenu essentiel — description, coordonnées, tarifs, conditions, distances, avis,
@@ -420,7 +563,7 @@ d'écrire à côté.
 ├── construire.py               générateur des blocs répétés
 ├── .env.exemple                les variables à renseigner pour passer en réel
 ├── outils-publier.sh           assemble _site/ ; refuse si le SIREN manque
-├── index.html … mentions.html  8 pages publiées
+├── index.html … mentions.html  10 pages publiées
 ├── css/polices.css             Marcellus et Jost, hébergées ici
 ├── css/style.css               feuille commune, palette et animations
 ├── css/reserver.css            calendrier, récapitulatif, confirmation
@@ -432,8 +575,11 @@ d'écrire à côté.
 ├── js/credits.js               GÉNÉRÉ — crédits de la visionneuse
 ├── netlify/functions/          iCal, Stripe, avis Google, courriel
 ├── assets/fonts/               8 fichiers woff2, sous-ensembles latin
-├── assets/img/                 28 photos étalonnées, AVIF + WebP, deux largeurs
-├── assets/hero/                140 images de séquence + affiches de repli
+├── assets/img/                 29 photos étalonnées, AVIF + WebP, deux largeurs
+├── assets/hero/                315 images de séquence + affiches de repli
 ├── assets/video/               Baie Longue, deux définitions
 └── src/                        sources, scripts de fabrication, serveur local
+    ├── animation.py            sépare mouvement de caméra et mouvement propre
+    ├── hero.py                 la séquence du hero
+    └── lisibilite.py           contrôle de contraste, image par image
 ```

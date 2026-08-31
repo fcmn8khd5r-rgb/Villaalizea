@@ -28,6 +28,23 @@ export const CONFIG = {
 
 const jour = d => d.toISOString().slice(0, 10);
 
+/** Durée minimale applicable à un séjour, en nuits.
+ *
+ *  Exportée parce que le CALENDRIER en a besoin autant que le calcul : sans
+ *  elle, il proposait des dates d'arrivée d'où aucun séjour valide ne pouvait
+ *  partir, et le visiteur tombait sur un refus après avoir choisi. La règle
+ *  vit ici, une seule fois, comme les prix. */
+export function nuitsMinimum(arrivee, nuits = 1) {
+  const a = new Date(arrivee + "T00:00:00Z");
+  let mini = CONFIG.nuitsMini;
+  for (let i = 0; i < Math.max(1, nuits); i++) {
+    const n = new Date(a); n.setUTCDate(n.getUTCDate() + i);
+    const s = saisonDu(n);
+    mini = Math.max(mini, s.nuitsMini || CONFIG.nuitsMini);
+  }
+  return mini;
+}
+
 export function saisonDu(date) {
   const md = jour(date).slice(5);              // "MM-JJ"
   for (const s of CONFIG.saisons) {            // l'ordre compte : fêtes d'abord

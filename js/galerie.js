@@ -86,9 +86,23 @@
     rendeur = source || null;
     visio.hidden = false;
     afficher(i);
-    requestAnimationFrame(function () { visio.setAttribute("data-ouvert", ""); });
     document.body.classList.add("bloque");
-    visio.querySelector(".visio__x").focus();
+    // Le focus doit venir APRES data-ouvert : tant que l'attribut n'est pas
+    // posé, la feuille de style laisse la visionneuse en visibility:hidden,
+    // et un navigateur refuse de donner le focus à un élément invisible. La
+    // demande partait donc dans le vide, le focus restait sur la vignette
+    // cliquée, et la tabulation continuait derrière la boîte de dialogue.
+    // DEUX trames, et c'est nécessaire. La feuille de style garde la
+    // visionneuse en `visibility:hidden` tant que `data-ouvert` n'est pas
+    // posé, et la transition ne bascule la visibilité qu'à la trame SUIVANTE.
+    // Un navigateur refusant le focus sur un élément invisible, la demande
+    // partait dans le vide : le focus restait sur la vignette cliquée et la
+    // tabulation continuait derrière la boîte de dialogue. Vérifié en traçant
+    // la valeur calculée de `visibility` trame par trame.
+    requestAnimationFrame(function () {
+      visio.setAttribute("data-ouvert", "");
+      requestAnimationFrame(function () { visio.querySelector(".visio__x").focus(); });
+    });
   }
 
   function fermer() {
