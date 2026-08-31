@@ -154,7 +154,17 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
   min-height:24px; display:inline-flex; align-items:center;
 }
 .langue:hover{opacity:1}
-@media (max-width:900px){ .langue{display:none} }
+/* Sur mobile la navigation passe dans le tiroir — mais pas le choix de langue.
+   Il y était caché derrière le burger : un anglophone tombant sur le site
+   français devait deviner qu'un menu contenait de quoi en sortir. Il reste
+   donc dans la barre, resserré pour laisser la marque respirer, et sa cible
+   tactile passe à 34 px de haut. Il figure aussi dans le tiroir : qui ouvre
+   le menu pour chercher la langue l'y trouve. */
+@media (max-width:900px){
+  .langue{
+    padding:8px 10px; font-size:10.5px; letter-spacing:.12em; min-height:34px;
+  }
+}
 .tiroir__langue{
   margin-top:1.4rem; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
   color:var(--lien) !important;
