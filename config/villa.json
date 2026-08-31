@@ -2,11 +2,17 @@
   "marque": {
     "nom": "Villa Alizéa",
     "baseline": "Terres Basses · Saint-Martin",
-    "accroche": "Quatre chambres face au vent, à deux pas de Baie Longue.",
+    "accroche": {
+      "fr": "Quatre chambres face au vent, à deux pas de Baie Longue.",
+      "en": "Four bedrooms facing the trade wind, a short walk from Baie Longue."
+    },
     "fictif": true
   },
   "bien": {
-    "type": "Meublé de tourisme",
+    "type": {
+      "fr": "Meublé de tourisme",
+      "en": "Registered holiday rental"
+    },
     "chambres": 4,
     "voyageurs": 8,
     "sallesEau": 3,
@@ -16,14 +22,20 @@
     "quartier": "Terres Basses",
     "enregistrement": "97801 00 0000",
     "enregistrementFictif": true,
-    "classement": "non classé"
+    "classement": {
+      "fr": "non classé",
+      "en": "unclassified"
+    }
   },
   "contact": {
     "telephone": "+590 590 00 00 00",
     "telephoneLien": "+590590000000",
     "courriel": "contact@villa-alizea.example",
     "adresse": "Baie Longue, Terres Basses, 97150 Saint-Martin",
-    "exploitant": "SCI Alizéa (société fictive)"
+    "exploitant": {
+      "fr": "SCI Alizéa (société fictive)",
+      "en": "SCI Alizéa (fictional company)"
+    }
   },
   "tarifs": {
     "devise": "EUR",
@@ -35,8 +47,14 @@
     "saisons": [
       {
         "cle": "basse",
-        "nom": "Basse saison",
-        "periode": "16 avril → 14 décembre",
+        "nom": {
+          "fr": "Basse saison",
+          "en": "Low season"
+        },
+        "periode": {
+          "fr": "16 avril → 14 décembre",
+          "en": "16 April → 14 December"
+        },
         "prix": 4200,
         "plages": [
           [
@@ -47,8 +65,14 @@
       },
       {
         "cle": "haute",
-        "nom": "Haute saison",
-        "periode": "15 décembre → 15 avril",
+        "nom": {
+          "fr": "Haute saison",
+          "en": "High season"
+        },
+        "periode": {
+          "fr": "15 décembre → 15 avril",
+          "en": "15 December → 15 April"
+        },
         "prix": 7800,
         "plages": [
           [
@@ -63,8 +87,14 @@
       },
       {
         "cle": "fetes",
-        "nom": "Fêtes de fin d'année",
-        "periode": "20 décembre → 5 janvier",
+        "nom": {
+          "fr": "Fêtes de fin d'année",
+          "en": "Festive season"
+        },
+        "periode": {
+          "fr": "20 décembre → 5 janvier",
+          "en": "20 December → 5 January"
+        },
         "prix": 12500,
         "nuitsMini": 14,
         "plages": [
@@ -83,7 +113,10 @@
       "mode": "pourcentage",
       "taux": 5,
       "plafondParPersonneParNuit": 4.3,
-      "note": "taux et plafond sont révisés périodiquement, à vérifier auprès d'elle avant toute mise en ligne réelle."
+      "note": {
+        "fr": "taux et plafond sont révisés périodiquement, à vérifier auprès d'elle avant toute mise en ligne réelle.",
+        "en": "the rate and the cap are reviewed periodically, and should be checked with them before any real publication."
+      }
     }
   },
   "sync": {
@@ -128,45 +161,81 @@
         "auteur": "Camille R.",
         "source": "airbnb",
         "note": 5,
-        "date": "Mars 2026",
-        "texte": "La maison est encore plus ouverte que sur les photos. Nous avons pris tous les petits déjeuners sur la terrasse, avec le bruit de la houle en fond. Baie Longue est à cinq minutes à pied et nous n'y avons jamais croisé personne."
+        "date": {
+          "fr": "Mars 2026",
+          "en": "March 2026"
+        },
+        "texte": {
+          "fr": "La maison est encore plus ouverte que sur les photos. Nous avons pris tous les petits déjeuners sur la terrasse, avec le bruit de la houle en fond. Baie Longue est à cinq minutes à pied et nous n'y avons jamais croisé personne.",
+          "en": "The house is even more open than the photographs suggest. We had every breakfast on the terrace with the sound of the swell behind us. Baie Longue is five minutes on foot and we never met a soul there."
+        }
       },
       {
         "auteur": "Thomas & Léa",
         "source": "booking",
         "note": 10,
         "sur": 10,
-        "date": "Février 2026",
-        "texte": "Quatre chambres vraiment indépendantes, ce qui change tout quand on part à deux couples avec des enfants. Accueil impeccable, et le ménage de fin de séjour évite les discussions."
+        "date": {
+          "fr": "Février 2026",
+          "en": "February 2026"
+        },
+        "texte": {
+          "fr": "Quatre chambres vraiment indépendantes, ce qui change tout quand on part à deux couples avec des enfants. Accueil impeccable, et le ménage de fin de séjour évite les discussions.",
+          "en": "Four genuinely separate bedrooms, which changes everything when two couples travel with children. Faultless welcome, and the end-of-stay cleaning saves any awkward conversation."
+        }
       },
       {
         "auteur": "Marie-Claude D.",
         "source": "google",
         "note": 5,
-        "date": "Janvier 2026",
-        "texte": "Nous cherchions du calme sans être coupés de tout : les Terres Basses sont parfaites pour ça. Marigot en dix minutes pour le marché du samedi."
+        "date": {
+          "fr": "Janvier 2026",
+          "en": "January 2026"
+        },
+        "texte": {
+          "fr": "Nous cherchions du calme sans être coupés de tout : les Terres Basses sont parfaites pour ça. Marigot en dix minutes pour le marché du samedi.",
+          "en": "We wanted quiet without being cut off from everything: Terres Basses is perfect for that. Marigot is ten minutes away for the Saturday market."
+        }
       },
       {
         "auteur": "Julien P.",
         "source": "airbnb",
         "note": 4,
-        "date": "Décembre 2025",
-        "texte": "Très belle villa, bien tenue. Un bémol honnête : la climatisation de la chambre du fond est un peu bruyante la nuit. Les propriétaires nous ont dit qu'elle serait remplacée."
+        "date": {
+          "fr": "Décembre 2025",
+          "en": "December 2025"
+        },
+        "texte": {
+          "fr": "Très belle villa, bien tenue. Un bémol honnête : la climatisation de la chambre du fond est un peu bruyante la nuit. Les propriétaires nous ont dit qu'elle serait remplacée.",
+          "en": "A lovely villa, well kept. One honest reservation: the air conditioning in the far bedroom is a little noisy at night. The owners told us it was due to be replaced."
+        }
       },
       {
         "auteur": "Sophie & Marc",
         "source": "booking",
         "note": 9.5,
         "sur": 10,
-        "date": "Novembre 2025",
-        "texte": "Le bassin de nage est un vrai bassin, pas une baignoire. Nous y avons fait des longueurs tous les matins. Nous reviendrons."
+        "date": {
+          "fr": "Novembre 2025",
+          "en": "November 2025"
+        },
+        "texte": {
+          "fr": "Le bassin de nage est un vrai bassin, pas une baignoire. Nous y avons fait des longueurs tous les matins. Nous reviendrons.",
+          "en": "The lap pool is a real pool, not a bathtub. We swam lengths every morning. We will be back."
+        }
       },
       {
         "auteur": "Anne-Laure V.",
         "source": "google",
         "note": 5,
-        "date": "Octobre 2025",
-        "texte": "La cuisine est un vrai plaisir : plan de travail immense, tout l'équipement, et une table où l'on tient à dix. Nous n'avons dîné dehors que deux fois en dix jours."
+        "date": {
+          "fr": "Octobre 2025",
+          "en": "October 2025"
+        },
+        "texte": {
+          "fr": "La cuisine est un vrai plaisir : plan de travail immense, tout l'équipement, et une table où l'on tient à dix. Nous n'avons dîné dehors que deux fois en dix jours.",
+          "en": "The kitchen is a genuine pleasure: an enormous worktop, everything you could need, and a table that seats ten. We ate out twice in ten days."
+        }
       }
     ]
   },
@@ -179,64 +248,145 @@
     {
       "cle": "ile-baielongue",
       "nom": "Baie Longue",
-      "sousTitre": "La plage de la villa",
-      "texte": "Un kilomètre et demi de sable clair bordé de cocotiers. Ni commerce ni parasol de location : c'est la plus longue plage de l'île, et le plus souvent on y marche seul. Le sentier part du bas du jardin.",
+      "sousTitre": {
+        "fr": "La plage de la villa",
+        "en": "The villa's beach"
+      },
+      "texte": {
+        "fr": "Un kilomètre et demi de sable clair bordé de cocotiers. Ni commerce ni parasol de location : c'est la plus longue plage de l'île, et le plus souvent on y marche seul. Le sentier part du bas du jardin.",
+        "en": "A mile and a half of pale sand edged with coconut palms. No shops, no hired parasols: it is the longest beach on the island, and most days you walk it alone. The path starts at the bottom of the garden."
+      },
       "km": 0.4,
-      "pied": "5 min",
-      "voiture": "2 min",
+      "pied": {
+        "fr": "5 min",
+        "en": "5 min"
+      },
+      "voiture": {
+        "fr": "2 min",
+        "en": "2 min"
+      },
       "video": true
     },
     {
       "cle": "ile-baierouge",
       "nom": "Baie Rouge",
-      "sousTitre": "Les arches de roche",
-      "texte": "Une anse courte fermée par une pointe rocheuse, l'eau très claire et des rouleaux qui plaisent aux enfants. C'est de ce côté que l'île regarde le soleil se coucher.",
+      "sousTitre": {
+        "fr": "Les arches de roche",
+        "en": "The rock arches"
+      },
+      "texte": {
+        "fr": "Une anse courte fermée par une pointe rocheuse, l'eau très claire et des rouleaux qui plaisent aux enfants. C'est de ce côté que l'île regarde le soleil se coucher.",
+        "en": "A short cove closed off by a rocky point, with very clear water and rollers that children love. This is the side from which the island watches the sun go down."
+      },
       "km": 2.5,
-      "pied": "30 min",
-      "voiture": "6 min"
+      "pied": {
+        "fr": "30 min",
+        "en": "30 min"
+      },
+      "voiture": {
+        "fr": "6 min",
+        "en": "6 min"
+      }
     },
     {
       "cle": "ile-marigot",
       "nom": "Marigot",
-      "sousTitre": "Le chef-lieu, côté français",
-      "texte": "Des rues basses aux façades peintes, sous les balcons de bois. Le marché du matin se tient sous les tôles colorées ; plus haut, le fort Louis donne la vue sur Anguilla. Les étals débordent sur le quai le mercredi et le samedi.",
+      "sousTitre": {
+        "fr": "Le chef-lieu, côté français",
+        "en": "The capital, French side"
+      },
+      "texte": {
+        "fr": "Des rues basses aux façades peintes, sous les balcons de bois. Le marché du matin se tient sous les tôles colorées ; plus haut, le fort Louis donne la vue sur Anguilla. Les étals débordent sur le quai le mercredi et le samedi.",
+        "en": "Low streets of painted façades under wooden balconies. The morning market is held beneath coloured tin roofs; higher up, Fort Louis gives you the view across to Anguilla. The stalls spill onto the quay on Wednesdays and Saturdays."
+      },
       "km": 7,
-      "pied": "—",
-      "voiture": "12 min"
+      "pied": {
+        "fr": "—",
+        "en": "—"
+      },
+      "voiture": {
+        "fr": "12 min",
+        "en": "12 min"
+      }
     },
     {
       "cle": "ile-grandcase",
       "nom": "Grand-Case",
-      "sousTitre": "La rue des restaurants",
-      "texte": "On y dîne sur des terrasses ouvertes au couchant, les pieds presque dans l'eau. Une seule rue, une trentaine de tables, et les <em>lolos</em> sur le port — les grillades au charbon servies sur des bancs de bois. Réserver le soir, surtout de janvier à avril.",
+      "sousTitre": {
+        "fr": "La rue des restaurants",
+        "en": "The restaurant street"
+      },
+      "texte": {
+        "fr": "On y dîne sur des terrasses ouvertes au couchant, les pieds presque dans l'eau. Une seule rue, une trentaine de tables, et les <em>lolos</em> sur le port — les grillades au charbon servies sur des bancs de bois. Réserver le soir, surtout de janvier à avril.",
+        "en": "You dine here on terraces open to the sunset, almost with your feet in the water. One street, some thirty tables, and the <em>lolos</em> along the harbour — charcoal grills served on wooden benches. Book ahead in the evening, especially from January to April."
+      },
       "km": 14,
-      "pied": "—",
-      "voiture": "20 min"
+      "pied": {
+        "fr": "—",
+        "en": "—"
+      },
+      "voiture": {
+        "fr": "20 min",
+        "en": "20 min"
+      }
     },
     {
       "cle": "ile-pinel",
-      "nom": "Îlet Pinel",
-      "sousTitre": "La réserve naturelle",
-      "texte": "Une eau si claire qu'on y marche longtemps sans perdre pied. L'îlet fait vingt hectares, dans la réserve naturelle, à dix minutes de navette depuis l'embarcadère de Cul-de-Sac. Sentier de découverte, deux restaurants de plage, navettes toutes les demi-heures.",
+      "nom": {
+        "fr": "Îlet Pinel",
+        "en": "Pinel Islet"
+      },
+      "sousTitre": {
+        "fr": "La réserve naturelle",
+        "en": "The nature reserve"
+      },
+      "texte": {
+        "fr": "Une eau si claire qu'on y marche longtemps sans perdre pied. L'îlet fait vingt hectares, dans la réserve naturelle, à dix minutes de navette depuis l'embarcadère de Cul-de-Sac. Sentier de découverte, deux restaurants de plage, navettes toutes les demi-heures.",
+        "en": "Water so clear you can wade a long way without losing your footing. The islet covers fifty acres inside the nature reserve, ten minutes by ferry from the Cul-de-Sac landing. A discovery trail, two beach restaurants, and ferries every half hour."
+      },
       "km": 21,
-      "pied": "—",
-      "voiture": "30 min + navette"
+      "pied": {
+        "fr": "—",
+        "en": "—"
+      },
+      "voiture": {
+        "fr": "30 min + navette",
+        "en": "30 min + ferry"
+      }
     },
     {
       "cle": "ile-picparadis",
       "nom": "Pic Paradis",
-      "sousTitre": "Le point haut",
-      "texte": "Une passerelle de bois, et la forêt qui se referme au-dessus. Le sommet est à 424 mètres, le seul endroit d'où l'on voie les deux côtes à la fois ; en contrebas, la forêt de Loterie Farm et ses parcours dans les arbres. Prévoir de bonnes chaussures et de l'eau.",
+      "sousTitre": {
+        "fr": "Le point haut",
+        "en": "The high point"
+      },
+      "texte": {
+        "fr": "Une passerelle de bois, et la forêt qui se referme au-dessus. Le sommet est à 424 mètres, le seul endroit d'où l'on voie les deux côtes à la fois ; en contrebas, la forêt de Loterie Farm et ses parcours dans les arbres. Prévoir de bonnes chaussures et de l'eau.",
+        "en": "A wooden walkway, and the forest closing overhead. The summit stands at 424 metres, the one place from which you see both coasts at once; below it, the Loterie Farm woods and their courses through the trees. Bring proper shoes and water."
+      },
       "km": 12,
-      "pied": "—",
-      "voiture": "25 min + 25 min de marche"
+      "pied": {
+        "fr": "—",
+        "en": "—"
+      },
+      "voiture": {
+        "fr": "25 min + 25 min de marche",
+        "en": "25 min + 25 min on foot"
+      }
     }
   ],
   "acces": {
     "aeroport": "Aéroport Princess Juliana (SXM)",
     "km": 9,
-    "voiture": "15 min",
-    "note": "Transfert privé sur demande, 60 € l'aller."
+    "voiture": {
+      "fr": "15 min",
+      "en": "15 min"
+    },
+    "note": {
+      "fr": "Transfert privé sur demande, 60 € l'aller.",
+      "en": "Private transfer on request, €60 each way."
+    }
   },
   "site": {
     "url": "https://villa-alizea.example",

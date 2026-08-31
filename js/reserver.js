@@ -14,15 +14,29 @@ import { calculer, nuitsMinimum, CONFIG } from "./tarifs.mjs";
 
 const $ = s => document.querySelector(s);
 const jour = d => d.toISOString().slice(0, 10);
-const MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août",
-              "septembre","octobre","novembre","décembre"];
-const JOURS = [["L","lundi"],["M","mardi"],["M","mercredi"],["J","jeudi"],
-               ["V","vendredi"],["S","samedi"],["D","dimanche"]];
-const euro = n => n.toLocaleString("fr-FR", { style:"currency", currency:"EUR",
-                                              maximumFractionDigits: 2 });
+/* La page dit sa langue ; les textes viennent de js/textes.js. `tx` retombe
+   sur la clé si un texte manque — mieux vaut un mot brut qu'un trou. */
+const LG = document.documentElement.lang === "en" ? "en" : "fr";
+const TX = (window.ALIZEA_TEXTES || {})[LG] || {};
+const tx = (cle, ...v) => {
+  let s = TX[cle];
+  if (s === undefined) return cle;
+  v.forEach((x, i) => { s = s.split("{" + i + "}").join(x); });
+  return s;
+};
+const MOIS  = TX.mois  || ["janvier","février","mars","avril","mai","juin","juillet",
+                           "août","septembre","octobre","novembre","décembre"];
+const MOIS_C = TX.mois_court || MOIS;
+const JOURS = TX.jours || [["L","lundi"],["M","mardi"],["M","mercredi"],["J","jeudi"],
+                           ["V","vendredi"],["S","samedi"],["D","dimanche"]];
+const LOCALE = TX.locale || "fr-FR";
+const euro = n => n.toLocaleString(LOCALE, { style:"currency", currency:"EUR",
+                                             maximumFractionDigits: 2 });
 const enLettres = s => {
   const d = new Date(s + "T00:00:00Z");
-  return d.getUTCDate() + " " + MOIS[d.getUTCMonth()].slice(0,4) + ". " + d.getUTCFullYear();
+  return LG === "en"
+    ? MOIS_C[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear()
+    : d.getUTCDate() + " " + MOIS_C[d.getUTCMonth()] + ". " + d.getUTCFullYear();
 };
 
 const etat = {
@@ -40,7 +54,8 @@ const etat = {
 async function charger() {
   const cal = $("#cal");
   try {
-    const r = await fetch("/api/disponibilites", { headers: { accept: "application/json" } });
+    const r = await fetch("/api/disponibilites?langue=" + LG,
+                          { headers: { accept: "application/json" } });
     if (!r.ok) throw new Error("HTTP " + r.status);
     const d = await r.json();
     etat.periodes = d.periodes || [];
@@ -55,8 +70,7 @@ async function charger() {
     majSource(d);
   } catch (e) {
     etat.mode = "erreur";
-    $("#cal-source").textContent =
-      "Les disponibilités n'ont pas pu être chargées. Écrivez-nous pour vérifier les dates.";
+    $("#cal-source").textContent = tx("cal_erreur");
     $("#cal-source").style.color = "#9C3A28";
   } finally {
     cal.setAttribute("aria-busy", "false");
@@ -98,12 +112,11 @@ function premierMoisUtile(depart) {
 function majSource(d) {
   const e = $("#cal-source");
   if (d.mode === "reel") {
-    const q = d.majLe ? new Date(d.majLe).toLocaleString("fr-FR",
+    const q = d.majLe ? new Date(d.majLe).toLocaleString(LOCALE,
                         { dateStyle:"short", timeStyle:"short" }) : "";
-    e.textContent = `Synchronisé avec ${etat.source} — dernière mise à jour ${q}.`;
+    e.textContent = tx("cal_synchro", etat.source, q);
   } else if (d.mode === "demonstration") {
-    e.textContent = "Démonstration : disponibilités simulées. Une fois les adresses iCal "
-                  + "d'Airbnb et de Booking renseignées, ce calendrier devient le vrai.";
+    e.textContent = tx("cal_demo");
   }
 }
 
@@ -177,7 +190,7 @@ function rendreMois(premier) {
 
     cases += `<td><button type="button" class="${cls.join(" ")}" data-j="${s}"`
            + `${possible ? "" : " disabled"}`
-           + ` aria-label="${n} ${MOIS[mo]} ${an}${pris ? ", réservé" : ""}">${n}</button></td>`;
+           + ` aria-label="${n} ${MOIS[mo]} ${an}${pris ? tx("reserve") : ""}">${n}</button></td>`;
     if ((decalage + n) % 7 === 0) cases += "</tr><tr>";
   }
 
@@ -212,13 +225,12 @@ function majRecap() {
 
   if (!etat.arrivee || !etat.depart) {
     zone.innerHTML = '<p class="recap__vide">'
-      + (etat.arrivee ? "Choisissez maintenant la date de départ."
-                      : "Choisissez vos dates dans le calendrier.") + "</p>";
+      + tx(etat.arrivee ? "choisir_depart" : "choisir_dates") + "</p>";
     payer.disabled = true;
     return;
   }
 
-  const p = calculer(etat.arrivee, etat.depart, +$("#r-voyageurs").value);
+  const p = calculer(etat.arrivee, etat.depart, +$("#r-voyageurs").value, LG);
   if (p.erreur) {
     zone.innerHTML = `<p class="recap__erreur">${p.erreur}</p>`;
     payer.disabled = true;
@@ -228,16 +240,18 @@ function majRecap() {
   // Le détail par saison n'a d'intérêt que si le séjour est à cheval sur
   // plusieurs : sinon on répète « 7 nuits · 7 nuits en basse saison ».
   const parts = Object.entries(p.detailSaisons);
+  const bas = n => LG === "en" ? n.toLowerCase() : n.toLowerCase();
   const libelle = parts.length > 1
-    ? `${p.nuits} nuits · ` + parts.map(([n, v]) => `${v} en ${n.toLowerCase()}`).join(", ")
-    : `${p.nuits} nuits en ${parts[0][0].toLowerCase()}`;
+    ? tx("nuits_saison_mix", p.nuits,
+         parts.map(([n, v]) => tx("nuits_part", v, bas(n))).join(", "))
+    : tx("nuits_saison_une", p.nuits, bas(parts[0][0]));
   zone.innerHTML =
       `<div class="ligne"><span>${libelle}</span><span>${euro(p.sejour)}</span></div>`
-    + `<div class="ligne"><span>Ménage de fin de séjour</span><span>${euro(p.menage)}</span></div>`
-    + `<div class="ligne"><span>Taxe de séjour · ${p.voyageurs} pers.</span><span>${euro(p.taxe)}</span></div>`
-    + `<div class="ligne ligne--total"><span>Total du séjour</span><span>${euro(p.total)}</span></div>`
-    + `<div class="ligne ligne--acompte"><span>Acompte à régler (${CONFIG.acomptePourcent} % hors taxe de séjour)</span><span>${euro(p.acompte)}</span></div>`
-    + `<div class="ligne"><span>Solde à 30 jours de l'arrivée</span><span>${euro(p.solde)}</span></div>`;
+    + `<div class="ligne"><span>${tx("menage")}</span><span>${euro(p.menage)}</span></div>`
+    + `<div class="ligne"><span>${tx("taxe", p.voyageurs)}</span><span>${euro(p.taxe)}</span></div>`
+    + `<div class="ligne ligne--total"><span>${tx("total")}</span><span>${euro(p.total)}</span></div>`
+    + `<div class="ligne ligne--acompte"><span>${tx("acompte", CONFIG.acomptePourcent)}</span><span>${euro(p.acompte)}</span></div>`
+    + `<div class="ligne"><span>${tx("solde")}</span><span>${euro(p.solde)}</span></div>`;
   payer.disabled = false;
   $("#r-note").textContent = "";
 }
@@ -288,25 +302,25 @@ $("#r-payer").addEventListener("click", async () => {
   const b = $("#r-payer"), note = $("#r-note");
   const libelle = b.textContent;
   b.disabled = true; note.style.color = "";
-  b.textContent = "Enregistrement…";
-  note.textContent = "Vérification des dates et du montant…";
+  b.textContent = tx("enregistrement");
+  note.textContent = tx("verification");
   try {
     const r = await fetch("/api/acompte", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         arrivee: etat.arrivee, depart: etat.depart,
-        voyageurs: +$("#r-voyageurs").value
+        voyageurs: +$("#r-voyageurs").value, langue: LG
       })
     });
     const d = await r.json();
-    if (!r.ok) throw new Error(d.message || "Réservation indisponible.");
+    if (!r.ok) throw new Error(d.message || tx("indisponible"));
 
     // En mode réel, d.url mène à la page de paiement hébergée par Stripe.
     // En démonstration, elle mène directement à la confirmation : le prix a
     // déjà été recalculé côté serveur et la disponibilité revérifiée.
     if (d.mode === "demonstration") {
-      note.textContent = "Démonstration : aucun paiement n'est demandé.";
+      note.textContent = tx("demo_paiement");
       // Une courte pause : sans elle le passage est si brusque qu'on ne voit
       // pas qu'une vérification a eu lieu.
       await new Promise(res => setTimeout(res, 600));
@@ -324,6 +338,6 @@ $("#r-payer").addEventListener("click", async () => {
 const n = new Date();
 etat.mois = new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), 1));
 if (new URLSearchParams(location.search).get("annule")) {
-  $("#r-note").textContent = "Paiement annulé — aucun montant n'a été débité.";
+  $("#r-note").textContent = tx("paiement_annule");
 }
 charger();

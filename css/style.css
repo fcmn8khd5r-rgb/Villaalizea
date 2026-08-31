@@ -144,6 +144,21 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
   text-transform:uppercase; margin-right:auto; white-space:nowrap;
 }
 .menu{display:flex; gap:clamp(14px,2vw,30px); align-items:center}
+
+/* Sélecteur de langue. Il affiche la langue vers laquelle on va, pas celle où
+   l'on est : « EN » sur le site français. C'est ce que le lecteur cherche. */
+.langue{
+  font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  border:1px solid currentColor; border-radius:2px;
+  padding:7px 10px; line-height:1; opacity:.75;
+  min-height:24px; display:inline-flex; align-items:center;
+}
+.langue:hover{opacity:1}
+@media (max-width:900px){ .langue{display:none} }
+.tiroir__langue{
+  margin-top:1.4rem; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--lien) !important;
+}
 .menu a{
   font-size:11px; letter-spacing:.15em; text-transform:uppercase; position:relative;
   padding:6px 0; opacity:.86;

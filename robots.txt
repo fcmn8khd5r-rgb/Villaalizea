@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /confirmation.html
 Disallow: /merci.html
+Disallow: /en/confirmation.html
+Disallow: /en/merci.html
 Disallow: /api/
 
 Sitemap: https://villa-alizea.example/sitemap.xml

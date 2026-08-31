@@ -6,6 +6,22 @@
    ========================================================================= */
 (function () {
   "use strict";
+
+/* ---- langue -------------------------------------------------------------
+   La page dit dans quelle langue elle est ; les textes viennent de
+   js/textes.js, engendré par construire.py. `tx` remplace {0}, {1}… par les
+   valeurs passées, et retombe sur la clé si un texte manque — mieux vaut un
+   mot brut qu'un trou. */
+var LG = document.documentElement.lang === "en" ? "en" : "fr";
+var TX = (window.ALIZEA_TEXTES || {})[LG] || {};
+function tx(cle) {
+  var s = TX[cle];
+  if (s === undefined) return cle;
+  for (var i = 1; i < arguments.length; i++)
+    s = s.split("{" + (i - 1) + "}").join(arguments[i]);
+  return s;
+}
+
   var grille = document.getElementById("galerie");
   var visio  = document.getElementById("visio");
   if (!grille) return;
@@ -26,7 +42,7 @@
     onglets.forEach(function (b) {
       b.classList.toggle("est-actif", b.getAttribute("data-filtre") === groupe);
     });
-    if (etat) etat.textContent = n + (n > 1 ? " photos affichées" : " photo affichée");
+    if (etat) etat.textContent = tx(n > 1 ? "photos_affichees" : "photo_affichee", n);
     construire();
   }
   onglets.forEach(function (b) {
@@ -49,7 +65,7 @@
       return {
         lien: a,
         cle: a.getAttribute("data-cle"),
-        avif: "assets/img/" + a.getAttribute("data-cle") + "-g.avif",
+        avif: "/assets/img/" + a.getAttribute("data-cle") + "-g.avif",
         webp: a.getAttribute("href"),
         alt: img ? img.alt : "",
         legende: (f.querySelector("figcaption") || {}).textContent || "",
@@ -78,7 +94,8 @@
       "</picture>";
     legende.textContent = v.legende;
     compte.textContent  = (index + 1) + " / " + vues.length;
-    credit.textContent  = (window.ALIZEA_CREDITS && window.ALIZEA_CREDITS[v.cle]) || "";
+    var cr = (window.ALIZEA_CREDITS || {})[LG] || {};
+    credit.textContent  = cr[v.cle] || "";
     precharger(index);
   }
 

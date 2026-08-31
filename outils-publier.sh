@@ -36,6 +36,13 @@ for f in *.html; do
   cp "$f" _site/
 done
 cp -R assets css js _site/
+
+# L'arbre anglais : mêmes pages, un cran plus bas. Les chemins des pages sont
+# absolus depuis la racine, il n'y a donc rien à réécrire à la copie.
+if [ -d en ]; then
+  mkdir -p _site/en
+  for f in en/*.html; do cp "$f" _site/en/; done
+fi
 cp favicon.svg favicon.ico apple-touch-icon.png robots.txt sitemap.xml _site/ 2>/dev/null || true
 
 # ---- Domaine réel -----------------------------------------------------------

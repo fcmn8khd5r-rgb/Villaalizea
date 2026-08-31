@@ -1,10 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://villa-alizea.example/galerie.html</loc><priority>0.9</priority></url>
-  <url><loc>https://villa-alizea.example/</loc><priority>1.0</priority></url>
-  <url><loc>https://villa-alizea.example/l-ile.html</loc><priority>0.7</priority></url>
-  <url><loc>https://villa-alizea.example/la-villa.html</loc><priority>0.7</priority></url>
-  <url><loc>https://villa-alizea.example/le-sejour.html</loc><priority>0.7</priority></url>
-  <url><loc>https://villa-alizea.example/mentions.html</loc><priority>0.7</priority></url>
-  <url><loc>https://villa-alizea.example/reserver.html</loc><priority>0.9</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://villa-alizea.example/galerie.html</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/galerie.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/galerie.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/"/>
+  </url>
+  <url><loc>https://villa-alizea.example/l-ile.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/l-ile.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/l-ile.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/la-villa.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/la-villa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/la-villa.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/le-sejour.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/le-sejour.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/le-sejour.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/mentions.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/mentions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/mentions.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/reserver.html</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/reserver.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/reserver.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/galerie.html</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/galerie.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/galerie.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/</loc><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/l-ile.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/l-ile.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/l-ile.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/la-villa.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/la-villa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/la-villa.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/le-sejour.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/le-sejour.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/le-sejour.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/mentions.html</loc><priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/mentions.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/mentions.html"/>
+  </url>
+  <url><loc>https://villa-alizea.example/en/reserver.html</loc><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://villa-alizea.example/reserver.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/reserver.html"/>
+  </url>
 </urlset>

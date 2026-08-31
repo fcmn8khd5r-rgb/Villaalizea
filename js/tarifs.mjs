@@ -16,17 +16,46 @@ export const CONFIG = {
   menage: 350,
   voyageursMax: 8,
   saisons: [
-    { cle: "fetes", nom: "Fêtes de fin d'année", prix: 12500, nuitsMini: 14,
+    { cle: "fetes", nom: { fr: "Fêtes de fin d'année", en: "Festive season" },
+      prix: 12500, nuitsMini: 14,
       plages: [["12-20", "12-31"], ["01-01", "01-05"]] },
-    { cle: "haute", nom: "Haute saison", prix: 7800,
+    { cle: "haute", nom: { fr: "Haute saison", en: "High season" }, prix: 7800,
       plages: [["12-15", "12-19"], ["01-06", "04-15"]] },
-    { cle: "basse", nom: "Basse saison", prix: 4200,
+    { cle: "basse", nom: { fr: "Basse saison", en: "Low season" }, prix: 4200,
       plages: [["04-16", "12-14"]] }
   ],
   taxe: { taux: 0.05, plafondParPersonneParNuit: 4.30 }
 };
 
 const jour = d => d.toISOString().slice(0, 10);
+
+/* Ce module tourne des deux côtés : il ne peut donc pas lire `document` pour
+   savoir dans quelle langue répondre. La langue lui est passée — par la page
+   côté navigateur, par la requête côté serveur — et le français sert de
+   repli. Les refus partent d'ici : c'est le seul endroit qui sait pourquoi
+   une demande est irrecevable, il doit savoir le dire dans les deux langues. */
+export const nomSaison = (s, lg = "fr") =>
+  (s.nom && typeof s.nom === "object") ? (s.nom[lg] || s.nom.fr) : s.nom;
+
+const MESSAGES = {
+  fr: {
+    illisible: "Dates illisibles.",
+    ordre:     "Le départ doit suivre l'arrivée.",
+    trop_long: "Séjour trop long pour une réservation en ligne.",
+    capacite:  n => `La villa accueille 1 à ${n} voyageurs.`,
+    passee:    "La date d'arrivée est passée.",
+    mini:      n => `Séjour minimum de ${n} nuits sur cette période.`
+  },
+  en: {
+    illisible: "Those dates cannot be read.",
+    ordre:     "The departure must come after the arrival.",
+    trop_long: "That stay is too long to book online.",
+    capacite:  n => `The villa sleeps 1 to ${n} guests.`,
+    passee:    "That arrival date has already passed.",
+    mini:      n => `A minimum stay of ${n} nights applies to these dates.`
+  }
+};
+const msg = lg => MESSAGES[lg] || MESSAGES.fr;
 
 /** Durée minimale applicable à un séjour, en nuits.
  *
@@ -54,19 +83,20 @@ export function saisonDu(date) {
 }
 
 /** Renvoie le détail chiffré, ou { erreur } si la demande est irrecevable. */
-export function calculer(arrivee, depart, voyageurs) {
+export function calculer(arrivee, depart, voyageurs, lg = "fr") {
+  const M = msg(lg);
   const a = new Date(arrivee + "T00:00:00Z"), d = new Date(depart + "T00:00:00Z");
-  if (isNaN(a) || isNaN(d)) return { erreur: "Dates illisibles." };
+  if (isNaN(a) || isNaN(d)) return { erreur: M.illisible };
   const nuits = Math.round((d - a) / 86400000);
-  if (nuits < 1) return { erreur: "Le départ doit suivre l'arrivée." };
-  if (nuits > 90) return { erreur: "Séjour trop long pour une réservation en ligne." };
+  if (nuits < 1) return { erreur: M.ordre };
+  if (nuits > 90) return { erreur: M.trop_long };
 
   const v = Math.round(Number(voyageurs) || 0);
   if (v < 1 || v > CONFIG.voyageursMax)
-    return { erreur: `La villa accueille 1 à ${CONFIG.voyageursMax} voyageurs.` };
+    return { erreur: M.capacite(CONFIG.voyageursMax) };
 
   const aujourdhui = new Date(); aujourdhui.setUTCHours(0, 0, 0, 0);
-  if (a < aujourdhui) return { erreur: "La date d'arrivée est passée." };
+  if (a < aujourdhui) return { erreur: M.passee };
 
   // Prix nuit par nuit : un séjour à cheval sur deux saisons est facturé au
   // prorata réel, pas au tarif de la date d'arrivée.
@@ -78,10 +108,11 @@ export function calculer(arrivee, depart, voyageurs) {
     const prixNuit = s.prix / 7;
     sejour += prixNuit;
     mini = Math.max(mini, s.nuitsMini || CONFIG.nuitsMini);
-    parSaison[s.nom] = (parSaison[s.nom] || 0) + 1;
+    const nomS = nomSaison(s, lg);
+    parSaison[nomS] = (parSaison[nomS] || 0) + 1;
   }
   if (nuits < mini)
-    return { erreur: `Séjour minimum de ${mini} nuits sur cette période.` };
+    return { erreur: M.mini(mini) };
 
   sejour = Math.round(sejour * 100) / 100;
   const prixNuitMoyen = sejour / nuits;

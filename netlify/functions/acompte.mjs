@@ -27,14 +27,51 @@ const json = (o, s = 200) => new Response(JSON.stringify(o),
 
 const JOUR = /^\d{4}-\d{2}-\d{2}$/;
 
+/* Bilingue comme le reste : un refus n'est utile que s'il est lu. La langue
+   vient du corps de la requête (POST) ou de l'adresse (GET). */
+const MESSAGES = {
+  fr: {
+    session:   "Session manquante.",
+    sans_cle:  "Aucune clé Stripe configurée.",
+    non_paye:  "Ce paiement n'est pas abouti.",
+    recap:     "Récapitulatif indisponible.",
+    methode:   "Méthode non autorisée.",
+    illisible: "Requête illisible.",
+    dates:     "Dates manquantes ou mal formées.",
+    dispo:     "Impossible de vérifier les disponibilités pour l'instant. "
+             + "Réessayez dans un moment ou écrivez-nous.",
+    prises:    "Ces dates viennent d'être prises. Le calendrier est à jour.",
+    simule:    "Paiement simulé : cette maquette n'encaisse rien.",
+    ouverture: "Le paiement n'a pas pu être ouvert. Aucun montant n'a été débité."
+  },
+  en: {
+    session:   "Missing session.",
+    sans_cle:  "No Stripe key configured.",
+    non_paye:  "That payment did not complete.",
+    recap:     "The summary is unavailable.",
+    methode:   "Method not allowed.",
+    illisible: "That request could not be read.",
+    dates:     "Dates are missing or badly formed.",
+    dispo:     "Availability cannot be checked right now. Try again shortly, or write "
+             + "to us.",
+    prises:    "Those dates have just been taken. The calendar is up to date.",
+    simule:    "Payment simulated: this mock-up takes no money.",
+    ouverture: "Payment could not be opened. Nothing was charged."
+  }
+};
+const langueDe = v => (String(v || "").toLowerCase().startsWith("en") ? "en" : "fr");
+
 export default async (req) => {
+  const urlReq = new URL(req.url);
+  let lg = langueDe(urlReq.searchParams.get("langue"));
+  let M = MESSAGES[lg];
   // GET ?session=cs_... : la page de confirmation demande le détail de la
   // session réglée. On ne renvoie que ce qui est utile à l'affichage.
   if (req.method === "GET") {
-    const id = new URL(req.url).searchParams.get("session");
+    const id = urlReq.searchParams.get("session");
     const cle = process.env.STRIPE_SECRET_KEY;
-    if (!id) return json({ message: "Session manquante." }, 400);
-    if (!cle) return json({ message: "Aucune clé Stripe configurée." }, 501);
+    if (!id) return json({ message: M.session }, 400);
+    if (!cle) return json({ message: M.sans_cle }, 501);
     try {
       const r = await fetch("https://api.stripe.com/v1/checkout/sessions/"
                             + encodeURIComponent(id),
@@ -43,7 +80,7 @@ export default async (req) => {
       const s = await r.json();
       if (!r.ok) throw new Error(s?.error?.message || ("HTTP " + r.status));
       if (s.payment_status !== "paid")
-        return json({ message: "Ce paiement n'est pas abouti." }, 409);
+        return json({ message: M.non_paye }, 409);
       const m = s.metadata || {};
       return json({
         arrivee: m.arrivee, depart: m.depart, voyageurs: m.voyageurs,
@@ -54,34 +91,38 @@ export default async (req) => {
       });
     } catch (e) {
       console.error("[acompte] lecture session :", e);
-      return json({ message: "Récapitulatif indisponible." }, 502);
+      return json({ message: M.recap }, 502);
     }
   }
 
-  if (req.method !== "POST") return json({ message: "Méthode non autorisée." }, 405);
+  if (req.method !== "POST") return json({ message: M.methode }, 405);
 
   let d;
   try { d = await req.json(); }
-  catch { return json({ message: "Requête illisible." }, 400); }
+  catch { return json({ message: M.illisible }, 400); }
+
+  // Le corps porte la langue de la page qui a émis la demande : elle prime.
+  if (d && d.langue) { lg = langueDe(d.langue); M = MESSAGES[lg]; }
 
   const arrivee = String(d.arrivee || "");
   const depart  = String(d.depart  || "");
   if (!JOUR.test(arrivee) || !JOUR.test(depart))
-    return json({ message: "Dates manquantes ou mal formées." }, 400);
+    return json({ message: M.dates }, 400);
 
   // ---- 1. le prix, recalculé ici ----------------------------------------
-  const p = calculer(arrivee, depart, d.voyageurs);
+  const p = calculer(arrivee, depart, d.voyageurs, lg);
   if (p.erreur) return json({ message: p.erreur }, 400);
 
   // ---- 2. la disponibilité, revérifiée ----------------------------------
   const dispo = await obtenirPeriodes();
   if (dispo.mode === "indisponible")
-    return json({ message: "Impossible de vérifier les disponibilités pour l'instant. "
-                         + "Réessayez dans un moment ou écrivez-nous." }, 503);
+    return json({ message: M.dispo }, 503);
   if (!estLibre(dispo.periodes, arrivee, depart))
-    return json({ message: "Ces dates viennent d'être prises. Le calendrier est à jour." }, 409);
+    return json({ message: M.prises }, 409);
 
-  const origine = new URL(req.url).origin;
+  const origine = urlReq.origin;
+  // La confirmation existe dans les deux langues : on renvoie sur la bonne.
+  const prefixe = lg === "en" ? "/en" : "";
   const cle = process.env.STRIPE_SECRET_KEY;
 
   // ---- Mode démonstration ------------------------------------------------
@@ -100,9 +141,9 @@ export default async (req) => {
     });
     return json({
       mode: "demonstration",
-      message: "Paiement simulé : cette maquette n'encaisse rien.",
+      message: M.simule,
       detail: p,
-      url: `${origine}/confirmation.html?${q}`
+      url: `${origine}${prefixe}/confirmation.html?${q}`
     });
   }
 
@@ -110,8 +151,8 @@ export default async (req) => {
   const champs = {
     mode: "payment",
     "payment_method_types[0]": "card",
-    success_url: `${origine}/confirmation.html?session={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origine}/reserver.html?annule=1`,
+    success_url: `${origine}${prefixe}/confirmation.html?session={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origine}${prefixe}/reserver.html?annule=1`,
     locale: "fr",
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": "eur",
@@ -151,8 +192,7 @@ export default async (req) => {
     });
   } catch (e) {
     console.error("[acompte] Stripe :", e);
-    return json({ message: "Le paiement n'a pas pu être ouvert. "
-                         + "Aucun montant n'a été débité." }, 502);
+    return json({ message: M.ouverture }, 502);
   }
 };
 

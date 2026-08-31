@@ -328,6 +328,52 @@ glisser l'image d'un peu plus d'un pour cent — assez pour qu'elle réponde, tr
 qu'on sache dire pourquoi. La toile est peinte 3,5 % plus large que le cadre : la marge sert
 au glissement, qui ne découvre donc jamais un bord. Sur écran tactile, l'effet n'existe pas.
 
+## Bilingue
+
+Une villa de luxe à Saint-Martin se loue à des Américains et à des Britanniques bien plus
+qu'à des Français. Le site existe donc en entier dans les deux langues : dix pages
+françaises à la racine, dix pages anglaises sous `/en/`.
+
+**Le français reste à la racine.** C'est cette adresse-là qu'on partage aux propriétaires
+francophones ; s'ils atterrissaient en anglais, la démonstration manquerait sa cible.
+L'anglais n'en est pas moins un site entier — mêmes pages, mêmes blocs, indexé séparément.
+
+**Où vivent les traductions.** Nulle part deux fois :
+
+| Ce qui est traduit | Où |
+|---|---|
+| Prose des pages | `en/*.html`, écrites comme de vraies pages, pas transposées mot à mot |
+| Prose de la configuration | `config/villa.json`, champs `{"fr": …, "en": …}` |
+| Libellés des blocs engendrés | dictionnaire `TXT` de `construire.py` |
+| Descriptions des pièces | `PIECES`, dans `construire.py` |
+| Légendes des images | `config/legendes-en.json` — le français vit dans `src/manifeste.json`, que `src/traiter.py` réécrit |
+| Textes affichés par le navigateur | `TEXTES_JS` de `construire.py` → `js/textes.js` |
+| Messages des fonctions | tables `MESSAGES` dans chaque fonction |
+| Refus du calcul de prix | `MESSAGES` de `js/tarifs.mjs`, partagé serveur et navigateur |
+
+Un champ traduit s'écrit `{"fr": …, "en": …}` ; `T()` le résout et **retombe sur le
+français** si l'anglais manque. Un trou de traduction n'ouvre donc jamais un trou dans la
+page.
+
+**Ce qui change avec la langue, au-delà des mots.** Les montants s'écrivent « 4 200,00 € »
+en français et « €4,200.00 » en anglais ; les dates « 12 sept. 2026 » et « Sep 12, 2026» ;
+les initiales du calendrier « LMMJVSD » et « MTWTFSS ». Les montants, eux, sont identiques —
+c'est le même argent.
+
+**Le sélecteur de langue affiche la langue vers laquelle on va**, pas celle où l'on est :
+« EN » sur le site français. Il renvoie sur la **page équivalente**, jamais sur l'accueil.
+
+**Pour les moteurs.** Chaque page déclare ses deux variantes en `hreflang`, plus un
+`x-default` sur le français, et le plan du site les répète en `xhtml:link`. Sans cela les
+deux versions se feraient concurrence au lieu d'être reconnues comme une même page en deux
+langues.
+
+**Un piège, rencontré.** Les pages anglaises vivent un cran plus bas : **tout chemin
+relatif y désigne autre chose**. Les pages sont donc en chemins absolus depuis la racine, et
+les deux seules adresses construites en JavaScript — les images du hero et la grande image
+de la visionneuse — l'ont été aussi. Avant correction, le hero anglais retombait en image
+fixe sans rien signaler.
+
 ## Les intégrations
 
 Les quatre fonctions sont écrites pour la production. **Il suffit de renseigner les

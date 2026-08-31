@@ -6,6 +6,22 @@
    ========================================================================= */
 (function () {
   "use strict";
+
+/* ---- langue -------------------------------------------------------------
+   La page dit dans quelle langue elle est ; les textes viennent de
+   js/textes.js, engendré par construire.py. `tx` remplace {0}, {1}… par les
+   valeurs passées, et retombe sur la clé si un texte manque — mieux vaut un
+   mot brut qu'un trou. */
+var LG = document.documentElement.lang === "en" ? "en" : "fr";
+var TX = (window.ALIZEA_TEXTES || {})[LG] || {};
+function tx(cle) {
+  var s = TX[cle];
+  if (s === undefined) return cle;
+  for (var i = 1; i < arguments.length; i++)
+    s = s.split("{" + (i - 1) + "}").join(arguments[i]);
+  return s;
+}
+
   var sobre = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---- en-tête : passe en clair une fois le hero quitté ---------------- */
@@ -138,7 +154,9 @@
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (r) {
         if (etat) {
-          etat.textContent = r.j.message || (r.ok ? "Message enregistré." : "Envoi impossible.");
+          etat.textContent = r.j.message
+            || (r.ok ? tx("message_enregistre")
+                     : (LG === "en" ? "Could not send." : "Envoi impossible."));
           etat.style.color = r.ok ? "var(--accent)" : "#9C3A28";
         }
         if (r.ok) form.reset();

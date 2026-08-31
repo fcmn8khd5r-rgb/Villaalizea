@@ -1,0 +1,38 @@
+{
+  "_note": "Légendes des images en anglais. Le français vit dans src/manifeste.json, que src/traiter.py réécrit : on ne le traduit donc pas là-bas, mais ici. Une clé absente retombe sur le français.",
+
+  "sejour-01": "The living room, wide view",
+  "sejour-02": "The living room, seen from the kitchen",
+  "sejour-03": "The sitting corner",
+  "sejour-04": "The living room in the morning",
+  "bureau-01": "The desk corner",
+
+  "cuisine-01": "The open kitchen",
+  "cuisine-02": "The dining table, laid",
+
+  "chambre-01": "The main bedroom",
+  "chambre-02": "The second bedroom",
+  "chambre-03": "The second bedroom, from the other side",
+  "chambre-04": "The bedroom writing desk",
+  "chambre-05": "The third bedroom",
+
+  "bain-01": "The walk-in shower",
+  "bain-02": "The basin and the bath",
+
+  "terrasse-01": "The terrace and the pool",
+  "terrasse-02": "The pergola and its day bed",
+  "terrasse-03": "The outdoor dining corner",
+  "piscine-01": "The lap pool",
+
+  "detail-01": "The low table",
+  "detail-02": "The woven wall",
+  "detail-03": "The wicker light",
+  "detail-04": "Bedside table and washed linen",
+
+  "ile-baielongue": "Baie Longue",
+  "ile-baierouge": "Baie Rouge",
+  "ile-marigot": "Marigot",
+  "ile-grandcase": "Grand-Case",
+  "ile-pinel": "Pinel islet",
+  "ile-picparadis": "Pic Paradis"
+}

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Villa Alizéa — villa rental in Terres Basses, Saint-Martin</title>
+<meta name="description" content="A four-bedroom villa for eight guests in Terres Basses, Saint-Martin. Lap pool, beach five minutes away. Live availability and online deposit.">
+<meta name="theme-color" content="#2B241E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="mask-icon" href="/favicon.svg" color="#B3552F">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="/assets/fonts/marcellus-400-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin
+      href="/assets/fonts/jost-300-latin.woff2">
+<link rel="stylesheet" href="/css/polices.css?v=ff1f5da2">
+<link rel="preload" as="image" href="/assets/hero/affiche-l.avif" fetchpriority="high" media="(min-width:700px) and (orientation:landscape)">
+<link rel="preload" as="image" href="/assets/hero/affiche-p.avif" fetchpriority="high" media="(max-width:699px), (orientation:portrait)">
+<!-- META:debut -->
+<link rel="canonical" href="https://villa-alizea.example/en/">
+<link rel="alternate" hreflang="fr" href="https://villa-alizea.example/">
+<link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/">
+<link rel="alternate" hreflang="x-default" href="https://villa-alizea.example/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Villa Alizéa">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta property="og:url" content="https://villa-alizea.example/en/">
+<meta property="og:title" content="Villa Alizéa — villa rental in Terres Basses, Saint-Martin">
+<meta property="og:description" content="A four-bedroom villa for eight guests in Terres Basses, Saint-Martin. Lap pool, beach five minutes away. Live availability and online deposit.">
+<meta property="og:image" content="https://villa-alizea.example/assets/hero/affiche-l.webp">
+<meta name="twitter:card" content="summary_large_image">
+<!-- META:fin -->
+<link rel="stylesheet" href="/css/style.css?v=5aaed36e">
+<script>document.documentElement.className+=" anime";</script>
+</head>
+<body>
+<!-- TETE:debut -->
+<a class="evitement" href="#contenu">Skip to content</a>
+<header class="tete">
+  <a class="bandeau" href="/en/mentions.html">
+    <span class="bandeau__long">Demonstration site — Villa Alizéa does not exist</span>
+    <span class="bandeau__court">Demonstration — this villa does not exist</span>
+  </a>
+  <div class="tete__barre">
+    <a class="marque" href="/en/">Villa Alizéa</a>
+    <nav class="menu" aria-label="Main">
+      <a href="/en/la-villa.html">The villa</a>
+      <a href="/en/galerie.html">Gallery</a>
+      <a href="/en/l-ile.html">The island</a>
+      <a href="/en/le-sejour.html">Your stay</a>
+    </nav>
+    <a class="langue" href="/" hreflang="fr" lang="fr" aria-label="Lire cette page en français">FR</a>
+    <a class="btn" href="/en/reserver.html">Book</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="tiroir"
+            aria-label="Open menu"><i></i></button>
+  </div>
+</header>
+<div class="tiroir" id="tiroir" hidden>
+  <button class="tiroir__x" type="button" aria-label="Close menu">&times;</button>
+  <a href="/en/la-villa.html">The villa</a>
+  <a href="/en/galerie.html">Gallery</a>
+  <a href="/en/l-ile.html">The island</a>
+  <a href="/en/le-sejour.html">Your stay</a>
+  <a href="/en/reserver.html">Book</a>
+  <a class="tiroir__langue" href="/" hreflang="fr" lang="fr">Français</a>
+</div>
+<!-- TETE:fin -->
+
+<!-- ====================== LE HERO PILOTÉ AU DÉFILEMENT ==================== -->
+<section class="hero" id="hero" aria-label="The shore, from the air">
+  <div class="hero__course" id="course">
+    <div class="hero__cadre">
+      <div class="hero__pile" id="pile">
+        <picture>
+          <source type="image/avif" srcset="/assets/hero/affiche-l.avif" media="(min-width:700px) and (orientation:landscape)">
+          <source type="image/avif" srcset="/assets/hero/affiche-p.avif">
+          <img class="hero__affiche" id="hero-affiche" src="/assets/hero/affiche-l.webp"
+               alt="From the air: two boats cross an emerald bay, each trailing a long white wake."
+               fetchpriority="high" decoding="async">
+        </picture>
+      </div>
+      <div class="hero__voile" id="hero-voile"></div>
+      <div class="hero__ecran" id="hero-ecran"></div>
+      <div class="hero__sortie" id="hero-sortie"></div>
+
+      <div class="hero__texte" id="hero-texte">
+        <div class="page">
+          <p class="hero__lieu">Terres Basses · Saint-Martin</p>
+          <h1>Villa Alizéa</h1>
+          <p class="hero__phrase">Fifteen minutes by boat to Anguilla, five minutes on
+             foot to the beach. The villa holds both.</p>
+          <a class="btn" href="/en/reserver.html">See availability</a>
+        </div>
+      </div>
+
+      <div class="hero__pilote" aria-hidden="true">
+        <span>Scroll to fly over</span>
+        <span class="hero__piste"><i class="hero__curseur" id="curseur"></i></span>
+      </div>
+      <div class="hero__jauge" id="jauge" hidden aria-hidden="true">
+        <i></i><span>Loading the flyover</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="contenu">
+
+<!-- ====================== LE SEUIL : on entre dans la maison ============== -->
+<section class="seuil">
+  <div class="page">
+    <p class="seuil__mot" data-anim>Five minutes from the sand,<br>the house.</p>
+  </div>
+  <div class="seuil__vue" data-anim="volet">
+    <picture>
+      <source type="image/avif" srcset="/assets/img/sejour-01-g.avif" media="(min-width:820px)">
+      <source type="image/avif" srcset="/assets/img/sejour-01-v.avif">
+      <img src="/assets/img/sejour-01-v.webp" alt="The living room of Villa Alizéa, open onto the terrace"
+           loading="lazy" decoding="async">
+    </picture>
+  </div>
+</section>
+
+<!-- ============================== LE LIEU ================================ -->
+<section class="section">
+  <div class="page">
+    <div class="duo">
+      <div data-anim>
+        <p class="oeil">The place</p>
+        <h2>A low, open house,<br>set on the point.</h2>
+      </div>
+      <div data-anim>
+        <p class="chapo">
+          Villa Alizéa sits at the far end of a plot in Terres Basses, the residential
+          quarter that closes off the western tip of Saint-Martin between Baie Longue and
+          Baie Rouge. The living room does not shut: it carries on into a covered terrace,
+          a pool, then the garden of sand and coconut palms.
+        </p>
+        <p class="mince" style="margin-top:1.2rem">
+          The trade wind — the <em>alizé</em> — crosses the house from morning to evening.
+          It gave the place its name, and it is why the house was drawn without a corridor
+          or a needless wall.
+        </p>
+        <p style="margin-top:1.8rem">
+          <a class="lien-fleche" href="/en/la-villa.html">Discover the house</a>
+        </p>
+      </div>
+    </div>
+
+    <dl class="compteurs" style="margin-top:clamp(3rem,6vw,4.5rem)">
+      <div class="compteur" data-anim><b data-compte="4">4</b><span>bedrooms</span></div>
+      <div class="compteur" data-anim><b data-compte="8">8</b><span>guests</span></div>
+      <div class="compteur" data-anim><b data-compte="3">3</b><span>bathrooms</span></div>
+      <div class="compteur" data-anim><b data-compte="320">320</b><span>m² of living space</span></div>
+      <div class="compteur" data-anim><b data-compte="1800">1 800</b><span>m² of grounds</span></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============================== APERÇU ================================= -->
+<section class="section section--voile">
+  <div class="page">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:2rem; flex-wrap:wrap; margin-bottom:2.6rem">
+      <div data-anim>
+        <p class="oeil">Gallery</p>
+        <h2 style="margin:0">Twenty-two views of the house</h2>
+      </div>
+      <a class="lien-fleche" href="/en/galerie.html" data-anim>See the full gallery</a>
+    </div>
+    <div class="apercu">
+      <!-- APERCU:debut -->
+<a class="apercu__item" href="/en/galerie.html" data-anim="volet"
+   aria-label="The living room, wide view — see the gallery">
+  <picture>
+    <source type="image/avif" srcset="/assets/img/sejour-01-v.avif">
+    <img src="/assets/img/sejour-01-v.webp" alt="The living room, wide view" loading="lazy" decoding="async"
+         style="background:url(data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JQBOgAfGSIrY2D/kIAOFBEFPLpa5Smus+93kZ07fAF7cfkKbEK4yLSrW9MHelKIAAAA==) center/cover">
+  </picture>
+</a>
+<a class="apercu__item" href="/en/galerie.html" data-anim="volet"
+   aria-label="The pergola and its day bed — see the gallery">
+  <picture>
+    <source type="image/avif" srcset="/assets/img/terrasse-02-v.avif">
+    <img src="/assets/img/terrasse-02-v.webp" alt="The pergola and its day bed" loading="lazy" decoding="async"
+         style="background:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDDVzjFGlSeOYAD+Vv4cTR2fkxRMyNm0taHeKiIELRiIRrgBqDJ8phmrif3VFFxUAAA=) center/cover">
+  </picture>
+</a>
+<a class="apercu__item" href="/en/galerie.html" data-anim="volet"
+   aria-label="The main bedroom — see the gallery">
+  <picture>
+    <source type="image/avif" srcset="/assets/img/chambre-01-v.avif">
+    <img src="/assets/img/chambre-01-v.webp" alt="The main bedroom" loading="lazy" decoding="async"
+         style="background:url(data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDmFZWawv0TmAAD9zFIVnWy5qUa8W994i/KZnpo6z20s4SaV9XAAAA==) center/cover">
+  </picture>
+</a>
+<a class="apercu__item" href="/en/galerie.html" data-anim="volet"
+   aria-label="The basin and the bath — see the gallery">
+  <picture>
+    <source type="image/avif" srcset="/assets/img/bain-02-v.avif">
+    <img src="/assets/img/bain-02-v.webp" alt="The basin and the bath" loading="lazy" decoding="async"
+         style="background:url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoQABQAPulgqE0pJaQiMAgBIB0JQBOgAskX2QAQXdfbSgAA9C7vrESZHq9EOv7G9ns+ZH8TbbAx68mTVTSkhs5gagTusZAA) center/cover">
+  </picture>
+</a>
+<a class="apercu__item" href="/en/galerie.html" data-anim="volet"
+   aria-label="The open kitchen — see the gallery">
+  <picture>
+    <source type="image/avif" srcset="/assets/img/cuisine-01-v.avif">
+    <img src="/assets/img/cuisine-01-v.webp" alt="The open kitchen" loading="lazy" decoding="async"
+         style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZQCw7BaidobiLhHkAP6QKEUm66eCI950kV6A6HVpyhGuMOOWTUrjnDwKfYsEwAA=) center/cover">
+  </picture>
+</a>
+<a class="apercu__item" href="/en/galerie.html" data-anim="volet"
+   aria-label="The woven wall — see the gallery">
+  <picture>
+    <source type="image/avif" srcset="/assets/img/detail-02-v.avif">
+    <img src="/assets/img/detail-02-v.webp" alt="The woven wall" loading="lazy" decoding="async"
+         style="background:url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBOmUABoV2KFIDXPGoAA/uczUoZV+R+eh1b+XpVLpLr5I5pujINyBTxcXHnEe6gLXEkq0ljMkAAA) center/cover">
+  </picture>
+</a>
+<!-- APERCU:fin -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================== L'ÎLE ================================== -->
+<section class="section section--sombre">
+  <div class="page">
+    <div class="duo">
+      <div data-anim>
+        <p class="oeil">Around</p>
+        <h2 style="margin:0">Saint-Martin fits<br>into a single morning.</h2>
+      </div>
+      <div data-anim>
+        <p class="chapo">
+          Thirty-seven square kilometres shared between France and the Netherlands, with no
+          marked border: you cross from one to the other without noticing. From Terres
+          Basses, Marigot is twelve minutes away, Grand-Case twenty, and Juliana airport
+          fifteen.
+        </p>
+        <p style="margin-top:1.8rem">
+          <a class="lien-fleche" href="/en/l-ile.html">The six places worth knowing</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== AVIS =================================== -->
+<section class="section">
+  <div class="page">
+    <p class="oeil" data-anim>Reviews</p>
+    <h2 data-anim style="margin-bottom:2.2rem">What guests say</h2>
+    <!-- AVISTETE:debut -->
+<div class="avis-tete" data-anim>
+  <p class="avis-note"><b data-compte="4.9" data-decimales="1">4.9</b><span>out of 5</span></p>
+  <div class="pf-liste"><div class="pf"><span class="marque-pf" style="--pf:#FF5A5F" aria-hidden="true">a</span><span><b>4.9</b>/5<small>26 reviews on Airbnb</small></span></div><div class="pf"><span class="marque-pf" style="--pf:#003580" aria-hidden="true">B</span><span><b>9.4</b>/10<small>14 reviews on Booking.com</small></span></div><div class="pf"><span class="marque-pf" style="--pf:#4285F4" aria-hidden="true">G</span><span><b>4.8</b>/5<small>7 reviews on Google</small></span></div></div>
+</div>
+<!-- AVISTETE:fin -->
+    <div class="avis-grille">
+      <!-- AVIS3:debut -->
+<article class="avis" data-anim>
+  <div class="avis__tete">
+    <span class="marque-pf" style="--pf:#FF5A5F" aria-hidden="true">a</span>
+    <span class="avis__source">Airbnb</span>
+    <span class="avis__date">March 2026</span>
+  </div>
+  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">5 / 5</span> <b>5/5</b></p>
+  <p class="avis__texte">The house is even more open than the photographs suggest. We had every breakfast on the terrace with the sound of the swell behind us. Baie Longue is five minutes on foot and we never met a soul there.</p>
+  <p class="avis__auteur">Camille R.</p>
+</article>
+<article class="avis" data-anim>
+  <div class="avis__tete">
+    <span class="marque-pf" style="--pf:#003580" aria-hidden="true">B</span>
+    <span class="avis__source">Booking.com</span>
+    <span class="avis__date">February 2026</span>
+  </div>
+  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">10 / 10</span> <b>10/10</b></p>
+  <p class="avis__texte">Four genuinely separate bedrooms, which changes everything when two couples travel with children. Faultless welcome, and the end-of-stay cleaning saves any awkward conversation.</p>
+  <p class="avis__auteur">Thomas & Léa</p>
+</article>
+<article class="avis" data-anim>
+  <div class="avis__tete">
+    <span class="marque-pf" style="--pf:#4285F4" aria-hidden="true">G</span>
+    <span class="avis__source">Google</span>
+    <span class="avis__date">January 2026</span>
+  </div>
+  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">5 / 5</span> <b>5/5</b></p>
+  <p class="avis__texte">We wanted quiet without being cut off from everything: Terres Basses is perfect for that. Marigot is ten minutes away for the Saturday market.</p>
+  <p class="avis__auteur">Marie-Claude D.</p>
+</article>
+<!-- AVIS3:fin -->
+    </div>
+    <p style="margin-top:2.2rem" data-anim>
+      <a class="lien-fleche" href="/en/le-sejour.html#avis">Read all six reviews</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============================== RÉSERVER =============================== -->
+<section class="section section--voile">
+  <div class="page" style="text-align:center; max-width:620px">
+    <p class="oeil" data-anim>Booking</p>
+    <h2 data-anim>The calendar is up to date</h2>
+    <p class="chapo" data-anim style="margin-inline:auto">
+      Availability is synchronised with Airbnb and Booking: a week let on either platform
+      closes here automatically. The deposit is paid online.
+    </p>
+    <p style="margin-top:2rem" data-anim>
+      <a class="btn" href="/en/reserver.html">See availability</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- PIED:debut -->
+<footer class="pied">
+  <div class="page">
+    <div class="pied__grille">
+      <div>
+        <p class="pied__marque">Villa Alizéa</p>
+        <p style="max-width:36ch; opacity:.82">A registered 4-bedroom holiday rental for 8 guests, in Terres Basses, Saint-Martin.</p>
+        <p style="opacity:.82">Registration no.: 97801 00 0000</p>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <ul>
+          <li><a href="tel:+590590000000">+590 590 00 00 00</a></li>
+          <li><a href="mailto:contact@villa-alizea.example">contact@villa-alizea.example</a></li>
+          <li style="opacity:.82">Baie Longue, Terres Basses, 97150 Saint-Martin</li>
+        </ul>
+      </div>
+      <div>
+        <h2>The site</h2>
+        <ul>
+          <li><a href="/en/la-villa.html">The villa</a></li>
+          <li><a href="/en/galerie.html">Gallery</a></li>
+          <li><a href="/en/l-ile.html">The island</a></li>
+          <li><a href="/en/le-sejour.html">Your stay</a></li>
+          <li><a href="/en/reserver.html">Book</a></li>
+          <li><a href="/en/mentions.html">Legal notice</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fictif"><strong>Demonstration site.</strong> Villa Alizéa is a fictional property: the name, the texts, the rates, the reviews and the registration number were invented for this mock-up, and the photographs come from royalty-free image libraries. The detail is set out in the <a href="/en/mentions.html">legal notice</a>. No real establishment is depicted.</p>
+    <p class="pied__signature">Demonstration site built by <a href="https://studiomathysbocage.fr" rel="noopener">Studio Mathys Bocage</a> — <a href="mailto:contact@studiomathysbocage.fr">contact@studiomathysbocage.fr</a> · <a href="tel:+590690305037">0690 30 50 37</a></p>
+    <div class="pied__bas">
+      <span>© 2026 Villa Alizéa — demonstration</span>
+      <span><a href="/en/mentions.html">Legal notice</a> · <a href="/en/mentions.html#credits">Photo credits</a></span>
+    </div>
+  </div>
+</footer>
+<!-- PIED:fin -->
+
+<script src="/js/textes.js?v=fc4542fa" defer></script>
+<script src="/js/main.js?v=df36dcf5" defer></script>
+<script src="/js/hero-data.js?v=e2a59178" defer></script>
+<script src="/js/hero.js?v=9f27e820" defer></script>
+</body>
+</html>

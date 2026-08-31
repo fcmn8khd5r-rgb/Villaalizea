@@ -6,59 +6,65 @@
 <title>Villa Alizéa — location de villa aux Terres Basses, Saint-Martin</title>
 <meta name="description" content="Villa de 4 chambres pour 8 voyageurs aux Terres Basses, à Saint-Martin. Bassin de nage, plage à cinq minutes. Disponibilités en direct et acompte en ligne.">
 <meta name="theme-color" content="#2B241E">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="mask-icon" href="favicon.svg" color="#B3552F">
-<link rel="icon" href="favicon.ico" sizes="48x48">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="mask-icon" href="/favicon.svg" color="#B3552F">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="assets/fonts/marcellus-400-latin.woff2">
+      href="/assets/fonts/marcellus-400-latin.woff2">
 <link rel="preload" as="font" type="font/woff2" crossorigin
-      href="assets/fonts/jost-300-latin.woff2">
-<link rel="stylesheet" href="css/polices.css?v=ff1f5da2">
-<link rel="preload" as="image" href="assets/hero/affiche-l.avif" fetchpriority="high" media="(min-width:700px) and (orientation:landscape)">
-<link rel="preload" as="image" href="assets/hero/affiche-p.avif" fetchpriority="high" media="(max-width:699px), (orientation:portrait)">
+      href="/assets/fonts/jost-300-latin.woff2">
+<link rel="stylesheet" href="/css/polices.css?v=ff1f5da2">
+<link rel="preload" as="image" href="/assets/hero/affiche-l.avif" fetchpriority="high" media="(min-width:700px) and (orientation:landscape)">
+<link rel="preload" as="image" href="/assets/hero/affiche-p.avif" fetchpriority="high" media="(max-width:699px), (orientation:portrait)">
 <!-- META:debut -->
 <link rel="canonical" href="https://villa-alizea.example/">
+<link rel="alternate" hreflang="fr" href="https://villa-alizea.example/">
+<link rel="alternate" hreflang="en" href="https://villa-alizea.example/en/">
+<link rel="alternate" hreflang="x-default" href="https://villa-alizea.example/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Villa Alizéa">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_GB">
 <meta property="og:url" content="https://villa-alizea.example/">
 <meta property="og:title" content="Villa Alizéa — location de villa aux Terres Basses, Saint-Martin">
 <meta property="og:description" content="Villa de 4 chambres pour 8 voyageurs aux Terres Basses, à Saint-Martin. Bassin de nage, plage à cinq minutes. Disponibilités en direct et acompte en ligne.">
 <meta property="og:image" content="https://villa-alizea.example/assets/hero/affiche-l.webp">
 <meta name="twitter:card" content="summary_large_image">
 <!-- META:fin -->
-<link rel="stylesheet" href="css/style.css?v=a93f6605">
+<link rel="stylesheet" href="/css/style.css?v=5aaed36e">
 <script>document.documentElement.className+=" anime";</script>
 </head>
 <body>
 <!-- TETE:debut -->
 <a class="evitement" href="#contenu">Aller au contenu</a>
 <header class="tete">
-  <a class="bandeau" href="mentions.html">
+  <a class="bandeau" href="/mentions.html">
     <span class="bandeau__long">Site de démonstration — la Villa Alizéa n'existe pas</span>
     <span class="bandeau__court">Démonstration — cette villa n'existe pas</span>
   </a>
   <div class="tete__barre">
-    <a class="marque" href="index.html">Villa Alizéa</a>
+    <a class="marque" href="/">Villa Alizéa</a>
     <nav class="menu" aria-label="Principale">
-      <a href="la-villa.html">La villa</a>
-      <a href="galerie.html">Galerie</a>
-      <a href="l-ile.html">L'île</a>
-      <a href="le-sejour.html">Le séjour</a>
+      <a href="/la-villa.html">La villa</a>
+      <a href="/galerie.html">Galerie</a>
+      <a href="/l-ile.html">L'île</a>
+      <a href="/le-sejour.html">Le séjour</a>
     </nav>
-    <a class="btn" href="reserver.html">Réserver</a>
+    <a class="langue" href="/en/" hreflang="en" lang="en" aria-label="Read this page in English">EN</a>
+    <a class="btn" href="/reserver.html">Réserver</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="tiroir"
             aria-label="Ouvrir le menu"><i></i></button>
   </div>
 </header>
 <div class="tiroir" id="tiroir" hidden>
   <button class="tiroir__x" type="button" aria-label="Fermer le menu">&times;</button>
-  <a href="la-villa.html">La villa</a>
-  <a href="galerie.html">Galerie</a>
-  <a href="l-ile.html">L'île</a>
-  <a href="le-sejour.html">Le séjour</a>
-  <a href="reserver.html">Réserver</a>
+  <a href="/la-villa.html">La villa</a>
+  <a href="/galerie.html">Galerie</a>
+  <a href="/l-ile.html">L'île</a>
+  <a href="/le-sejour.html">Le séjour</a>
+  <a href="/reserver.html">Réserver</a>
+  <a class="tiroir__langue" href="/en/" hreflang="en" lang="en">English</a>
 </div>
 <!-- TETE:fin -->
 
@@ -68,9 +74,9 @@
     <div class="hero__cadre">
       <div class="hero__pile" id="pile">
         <picture>
-          <source type="image/avif" srcset="assets/hero/affiche-l.avif" media="(min-width:700px) and (orientation:landscape)">
-          <source type="image/avif" srcset="assets/hero/affiche-p.avif">
-          <img class="hero__affiche" id="hero-affiche" src="assets/hero/affiche-l.webp"
+          <source type="image/avif" srcset="/assets/hero/affiche-l.avif" media="(min-width:700px) and (orientation:landscape)">
+          <source type="image/avif" srcset="/assets/hero/affiche-p.avif">
+          <img class="hero__affiche" id="hero-affiche" src="/assets/hero/affiche-l.webp"
                alt="Vue du ciel : deux bateaux traversent une baie émeraude en tirant chacun un long sillage blanc."
                fetchpriority="high" decoding="async">
         </picture>
@@ -85,7 +91,7 @@
           <h1>Villa Alizéa</h1>
           <p class="hero__phrase">Quinze minutes de bateau jusqu'à Anguilla, cinq minutes
              de marche jusqu'à la plage. La villa tient les deux.</p>
-          <a class="btn" href="reserver.html">Voir les disponibilités</a>
+          <a class="btn" href="/reserver.html">Voir les disponibilités</a>
         </div>
       </div>
 
@@ -113,9 +119,9 @@
   </div>
   <div class="seuil__vue" data-anim="volet">
     <picture>
-      <source type="image/avif" srcset="assets/img/sejour-01-g.avif" media="(min-width:820px)">
-      <source type="image/avif" srcset="assets/img/sejour-01-v.avif">
-      <img src="assets/img/sejour-01-v.webp" alt="Le séjour de la Villa Alizéa, ouvert sur la terrasse"
+      <source type="image/avif" srcset="/assets/img/sejour-01-g.avif" media="(min-width:820px)">
+      <source type="image/avif" srcset="/assets/img/sejour-01-v.avif">
+      <img src="/assets/img/sejour-01-v.webp" alt="Le séjour de la Villa Alizéa, ouvert sur la terrasse"
            loading="lazy" decoding="async">
     </picture>
   </div>
@@ -141,7 +147,7 @@
           et c'est pour lui qu'elle a été dessinée sans couloir ni cloison inutile.
         </p>
         <p style="margin-top:1.8rem">
-          <a class="lien-fleche" href="la-villa.html">Découvrir la maison</a>
+          <a class="lien-fleche" href="/la-villa.html">Découvrir la maison</a>
         </p>
       </div>
     </div>
@@ -164,55 +170,55 @@
         <p class="oeil">Galerie</p>
         <h2 style="margin:0">Vingt-deux vues de la maison</h2>
       </div>
-      <a class="lien-fleche" href="galerie.html" data-anim>Voir la galerie complète</a>
+      <a class="lien-fleche" href="/galerie.html" data-anim>Voir la galerie complète</a>
     </div>
     <div class="apercu">
       <!-- APERCU:debut -->
-<a class="apercu__item" href="galerie.html" data-anim="volet"
+<a class="apercu__item" href="/galerie.html" data-anim="volet"
    aria-label="Le séjour, vue d'ensemble — voir la galerie">
   <picture>
-    <source type="image/avif" srcset="assets/img/sejour-01-v.avif">
-    <img src="assets/img/sejour-01-v.webp" alt="Le séjour, vue d'ensemble" loading="lazy" decoding="async"
+    <source type="image/avif" srcset="/assets/img/sejour-01-v.avif">
+    <img src="/assets/img/sejour-01-v.webp" alt="Le séjour, vue d'ensemble" loading="lazy" decoding="async"
          style="background:url(data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JQBOgAfGSIrY2D/kIAOFBEFPLpa5Smus+93kZ07fAF7cfkKbEK4yLSrW9MHelKIAAAA==) center/cover">
   </picture>
 </a>
-<a class="apercu__item" href="galerie.html" data-anim="volet"
+<a class="apercu__item" href="/galerie.html" data-anim="volet"
    aria-label="La pergola et son lit de repos — voir la galerie">
   <picture>
-    <source type="image/avif" srcset="assets/img/terrasse-02-v.avif">
-    <img src="assets/img/terrasse-02-v.webp" alt="La pergola et son lit de repos" loading="lazy" decoding="async"
+    <source type="image/avif" srcset="/assets/img/terrasse-02-v.avif">
+    <img src="/assets/img/terrasse-02-v.webp" alt="La pergola et son lit de repos" loading="lazy" decoding="async"
          style="background:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoUAA0APuliqE2pJaOiMAgBIB0JQBOgBDDVzjFGlSeOYAD+Vv4cTR2fkxRMyNm0taHeKiIELRiIRrgBqDJ8phmrif3VFFxUAAA=) center/cover">
   </picture>
 </a>
-<a class="apercu__item" href="galerie.html" data-anim="volet"
+<a class="apercu__item" href="/galerie.html" data-anim="volet"
    aria-label="La chambre principale — voir la galerie">
   <picture>
-    <source type="image/avif" srcset="assets/img/chambre-01-v.avif">
-    <img src="assets/img/chambre-01-v.webp" alt="La chambre principale" loading="lazy" decoding="async"
+    <source type="image/avif" srcset="/assets/img/chambre-01-v.avif">
+    <img src="/assets/img/chambre-01-v.webp" alt="La chambre principale" loading="lazy" decoding="async"
          style="background:url(data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACwAwCdASoUAA0APulgqE0pJaQiMAgBIB0JQBOgBDmFZWawv0TmAAD9zFIVnWy5qUa8W994i/KZnpo6z20s4SaV9XAAAA==) center/cover">
   </picture>
 </a>
-<a class="apercu__item" href="galerie.html" data-anim="volet"
+<a class="apercu__item" href="/galerie.html" data-anim="volet"
    aria-label="La vasque et la baignoire — voir la galerie">
   <picture>
-    <source type="image/avif" srcset="assets/img/bain-02-v.avif">
-    <img src="assets/img/bain-02-v.webp" alt="La vasque et la baignoire" loading="lazy" decoding="async"
+    <source type="image/avif" srcset="/assets/img/bain-02-v.avif">
+    <img src="/assets/img/bain-02-v.webp" alt="La vasque et la baignoire" loading="lazy" decoding="async"
          style="background:url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAwCdASoQABQAPulgqE0pJaQiMAgBIB0JQBOgAskX2QAQXdfbSgAA9C7vrESZHq9EOv7G9ns+ZH8TbbAx68mTVTSkhs5gagTusZAA) center/cover">
   </picture>
 </a>
-<a class="apercu__item" href="galerie.html" data-anim="volet"
+<a class="apercu__item" href="/galerie.html" data-anim="volet"
    aria-label="La cuisine ouverte — voir la galerie">
   <picture>
-    <source type="image/avif" srcset="assets/img/cuisine-01-v.avif">
-    <img src="assets/img/cuisine-01-v.webp" alt="La cuisine ouverte" loading="lazy" decoding="async"
+    <source type="image/avif" srcset="/assets/img/cuisine-01-v.avif">
+    <img src="/assets/img/cuisine-01-v.webp" alt="La cuisine ouverte" loading="lazy" decoding="async"
          style="background:url(data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoUAA0APulgqU0pJaQiMAgBIB0JZQCw7BaidobiLhHkAP6QKEUm66eCI950kV6A6HVpyhGuMOOWTUrjnDwKfYsEwAA=) center/cover">
   </picture>
 </a>
-<a class="apercu__item" href="galerie.html" data-anim="volet"
+<a class="apercu__item" href="/galerie.html" data-anim="volet"
    aria-label="Le mur de vannerie — voir la galerie">
   <picture>
-    <source type="image/avif" srcset="assets/img/detail-02-v.avif">
-    <img src="assets/img/detail-02-v.webp" alt="Le mur de vannerie" loading="lazy" decoding="async"
+    <source type="image/avif" srcset="/assets/img/detail-02-v.avif">
+    <img src="/assets/img/detail-02-v.webp" alt="Le mur de vannerie" loading="lazy" decoding="async"
          style="background:url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADQAwCdASoUAA0APulgqE2pJaQiMAgBIB0JQBOmUABoV2KFIDXPGoAA/uczUoZV+R+eh1b+XpVLpLr5I5pujINyBTxcXHnEe6gLXEkq0ljMkAAA) center/cover">
   </picture>
 </a>
@@ -237,7 +243,7 @@
           l'aéroport de Juliana à quinze.
         </p>
         <p style="margin-top:1.8rem">
-          <a class="lien-fleche" href="l-ile.html">Les six lieux à connaître</a>
+          <a class="lien-fleche" href="/l-ile.html">Les six lieux à connaître</a>
         </p>
       </div>
     </div>
@@ -263,7 +269,7 @@
     <span class="avis__source">Airbnb</span>
     <span class="avis__date">Mars 2026</span>
   </div>
-  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">5 sur 5</span> <b>5/5</b></p>
+  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">5 / 5</span> <b>5/5</b></p>
   <p class="avis__texte">La maison est encore plus ouverte que sur les photos. Nous avons pris tous les petits déjeuners sur la terrasse, avec le bruit de la houle en fond. Baie Longue est à cinq minutes à pied et nous n'y avons jamais croisé personne.</p>
   <p class="avis__auteur">Camille R.</p>
 </article>
@@ -273,7 +279,7 @@
     <span class="avis__source">Booking.com</span>
     <span class="avis__date">Février 2026</span>
   </div>
-  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">10 sur 10</span> <b>10/10</b></p>
+  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">10 / 10</span> <b>10/10</b></p>
   <p class="avis__texte">Quatre chambres vraiment indépendantes, ce qui change tout quand on part à deux couples avec des enfants. Accueil impeccable, et le ménage de fin de séjour évite les discussions.</p>
   <p class="avis__auteur">Thomas & Léa</p>
 </article>
@@ -283,14 +289,14 @@
     <span class="avis__source">Google</span>
     <span class="avis__date">Janvier 2026</span>
   </div>
-  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">5 sur 5</span> <b>5/5</b></p>
+  <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★</span><span class="vh">5 / 5</span> <b>5/5</b></p>
   <p class="avis__texte">Nous cherchions du calme sans être coupés de tout : les Terres Basses sont parfaites pour ça. Marigot en dix minutes pour le marché du samedi.</p>
   <p class="avis__auteur">Marie-Claude D.</p>
 </article>
 <!-- AVIS3:fin -->
     </div>
     <p style="margin-top:2.2rem" data-anim>
-      <a class="lien-fleche" href="le-sejour.html#avis">Lire les six avis</a>
+      <a class="lien-fleche" href="/le-sejour.html#avis">Lire les six avis</a>
     </p>
   </div>
 </section>
@@ -305,7 +311,7 @@
       l'une des plateformes s'y ferme automatiquement. L'acompte se règle en ligne.
     </p>
     <p style="margin-top:2rem" data-anim>
-      <a class="btn" href="reserver.html">Voir les disponibilités</a>
+      <a class="btn" href="/reserver.html">Voir les disponibilités</a>
     </p>
   </div>
 </section>
@@ -319,7 +325,7 @@
       <div>
         <p class="pied__marque">Villa Alizéa</p>
         <p style="max-width:36ch; opacity:.82">Meublé de tourisme de 4 chambres pour 8 voyageurs, aux Terres Basses, à Saint-Martin.</p>
-        <p style="opacity:.82">N° de déclaration : 97801 00 0000</p>
+        <p style="opacity:.82">N° de déclaration : 97801 00 0000</p>
       </div>
       <div>
         <h2>Contact</h2>
@@ -332,27 +338,28 @@
       <div>
         <h2>Le site</h2>
         <ul>
-          <li><a href="la-villa.html">La villa</a></li>
-          <li><a href="galerie.html">Galerie</a></li>
-          <li><a href="l-ile.html">L'île</a></li>
-          <li><a href="le-sejour.html">Le séjour</a></li>
-          <li><a href="reserver.html">Réserver</a></li>
-          <li><a href="mentions.html">Mentions légales</a></li>
+          <li><a href="/la-villa.html">La villa</a></li>
+          <li><a href="/galerie.html">Galerie</a></li>
+          <li><a href="/l-ile.html">L'île</a></li>
+          <li><a href="/le-sejour.html">Le séjour</a></li>
+          <li><a href="/reserver.html">Réserver</a></li>
+          <li><a href="/mentions.html">Mentions légales</a></li>
         </ul>
       </div>
     </div>
-    <p class="fictif"><strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive : le nom, les textes, les tarifs, les avis et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits. Le détail figure dans les <a href="mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.</p>
+    <p class="fictif"><strong>Site de démonstration.</strong> La Villa Alizéa est une propriété fictive : le nom, les textes, les tarifs, les avis et le numéro de déclaration ont été inventés pour cette maquette, et les photographies proviennent de banques d'images libres de droits. Le détail figure dans les <a href="/mentions.html">mentions légales</a>. Aucun établissement réel n'est représenté.</p>
     <p class="pied__signature">Site de démonstration réalisé par <a href="https://studiomathysbocage.fr" rel="noopener">Studio Mathys Bocage</a> — <a href="mailto:contact@studiomathysbocage.fr">contact@studiomathysbocage.fr</a> · <a href="tel:+590690305037">0690 30 50 37</a></p>
     <div class="pied__bas">
       <span>© 2026 Villa Alizéa — maquette</span>
-      <span><a href="mentions.html">Mentions légales</a> · <a href="mentions.html#credits">Crédits photo</a></span>
+      <span><a href="/mentions.html">Mentions légales</a> · <a href="/mentions.html#credits">Crédits photo</a></span>
     </div>
   </div>
 </footer>
 <!-- PIED:fin -->
 
-<script src="js/main.js?v=77a1396b" defer></script>
-<script src="js/hero-data.js?v=e2a59178" defer></script>
-<script src="js/hero.js?v=d58f7253" defer></script>
+<script src="/js/textes.js?v=fc4542fa" defer></script>
+<script src="/js/main.js?v=df36dcf5" defer></script>
+<script src="/js/hero-data.js?v=e2a59178" defer></script>
+<script src="/js/hero.js?v=9f27e820" defer></script>
 </body>
 </html>
