@@ -9,6 +9,15 @@
 [build.processing]
   skip_processing = true
 
+# Le site appelle /api/disponibilites et /api/acompte. Les fonctions Netlify ne
+# répondent qu'à /.netlify/functions/<nom> : sans cette redirection, le
+# calendrier reste vide et l'acompte échoue une fois en ligne, alors que tout
+# fonctionne en local où le serveur de développement fait la correspondance.
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 [[headers]]
   for = "/assets/*"
   [headers.values]

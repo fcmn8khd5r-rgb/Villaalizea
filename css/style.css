@@ -9,9 +9,13 @@
 
 :root{
   --fond:#FFF8EF;   --fond2:#F5EBDC;  --voile:#EFE5D7;
-  --encre:#2B241E;  --encre2:#6B6055; --sourdine:#9A8C7C;
+  --encre:#2B241E;  --encre2:#6B6055; --sourdine:#70665A;
   --trait:#DCD1BF;  --trait2:#E4DACA;
   --accent:#B3552F; --accent2:#8B3F21; --accent-pale:#E9C9B5;
+  /* Le terracotta de marque tient l'aplat mais pas le texte : 3,96:1 sur le
+     voile, 3,42:1 sur les sections sombres. Deux déclinaisons, l'une
+     assombrie l'autre éclaircie, passent 4,5:1 sans changer la teinte. */
+  --lien:#A54E2B; --lien-sombre:#D26437;
   --noir:#221C17;
   --serif:Marcellus, "Iowan Old Style", Palatino, Georgia, serif;
   --sans:Jost, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -30,7 +34,7 @@ body{
   -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
 img,video{max-width:100%; height:auto; display:block}
-a{color:var(--accent); text-decoration:none}
+a{color:var(--lien); text-decoration:none}
 a:hover{color:var(--accent2)}
 ::selection{background:var(--accent-pale)}
 input,textarea,select,button{font-size:16px}   /* évite le zoom auto sur iOS */
@@ -75,6 +79,7 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
 .section--sombre{background:var(--noir); color:var(--fond2)}
 .section--sombre .oeil{color:var(--accent-pale)}
 .section--sombre .chapo,.section--sombre .mince{color:color-mix(in srgb, var(--fond2) 76%, transparent)}
+.section--sombre a{color:var(--lien-sombre)}
 .filet{border:0; border-top:1px solid var(--trait); margin:0}
 
 /* ---- boutons ------------------------------------------------------------ */
@@ -85,14 +90,14 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
   letter-spacing:.16em; text-transform:uppercase; min-height:48px;
 }
 .btn:hover{background:var(--accent2); border-color:var(--accent2); color:var(--fond)}
-.btn--vide{background:transparent; color:var(--accent)}
+.btn--vide{background:transparent; color:var(--lien)}
 .btn--vide:hover{background:var(--accent); color:var(--fond)}
 .btn--clair{background:transparent; border-color:currentColor; color:inherit}
 .btn--clair:hover{background:var(--fond); border-color:var(--fond); color:var(--encre)}
 .btn[disabled]{opacity:.45; cursor:not-allowed}
 .lien-fleche{
   display:inline-block; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
-  border-bottom:1px solid currentColor; padding-bottom:3px;
+  border-bottom:1px solid currentColor; padding:2px 0 3px;
 }
 
 /* ---- en-tête ------------------------------------------------------------ */
@@ -130,6 +135,10 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
   box-shadow:0 1px 30px rgba(43,36,30,.06);
 }
 .tete a{color:inherit}
+/* « .tete a » est plus spécifique que « .btn » : sans cette ligne, l'appel
+   à l'action principal héritait de l'encre de l'en-tête posée, soit 3,1:1
+   sur son aplat terracotta. */
+.tete .btn{color:var(--fond)}
 .marque{
   font-family:var(--serif); font-size:clamp(16px,1.6vw,22px); letter-spacing:.14em;
   text-transform:uppercase; margin-right:auto; white-space:nowrap;
@@ -167,7 +176,7 @@ h3{font-size:clamp(1.25rem, 1.9vw, 1.55rem)}
 .tiroir[data-ouvert]{opacity:1; visibility:visible}
 .tiroir a{font-family:var(--serif); font-size:clamp(1.8rem,6.5vw,2.6rem); color:var(--encre);
           padding:.28rem 0; letter-spacing:.02em}
-.tiroir a:hover{color:var(--accent)}
+.tiroir a:hover{color:var(--lien)}
 .tiroir__x{position:absolute; top:20px; right:clamp(18px,4vw,50px); width:44px; height:44px;
   border:0; background:none; font-size:1.7rem; cursor:pointer; color:var(--encre)}
 body.bloque{overflow:hidden}
@@ -222,7 +231,7 @@ body.bloque{overflow:hidden}
 .service b{display:block; font-family:var(--serif); font-size:1.15rem; font-weight:400;
            margin-bottom:.4rem}
 .service em{display:block; font-style:normal; font-size:10.5px; letter-spacing:.18em;
-            text-transform:uppercase; color:var(--accent); margin-bottom:.7rem}
+            text-transform:uppercase; color:var(--lien); margin-bottom:.7rem}
 .service p{margin:0; font-size:.95rem; color:var(--encre2)}
 
 /* ---- pied de page ------------------------------------------------------- */
@@ -270,7 +279,7 @@ body.bloque{overflow:hidden}
 }
 .champ textarea{resize:vertical; min-height:96px}
 .champ input:focus,.champ select:focus,.champ textarea:focus{border-color:var(--accent)}
-.champ small{margin-top:6px; font-size:12px; color:var(--accent)}
+.champ small{margin-top:6px; font-size:12px; color:var(--lien)}
 @media (max-width:640px){ .form{grid-template-columns:1fr} }
 
 /* ---- en-tête de page intérieure ----------------------------------------- */
@@ -352,6 +361,17 @@ body.bloque{overflow:hidden}
 }
 .hero h1{margin:0; max-width:13ch; font-size:clamp(2.7rem,7.2vw,5.2rem); line-height:1.04}
 .hero__phrase{max-width:38ch; font-size:1.05rem; margin:1rem 0 1.9rem; opacity:.94}
+/* Le bloc de texte est ancré en bas et grandit vers le haut. Sur un téléphone
+   tenu en paysage — 390 px de haut — il remontait jusque sous la barre de
+   navigation : le « Villa Alizéa » du hero passait derrière celui de l'en-tête,
+   au même endroit. On resserre l'échelle tant que l'écran est court. */
+@media (max-height:520px){
+  .hero__texte{padding-bottom:clamp(1.6rem,6vh,3rem)}
+  .hero__lieu{margin-bottom:.6rem}
+  .hero h1{font-size:clamp(1.9rem,4.6vw,3rem)}
+  .hero__phrase{font-size:.95rem; margin:.7rem 0 1.1rem}
+}
+
 .hero .btn{border-color:#fff; background:transparent; color:#fff}
 .hero .btn:hover{background:#fff; color:var(--encre); border-color:#fff}
 
@@ -414,7 +434,7 @@ body.bloque{overflow:hidden}
   padding:.55rem 1.15rem; min-height:auto; cursor:pointer;
   font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
 }
-.onglet:hover{border-color:var(--accent); color:var(--accent)}
+.onglet:hover{border-color:var(--accent); color:var(--lien)}
 .onglet.est-actif{background:var(--accent); border-color:var(--accent); color:var(--fond)}
 
 .mosaique{columns:3 280px; column-gap:clamp(8px,1.2vw,16px)}

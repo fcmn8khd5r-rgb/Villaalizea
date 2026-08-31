@@ -36,7 +36,29 @@ for f in *.html; do
   cp "$f" _site/
 done
 cp -R assets css js _site/
-cp favicon.svg robots.txt sitemap.xml _site/ 2>/dev/null || true
+cp favicon.svg favicon.ico apple-touch-icon.png robots.txt sitemap.xml _site/ 2>/dev/null || true
+
+# ---- Domaine réel -----------------------------------------------------------
+# config/villa.json porte un domaine d'attente. Netlify expose l'adresse vraie
+# du site dans $URL au moment de construire : on la substitue ici, faute de quoi
+# le lien canonique, les balises de partage et le plan du site désigneraient un
+# domaine qui n'existe pas — et l'aperçu partagé n'aurait pas d'image.
+python3 - "${URL:-}" "${DEPLOY_PRIME_URL:-}" <<'DOM'
+import json, sys, glob
+attente = json.load(open("config/villa.json", encoding="utf-8"))["site"]["url"].rstrip("/")
+reel = (sys.argv[1] or sys.argv[2] or "").rstrip("/")
+if not reel:
+    print("  domaine : %s (l'hebergeur n'a fourni aucune adresse)" % attente)
+    raise SystemExit
+n = 0
+for f in glob.glob("_site/**/*", recursive=True):
+    if not f.endswith((".html", ".xml", ".txt", ".webmanifest")): continue
+    s = open(f, encoding="utf-8").read()
+    if attente in s:
+        open(f, "w", encoding="utf-8").write(s.replace(attente, reel))
+        n += 1
+print("  domaine : %s -> %s (%d fichiers)" % (attente, reel, n))
+DOM
 
 echo "  _site assemblé : $(find _site -type f | wc -l | tr -d ' ') fichiers, $(du -sh _site | cut -f1)"
 echo "  exclus : src/ (dont $(du -sh src/orig 2>/dev/null | cut -f1 || echo 0) de sources), les pages essai-*.html, config/"

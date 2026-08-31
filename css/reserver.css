@@ -20,7 +20,7 @@
   cursor:pointer; font-size:1.1rem; line-height:1; display:grid; place-items:center;
   min-height:40px; transition:border-color .2s ease, color .2s ease;
 }
-.cal__fl:hover:not([disabled]){border-color:var(--accent); color:var(--accent)}
+.cal__fl:hover:not([disabled]){border-color:var(--accent); color:var(--lien)}
 .cal__fl[disabled]{opacity:.28; cursor:not-allowed}
 
 .cal__mois{display:grid; grid-template-columns:1fr 1fr; gap:clamp(1rem,3vw,2.4rem)}
@@ -38,7 +38,7 @@
   transition:background .14s ease, color .14s ease;
 }
 .jour:hover:not([disabled]){background:var(--voile)}
-.jour[disabled]{color:color-mix(in srgb, var(--sourdine) 55%, transparent); cursor:not-allowed}
+.jour[disabled]{color:color-mix(in srgb, var(--sourdine) 75%, transparent); cursor:not-allowed}
 /* Une date prise : barrée en diagonale, comme sur les plateformes. */
 .jour--pris::after{
   content:""; position:absolute; inset:22% 12%; border-top:1px solid currentColor;
@@ -85,7 +85,7 @@
 .ligne--total{border-top:1px solid var(--trait); margin-top:.7rem; padding-top:.8rem;
               font-weight:400; font-family:var(--serif); font-size:1.05rem}
 .ligne--acompte{background:var(--fond); margin:.8rem -.6rem 0; padding:.7rem .6rem;
-  color:var(--accent); font-weight:500}
+  color:var(--lien); font-weight:500}
 .recap__erreur{margin:0; font-size:.87rem; color:#9C3A28; background:#FBEDE9;
   border-left:2px solid #9C3A28; padding:.75rem .9rem}
 .recap__payer{width:100%}

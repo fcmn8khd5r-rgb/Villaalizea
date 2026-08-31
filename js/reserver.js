@@ -10,7 +10,7 @@
    les coordonnées sont dans le HTML, et un encart renvoie vers le
    formulaire de demande.
    ========================================================================= */
-import { calculer, nuitsMinimum } from "./tarifs.mjs";
+import { calculer, nuitsMinimum, CONFIG } from "./tarifs.mjs";
 
 const $ = s => document.querySelector(s);
 const jour = d => d.toISOString().slice(0, 10);
@@ -60,8 +60,39 @@ async function charger() {
     $("#cal-source").style.color = "#9C3A28";
   } finally {
     cal.setAttribute("aria-busy", "false");
+    etat.mois = premierMoisUtile(etat.mois);
     rendre();
   }
+}
+
+/* Le calendrier s'ouvrait sur le mois courant quel qu'il soit. Le 31 août, on
+   tombait sur une grille où trente jours sur trente et un étaient barrés — et
+   sur téléphone, où un seul mois tient à l'écran, le visiteur n'avait à peu
+   près rien à choisir avant d'avoir pensé à cliquer sur la flèche.
+
+   On ouvre donc sur le premier mois qui offre de quoi travailler. Le seuil de
+   trois arrivées est un jugement, pas un calcul : assez bas pour ne jamais
+   sauter un mois réellement utilisable, assez haut pour ne pas s'arrêter sur
+   une grille qui a l'air morte. À défaut, on retient le premier mois offrant
+   une seule arrivée, puis le mois courant. La flèche arrière reste active :
+   rien n'est caché, seul le point d'entrée change. */
+function arriveesDuMois(m) {
+  const fin = moisSuivant(m, 1);
+  let n = 0;
+  for (const c = new Date(m); c < fin; c.setUTCDate(c.getUTCDate() + 1))
+    if (arriveePossible(jour(c))) n++;
+  return n;
+}
+
+function premierMoisUtile(depart) {
+  const limite = moisSuivant(depart, 16);
+  let repli = null;
+  for (let m = new Date(depart); m < limite; m = moisSuivant(m, 1)) {
+    const n = arriveesDuMois(m);
+    if (n >= 3) return m;
+    if (n > 0 && !repli) repli = m;
+  }
+  return repli || depart;
 }
 
 function majSource(d) {
@@ -205,7 +236,7 @@ function majRecap() {
     + `<div class="ligne"><span>Ménage de fin de séjour</span><span>${euro(p.menage)}</span></div>`
     + `<div class="ligne"><span>Taxe de séjour · ${p.voyageurs} pers.</span><span>${euro(p.taxe)}</span></div>`
     + `<div class="ligne ligne--total"><span>Total du séjour</span><span>${euro(p.total)}</span></div>`
-    + `<div class="ligne ligne--acompte"><span>Acompte à régler (30 %)</span><span>${euro(p.acompte)}</span></div>`
+    + `<div class="ligne ligne--acompte"><span>Acompte à régler (${CONFIG.acomptePourcent} % hors taxe de séjour)</span><span>${euro(p.acompte)}</span></div>`
     + `<div class="ligne"><span>Solde à 30 jours de l'arrivée</span><span>${euro(p.solde)}</span></div>`;
   payer.disabled = false;
   $("#r-note").textContent = "";
