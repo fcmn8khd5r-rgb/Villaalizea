@@ -19,10 +19,62 @@ if (CAS === "donnees")Object.defineProperty(navigator, "connection", { value: { 
 if (CAS === "force") {          // neutralise l'estimation de debit du navigateur
   Object.defineProperty(navigator, "connection", { value: { effectiveType: "4g" }, configurable: true });
 }
+if (CAS === "latence") {         // la 1re image lente, les suivantes normales
+  /* Le cas exact de la regression : a froid, la premiere requete paie la
+     resolution du nom, la poignee de main TLS et le premier acces a l'objet
+     sur le CDN. Le debit se deduisait d'elle seule, et le hero se figeait.
+     Attendu desormais : anime, la connexion etant chaude des la deuxieme. */
+  var imgFroide = window.Image, premiere = true;
+  window.Image = function () {
+    var e = new imgFroide(), pose = null, tarde = premiere; premiere = false;
+    Object.defineProperty(e, "onload", {
+      configurable: true,
+      get: function () { return pose; },
+      set: function (f) {
+        pose = f;
+        e.addEventListener("load", function () {
+          if (tarde) setTimeout(function () { f.call(e); }, 600);
+          else f.call(e);
+        });
+      }
+    });
+    return e;
+  };
+}
+if (CAS === "debit") {           // chaque image met 400 ms : liaison etranglee
+  /* Ce cas manquait, et c'est celui qui a laisse passer le defaut : le repli
+     « debit-insuffisant » se declenchait a chaque premiere visite sans que
+     rien ici ne le montre. On retarde l'arrivee de chaque image pour obtenir
+     un debit reellement insuffisant, au lieu de l'annoncer au navigateur. */
+  var imgLente = window.Image;
+  window.Image = function () {
+    var e = new imgLente(), pose = null;
+    Object.defineProperty(e, "onload", {
+      configurable: true,
+      get: function () { return pose; },
+      set: function (f) {
+        pose = f;
+        e.addEventListener("load", function () {
+          setTimeout(function () { f.call(e); }, 400);
+        });
+      }
+    });
+    return e;
+  };
+}
 if (CAS === "panne") {           // toutes les images du hero echouent
   var vraieImage = window.Image;
-  window.Image = function () { var e = new vraieImage();
-    setTimeout(function(){ e.onerror && e.onerror(); }, 5); return e; };
+  window.Image = function () {
+    var e = new vraieImage();
+    /* On neutralise aussi onload. Sans cela, une image deja en cache pouvait
+       reussir avant l'echec simule : une promesse ne se resout qu'une fois,
+       et le cas devenait aleatoire — il passait ou non selon l'etat du cache. */
+    Object.defineProperty(e, "onload", {
+      configurable: true, get: function () { return null; }, set: function () {}
+    });
+    setTimeout(function () { e.onerror && e.onerror(); }, 5);
+    return e;
+  };
 }
 </script></head><body>
 <section class="hero" id="hero">
@@ -38,6 +90,11 @@ if (CAS === "panne") {           // toutes les images du hero echouent
 </section>
 <div style="height:150vh"></div>
 <pre id="journal"></pre>
+<!-- Sans hero-data.js, window.ALIZEA_HERO est absent : hero.js sort sur
+     « sequence-absente » avant d'atteindre quoi que ce soit d'autre, et
+     ce banc validait « sequence-absente » pour tous les cas sauf les deux
+     verifies en amont. Il ne verifiait donc plus rien. -->
+<script src="/js/hero-data.js"></script>
 <script src="/js/hero.js"></script>
 <script>
 setTimeout(function () {

@@ -319,7 +319,7 @@ une fibre. Seul l'**économiseur de données**, qui est une intention explicite 
 personne, interdit d'emblée. Tout le reste se décide sur une mesure : on charge une image,
 on chronomètre, et on renonce si le reste demanderait plus de dix secondes.
 
-`essai-replis.html?cas=sobre|lent|donnees|normal` rejoue chacun de ces cas.
+`essai-replis.html?cas=sobre|lent|donnees|panne|debit|latence|normal` rejoue chacun de ces cas.
 
 ### L'effet de souris
 

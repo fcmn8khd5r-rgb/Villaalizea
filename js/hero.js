@@ -117,33 +117,76 @@
     if (jauge) jauge.style.setProperty("--part", (prets / N).toFixed(3));
   }
 
+  /* Six requêtes de front : au-delà, les navigateurs font la queue et le gain
+     disparaît ; en deçà, on laisse le réseau inoccupé. */
+  var VOIES = 6;
+
+  /* ------------------------------------------------------- préchargement
+
+     Le débit se jugeait autrefois sur une seule image, chronométrée depuis
+     avant la toute première requête. Deux erreurs s'y cumulaient : ce temps
+     contenait l'établissement de la connexion et, sur un CDN, le premier
+     accès à l'objet dans la région — de la latence, pas du débit ; et la
+     projection supposait un chargement séquentiel alors que six voies
+     s'ouvrent juste après. Le poids par image se simplifiant, la condition
+     se réduisait à « la première image arrive-t-elle en moins de dix
+     secondes divisées par le nombre d'images », soit 38 ms sur le profil
+     bureau. Un aller-retour vers un CDN en demande trente à cent cinquante :
+     le repli tombait presque à chaque première visite, et jamais à la
+     seconde, le cache aidant.
+
+     On ne juge donc plus une fois, on juge en continu. La première image
+     échauffe la connexion sans être comptée ; ensuite chaque arrivée met à
+     jour un débit moyen, et l'on n'abandonne que lorsque ce débit, mesuré
+     sur assez d'images pour ne plus refléter la montée en régime d'une
+     connexion neuve, ne laisse plus d'espoir de tenir le budget. */
   function precharger() {
     if (jauge) jauge.hidden = false;
-    var t0 = performance.now();
 
-    /* Une image sonde : elle donne le débit réel, seul chiffre digne de foi. */
     return charger(0).then(function () {
       progres();
-      var sec1 = (performance.now() - t0) / 1000;
-      var debit = POIDS / Math.max(sec1, 0.02);       /* octets par seconde */
-      var reste = (N - 1) * POIDS / debit;
-      if (reste > ATTENTE_MAX) {
-        abandon = true;
-        throw new Error("débit mesuré " + Math.round(debit / 1024) + " Ko/s, "
-                      + Math.round(reste) + " s nécessaires");
-      }
 
-      /* Six requêtes de front : au-delà, les navigateurs font la queue et le
-         gain disparaît ; en deçà, on laisse le réseau inoccupé. */
+      var t0      = performance.now();   /* connexion chaude : le chrono part ici */
+      var recues  = 0;
       var suivant = 1;
+      var arret   = null;
+
       function file() {
+        if (arret) return Promise.reject(arret);
         if (suivant >= N) return Promise.resolve();
         var i = suivant++;
-        return charger(i).then(progres).then(file);
+        return charger(i).then(function () {
+          progres();
+          recues++;
+          var sec = (performance.now() - t0) / 1000;
+          /* Douze images et quatre dixièmes de seconde au moins : en deçà,
+             la mesure décrit la montée en débit, pas la liaison. */
+          if (recues >= VOIES * 2 && sec > 0.4) {
+            var debit = recues * POIDS / sec;
+            var reste = (N - 1 - recues) * POIDS / debit;
+            if (sec + reste > ATTENTE_MAX) {
+              abandon = true;
+              arret = new Error("débit mesuré " + Math.round(debit / 1024)
+                              + " Ko/s, " + Math.round(reste) + " s encore nécessaires");
+              throw arret;
+            }
+          }
+        }).then(file);
       }
+
       var voies = [];
-      for (var v = 0; v < 6; v++) voies.push(file());
-      return Promise.all(voies);
+      for (var v = 0; v < VOIES; v++) voies.push(file());
+
+      /* Filet. Une image suspendue ne répond ni par onload ni par onerror :
+         sans échéance, le hero attendrait sans fin, jauge à l'écran. */
+      var echeance = new Promise(function (_, non) {
+        setTimeout(function () {
+          if (arret) return;
+          abandon = true;
+          non(new Error("séquence incomplète après " + (ATTENTE_MAX * 2) + " s"));
+        }, ATTENTE_MAX * 2000);
+      });
+      return Promise.race([Promise.all(voies), echeance]);
     });
   }
 
