@@ -379,12 +379,14 @@ def _img(cle, lg, taille="v", classe="", ratio="", anim=True, large=False):
       '<div class="cadre %s"%s>\n'
       '    <picture>%s\n'
       '      <source type="image/avif" srcset="/assets/img/%s-%s.avif">\n'
-      '      <img src="/assets/img/%s-%s.webp" alt="%s" loading="lazy" decoding="async"\n'
+      '      <img src="/assets/img/%s-%s.webp" alt="%s" width="%d" height="%d"\n'
+      '           loading="lazy" decoding="async"\n'
       '           style="background:url(%s) center/cover">\n'
       '    </picture>\n'
       '  </div>' % (ratio + (" " + classe if classe else ""),
                     ' data-anim="volet"' if anim else "",
-                    src2, cle, suff, cle, suff, alt, f["lqip"]))
+                    src2, cle, suff, cle, suff, alt,
+                    f["w"], f["h"], f["lqip"]))
 
 
 def bloc_pieces(lg):
@@ -448,11 +450,12 @@ def bloc_apercu(lg):
           '   aria-label="%s">\n'
           '  <picture>\n'
           '    <source type="image/avif" srcset="/assets/img/%s-v.avif">\n'
-          '    <img src="/assets/img/%s-v.webp" alt="%s" loading="lazy" decoding="async"\n'
+          '    <img src="/assets/img/%s-v.webp" alt="%s" width="%d" height="%d"\n'
+          '         loading="lazy" decoding="async"\n'
           '         style="background:url(%s) center/cover">\n'
           '  </picture>\n'
           '</a>' % (lien("galerie.html", lg), t("voir_galerie", lg) % leg,
-                    c, c, leg, f["lqip"]))
+                    c, c, leg, f["w"], f["h"], f["lqip"]))
     return "\n".join(out)
 
 
