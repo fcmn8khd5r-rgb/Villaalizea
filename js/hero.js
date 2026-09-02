@@ -157,21 +157,47 @@
      le repli tombait presque à chaque première visite, et jamais à la
      seconde, le cache aidant.
 
-     On ne juge donc plus une fois, on juge en continu. La première image
-     échauffe la connexion sans être comptée ; ensuite chaque arrivée met à
-     jour un débit moyen, et l'on n'abandonne que lorsque ce débit, mesuré
-     sur assez d'images pour ne plus refléter la montée en régime d'une
-     connexion neuve, ne laisse plus d'espoir de tenir le budget. */
+     On ne juge donc plus une fois, on juge en continu. Mais la mesure
+     continue s'est révélée fausse elle aussi, et pour une raison plus
+     profonde : ELLE COMMENÇAIT PENDANT QUE LA PAGE SE CHARGEAIT ENCORE.
+     Les images de la séquence partagent alors la liaison avec le document,
+     la feuille de style, les polices et l'affiche du hero — et le navigateur
+     les sert en dernier, car une image créée par script est de priorité
+     basse. Le débit relevé décrit donc la CONCURRENCE, pas la liaison.
+
+     Mesuré sur le site en ligne, profil portrait, mêmes 24 voies :
+
+         pendant le chargement de la page →  53 Ko/s   (repli déclenché)
+         page au repos, même liaison      → 373 Ko/s   (2,95 s en tout)
+
+     Sept fois moins. Le premier chiffre était ensuite extrapolé à toute la
+     séquence, ce qui annonçait quinze secondes de plus et faisait tomber le
+     repli — sur tous les appareils, à chaque première visite. C'est la même
+     erreur que le test effectiveType retiré plus haut : décider sur un
+     échantillon qui ne décrit pas le régime établi.
+
+     On attend donc que la page ait fini de charger avant de juger, et l'on
+     ne mesure que ce qui arrive APRÈS ce moment-là. Le chargement de la
+     séquence, lui, n'attend pas : il démarre tout de suite, seul le verdict
+     est différé. Ce qui est jugé est alors la liaison seule, et la question
+     posée est la bonne : « au rythme observé, combien de temps reste-t-il ? » */
   function precharger() {
     if (jauge) jauge.hidden = false;
 
     return charger(0).then(function () {
       progres();
 
-      var t0      = performance.now();   /* connexion chaude : le chrono part ici */
       var recues  = 0;
       var suivant = 1;
       var arret   = null;
+
+      /* Repère du régime établi : l'instant où la page a fini de charger, et
+         le nombre d'images déjà reçues à ce moment. Tout ce qui précède est
+         écarté de la mesure. */
+      var t0 = 0, recues0 = 0;
+      var poser = function () { t0 = performance.now(); recues0 = recues; };
+      if (document.readyState === "complete") poser();
+      else addEventListener("load", poser, { once: true });
 
       function file() {
         if (arret) return Promise.reject(arret);
@@ -180,13 +206,18 @@
         return charger(i).then(function () {
           progres();
           recues++;
+          if (!t0) return;                       /* la page charge encore */
           var sec = (performance.now() - t0) / 1000;
-          /* Douze images et quatre dixièmes de seconde au moins : en deçà,
-             la mesure décrit la montée en débit, pas la liaison. */
-          if (recues >= VOIES * 2 && sec > 0.4) {
-            var debit = recues * POIDS / sec;
+          var vues = recues - recues0;
+          /* Une vague complète de voies et une seconde et demie au moins :
+             en deçà, la mesure décrit la montée en débit, pas la liaison. */
+          if (vues >= VOIES && sec > 1.5) {
+            var debit = vues * POIDS / sec;
             var reste = (N - 1 - recues) * POIDS / debit;
-            if (sec + reste > ATTENTE_MAX) {
+            /* Le temps qui RESTE, et non le temps total : ce qui a été
+               téléchargé pendant que la page se chargeait est acquis, le
+               décompter une seconde fois punirait une page riche. */
+            if (reste > ATTENTE_MAX) {
               abandon = true;
               arret = new Error("débit mesuré " + Math.round(debit / 1024)
                               + " Ko/s, " + Math.round(reste) + " s encore nécessaires");
