@@ -403,8 +403,8 @@
     "telephone": "0690 30 50 37",
     "telephoneLien": "+590690305037",
     "adresse": "16 B Les Jardins de Houelbourg, Boulevard de Houëlbourg, ZI Jarry, 97122 Baie-Mahault",
-    "siren": "",
-    "sirenNote": "Immatriculation en cours. Le champ vide n'empêche pas la publication : la villa est fictive, le site est une démonstration. Les mentions légales affichent alors « Immatriculation en cours ».",
+    "siren": "109 247 841",
+    "sirenNote": "Immatriculation obtenue. Le numéro s'affiche tel quel dans les mentions légales ; groupé par trois, comme il se présente d'usage.",
     "hebergeur": {
       "nom": "Netlify, Inc.",
       "adresse": "512 2nd Street, Suite 200, San Francisco, CA 94107, États-Unis",
