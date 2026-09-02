@@ -120,9 +120,28 @@
     if (jauge) jauge.style.setProperty("--part", (prets / N).toFixed(3));
   }
 
-  /* Six requêtes de front : au-delà, les navigateurs font la queue et le gain
-     disparaît ; en deçà, on laisse le réseau inoccupé. */
-  var VOIES = 6;
+  /* Nombre de requêtes menées de front.
+
+     Il valait six — une règle héritée de HTTP/1.1, où les navigateurs
+     n'ouvraient pas plus de six connexions par domaine. Elle est FAUSSE
+     depuis HTTP/2, que servent Netlify et tous les hébergeurs modernes :
+     les requêtes y sont multiplexées sur une seule connexion, et les
+     brider ne fait que sérialiser ce qui pourrait être simultané.
+
+     Cela ne se voit pas en développement, où la latence est nulle. Sur le
+     vrai réseau elle domine tout : chaque image demande environ 300 ms
+     d'aller-retour, et six voies ne peuvent donc en tirer que vingt par
+     seconde. Mesuré sur le site en ligne, sur soixante images réelles :
+
+         6 voies  → 18,5 s pour la séquence   (au-delà du budget : abandon)
+        12 voies  →  4,7 s
+        24 voies  →  3,7 s
+        40 voies  →  1,5 s
+
+     Le hero se repliait donc à chaque visite, sur tous les appareils, pour
+     une limite qui ne protégeait plus rien. Vingt-quatre laisse une marge
+     confortable sans saturer une connexion mobile. */
+  var VOIES = 24;
 
   /* ------------------------------------------------------- préchargement
 
