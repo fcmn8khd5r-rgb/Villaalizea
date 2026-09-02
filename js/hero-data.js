@@ -8,6 +8,6 @@ window.ALIZEA_HERO = {
  },
  "p": {
   "n": 176,
-  "poids": 6433
+  "poids": 6429
  }
 };

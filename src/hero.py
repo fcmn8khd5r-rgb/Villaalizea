@@ -81,8 +81,29 @@ DEBUT, DUREE = 0.1, 8.8                     # segment retenu, en secondes
 #
 #   large    coque a 35 % du haut, entre 75 % et 86 % de la largeur
 #   portrait coque a 15 % du haut, entre 67 % et 79 % de la largeur
+#
+# --- Les coques descendues, en portrait ------------------------------------
+# A 15 % du haut, elles se serraient contre le bord superieur d'un telephone :
+# le bandeau de demonstration et la barre de navigation occupent les 80
+# premiers pixels sur 844, et les bateaux venaient buter juste dessous. On ne
+# les voyait pas, on les devinait.
+#
+# La fenetre de recadrage a donc ete REMONTEE dans la source, ce qui fait
+# descendre le sujet dans le cadre. Le reglage est serre des deux cotes :
+#
+#   oy 0.62  coques a 19 % de l'ecran — trop haut, contre la barre
+#   oy 0.58  coques a 22,5 %          — degagees, et AUCUNE terre visible
+#   oy 0.56  un cap apparait dans l'angle superieur droit
+#   oy 0.50  les deux caps et le ciel entrent dans le cadre
+#
+# 0.58 est donc la derniere valeur qui descend les bateaux sans faire entrer
+# les caps arides que la coupe verticale sert precisement a exclure. Verifie
+# sur toute la duree du plan — t = 0,1 / 1,9 / 3,6 / 5,4 / 7,1 / 8,8 s — et sur
+# trois tailles de telephone : la terre ne parait a aucun moment.
+#
+# Le profil large n'est pas touche : le defaut ne concerne que le portrait.
 PROFILS = [("l", 30, 1600, 900, 32, 0.50, 0.36, 1.35),   # large   : 264 images
-           ("p", 20,  416, 555, 33, 0.72, 0.62, 1.35)]   # portrait: 176 images
+           ("p", 20,  416, 555, 33, 0.72, 0.58, 1.35)]   # portrait: 176 images
 
 
 def cadence_source():
