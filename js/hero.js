@@ -80,7 +80,12 @@
     /* Absolue depuis la racine : les pages anglaises vivent sous /en/, et une
        adresse relative y désignerait /en/assets/hero/… — la séquence ne se
        chargeait pas, et le hero retombait en image fixe sans rien signaler. */
-    return "/assets/hero/" + profil + String(i).padStart(3, "0") + ".avif";
+    /* L'empreinte de la sequence suit l'adresse. Sans elle, une image refaite
+       n'arrivait jamais chez qui avait deja vu le site : netlify.toml declare
+       /assets/ « immutable » pour un an, et le navigateur ne revalide meme
+       pas. Le recadrage etait deploye, et personne ne le voyait. */
+    return "/assets/hero/" + profil + String(i).padStart(3, "0") + ".avif"
+           + (COMPTES.v ? "?v=" + COMPTES.v : "");
   }
 
   /* ---------------------------------------------------------------- toile */

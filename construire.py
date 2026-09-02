@@ -631,6 +631,27 @@ def ecrire_hero_js():
         return False
     h = json.load(open(chemin_src, encoding="utf-8"))
     d = {c: {"n": v["n"], "poids": round(v["poids"] / v["n"])} for c, v in h.items()}
+
+    # EMPREINTE DE LA SEQUENCE, ajoutee a l'adresse de chaque image.
+    #
+    # netlify.toml declare tout /assets/ « immutable » pour un an. C'est le bon
+    # reglage pour des fichiers dont l'adresse change quand le contenu change —
+    # ce qui etait vrai du CSS et du JS, versionnes par empreinte, mais FAUX de
+    # la sequence du hero : ses images gardaient la meme adresse d'une
+    # fabrication a l'autre. Un recadrage refait etait donc bien deploye, et
+    # jamais recu : le navigateur de qui avait deja vu le site servait ses
+    # copies pendant un an, sans meme revalider — c'est ce que « immutable »
+    # lui demande.
+    #
+    # L'empreinte porte sur la fiche ET sur la premiere image de chaque profil :
+    # la fiche seule ne bougerait pas si un recadrage laissait le poids total
+    # inchange.
+    graine = open(chemin_src, "rb").read()
+    for c in sorted(h):
+        img = os.path.join(RACINE, "assets", "hero", "%s000.avif" % c)
+        if os.path.exists(img):
+            graine += open(img, "rb").read()
+    d["v"] = hashlib.sha1(graine).hexdigest()[:8]
     chemin = os.path.join(RACINE, "js", "hero-data.js")
     contenu = ("/* GÉNÉRÉ par construire.py — ne pas modifier à la main.\n"
                "   Nombre d'images de chaque séquence et poids moyen d'une image,\n"
@@ -950,6 +971,11 @@ def versionner(chemin, verifie=False):
         return '%s="/%s?v=%s"' % (m.group("a"), actif, h)
 
     s = re.sub(r'(?P<a>href|src)="/?(?P<f>(?:css|js)/[A-Za-z0-9._-]+\.(?:css|js|mjs))(?:\?v=[^"]*)?"',
+               remplacer, s)
+    # Les affiches du hero aussi. Elles vivent sous /assets/, que netlify.toml
+    # declare « immutable » pour un an : sans empreinte dans l'adresse, une
+    # affiche refaite ne serait jamais rechargee par qui a deja vu le site.
+    s = re.sub(r'(?P<a>href|src)="/?(?P<f>assets/hero/affiche-[a-z]+\.(?:avif|webp|jpg))(?:\?v=[^"]*)?"',
                remplacer, s)
     if s != avant and not verifie:
         open(chemin, "w", encoding="utf-8").write(s)
