@@ -107,7 +107,13 @@
   }
 
   /* ------------------------------------------------------- préchargement */
-  var images = new Array(N), prets = 0, abandon = false;
+  /* « motif » retient POURQUOI l'on a renoncé, et non seulement qu'on l'a
+     fait. Les deux causes n'ont rien a voir — un debit trop faible, ou une
+     image restee sans reponse — et l'attribut data-repli annoncait
+     « debit-insuffisant » dans les deux cas. Le journal disait la verite,
+     l'attribut mentait : de quoi chercher longtemps du mauvais cote, ce qui
+     m'est arrive deux fois. */
+  var images = new Array(N), prets = 0, motif = null;
   var ATTENTE_MAX = 10;                       /* secondes que l'on s'autorise */
 
   function charger(i) {
@@ -223,7 +229,7 @@
                téléchargé pendant que la page se chargeait est acquis, le
                décompter une seconde fois punirait une page riche. */
             if (reste > ATTENTE_MAX) {
-              abandon = true;
+              motif = "debit-insuffisant";
               arret = new Error("débit mesuré " + Math.round(debit / 1024)
                               + " Ko/s, " + Math.round(reste) + " s encore nécessaires");
               throw arret;
@@ -240,7 +246,7 @@
       var echeance = new Promise(function (_, non) {
         setTimeout(function () {
           if (arret) return;
-          abandon = true;
+          motif = "sequence-incomplete";
           non(new Error("séquence incomplète après " + (ATTENTE_MAX * 2) + " s"));
         }, ATTENTE_MAX * 2000);
       });
@@ -440,7 +446,7 @@
   });
 
   precharger().then(activer).catch(function (e) {
-    figer(abandon ? "debit-insuffisant" : "chargement-impossible",
-          abandon ? e.message : "séquence indisponible");
+    figer(motif || "chargement-impossible",
+          motif ? e.message : "séquence indisponible");
   });
 })();
