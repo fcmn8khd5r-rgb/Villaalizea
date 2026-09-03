@@ -114,7 +114,19 @@
   background:var(--accent); opacity:.55;
 }
 
-/* Bandeau discret sur la confirmation de démonstration. */
+/* Bandeau discret sur la confirmation de démonstration.
+
+   « hidden » DOIT l'emporter sur le display ci-dessous. L'attribut ne masque
+   que par la règle « [hidden] { display: none } » de la feuille du navigateur,
+   dont la spécificité est la plus faible qui soit : « display:inline-flex »
+   la battait, et la mention paraissait donc à CHAQUE visite de la page de
+   confirmation, alors que js/confirmation.js ne la révèle que sur le parcours
+   de démonstration — « m.hidden = false » quand l'adresse porte ?demo.
+
+   Sans conséquence ici, le site étant lui-même une démonstration. Mais sur le
+   site d'un vrai client bâti sur ce gabarit, « aucun paiement n'a eu lieu »
+   se serait affiché sur chaque confirmation authentique. */
+.mention-demo[hidden]{ display:none }
 .mention-demo{
   display:inline-flex; align-items:center; gap:.55rem; margin:1.6rem auto 0;
   padding:.5rem 1rem; border:1px solid var(--trait); background:var(--fond);
